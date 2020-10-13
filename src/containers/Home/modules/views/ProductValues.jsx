@@ -4,6 +4,9 @@ import { withStyles } from '@material-ui/core/styles';
 import Grid from '@material-ui/core/Grid';
 import Container from '@material-ui/core/Container';
 import Typography from '../components/Typography';
+import salud from '../../../../assets/static/salud.svg';
+import comida1 from '../../../../assets/static/comida1.svg';
+import comida2 from '../../../../assets/static/paquete_de_comida.svg';
 
 const styles = (theme) => ({
   root: {
@@ -53,15 +56,16 @@ function ProductValues(props) {
             <div className={classes.item}>
               <img
                 className={classes.image}
-                src="/static/themes/onepirate/productValues1.svg"
-                alt="suitcase"
+                src={salud}
+                alt="salud"
               />
               <Typography variant="h6" className={classes.title}>
-                The best luxury hotels
+                Protocolos de Bioseguridad
               </Typography>
               <Typography variant="h5">
-                {'From the latest trendy boutique hotel to the iconic palace with XXL pool'}
-                {', go for a mini-vacation just a few subway stops away from your home.'}
+                {'Preparamos y empacamos todos nuestros alimentos con los más altos estándares '}
+                {'de Protocolos de Bioseguridad y manejo adecuado de alimentos, para brindarte '}
+                {'una experiencia agradable y segura para ti y tu familia.'}
               </Typography>
             </div>
           </Grid>
@@ -69,15 +73,16 @@ function ProductValues(props) {
             <div className={classes.item}>
               <img
                 className={classes.image}
-                src="/static/themes/onepirate/productValues2.svg"
-                alt="graph"
+                src={comida1}
+                alt="comida1"
               />
               <Typography variant="h6" className={classes.title}>
-                New experiences
+                Caliente hasta tu casa
               </Typography>
               <Typography variant="h5">
-                {'Privatize a pool, take a Japanese bath or wake up in 900m2 of garden… '}
-                {'your Sundays will not be alike.'}
+                {'En BurgerTown nos preocupamos porque la experiencia sea la más agradable'}
+                {', y por ello en nuestros empaques de alimentos usamos material termoaislante '}
+                {'para conservar el calor del plato mientras llega a tu domicilio.'}
               </Typography>
             </div>
           </Grid>
@@ -85,15 +90,16 @@ function ProductValues(props) {
             <div className={classes.item}>
               <img
                 className={classes.image}
-                src="/static/themes/onepirate/productValues3.svg"
-                alt="clock"
+                src={comida2}
+                alt="comida2"
               />
               <Typography variant="h6" className={classes.title}>
-                Exclusive rates
+                Amigables con el medio ambiente
               </Typography>
               <Typography variant="h5">
-                {'By registering, you will access specially negotiated rates '}
-                {'that you will not find anywhere else.'}
+                {'Todos nuestros empaques de comida son eco-friendly, hechos con material reciclado '}
+                {'y listos para ser reciclados y reusados una vez hayas terminado de comer. Al ser desechados, tardan solo 2 años en '}
+                {'biodegradarse.'}
               </Typography>
             </div>
           </Grid>

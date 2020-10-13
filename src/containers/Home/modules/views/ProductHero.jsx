@@ -51,7 +51,7 @@ function ProductHero(props) {
         Ir al Menú
       </Button>
       <Typography variant="body2" color="inherit" className={classes.more}>
-        También somos expertos en Perros y Salchipapas. Descubre la auténtica experiencia de comida rápida americana con nosotros!
+        También somos expertos en todo tipo de comida rápida americana y colombiana. Descubre la auténtica experiencia de comida rápida con nosotros!
       </Typography>
     </ProductHeroLayout>
   );
