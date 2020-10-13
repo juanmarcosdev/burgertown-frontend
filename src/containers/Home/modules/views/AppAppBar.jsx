@@ -9,7 +9,7 @@ import logo from '../../../../assets/static/burgertown_logo.png';
 
 const styles = (theme) => ({
   title: {
-    fontSize: 28,
+    fontSize: 36,
     fontFamily: '\'Sansita Swashed\', cursive;',
   },
   placeholder: toolbarStyles(theme).root,
@@ -28,7 +28,7 @@ const styles = (theme) => ({
     justifyContent: 'flex-end',
   },
   rightLink: {
-    fontSize: 16,
+    fontSize: 13,
     color: theme.palette.common.white,
     marginLeft: theme.spacing(3),
   },
@@ -60,15 +60,24 @@ function AppAppBar(props) {
               variant='h6'
               underline='none'
               className={classes.rightLink}
-              href='/premium-themes/onepirate/sign-in/'
+              href='#'
             >
-              Iniciar Sesión
+              Iniciar Sesión como Admin
+            </Link>
+            <Link
+              color='inherit'
+              variant='h6'
+              underline='none'
+              className={classes.rightLink}
+              href='#'
+            >
+              Iniciar Sesión como Cliente
             </Link>
             <Link
               variant='h6'
               underline='none'
               className={clsx(classes.rightLink, classes.linkSecondary)}
-              href='/premium-themes/onepirate/sign-up/'
+              href='#'
             >
               Registrarse
             </Link>

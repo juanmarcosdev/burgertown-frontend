@@ -8,7 +8,7 @@ import ProductValues from './modules/views/ProductValues';
 import ProductHowItWorks from './modules/views/ProductHowItWorks';
 import AppAppBar from './modules/views/AppAppBar';
 
-function Index() {
+function Home() {
   return (
     <>
       <AppAppBar />
@@ -21,4 +21,4 @@ function Index() {
   );
 }
 
-export default withRoot(Index);
+export default withRoot(Home);
