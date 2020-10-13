@@ -5,6 +5,9 @@ import Grid from '@material-ui/core/Grid';
 import Container from '@material-ui/core/Container';
 import Button from '../components/Button';
 import Typography from '../components/Typography';
+import user from '../../../../assets/static/user.svg';
+import iniciarSesion from '../../../../assets/static/iniciar-sesion.svg';
+import orden from '../../../../assets/static/orden.svg';
 
 const styles = (theme) => ({
   root: {
@@ -63,7 +66,7 @@ function ProductHowItWorks(props) {
           alt="curvy lines"
         />
         <Typography variant="h4" marked="center" className={classes.title} component="h2">
-          How it works
+          ¿Cómo ordenar comida de BurgerTown?
         </Typography>
         <div>
           <Grid container spacing={5}>
@@ -71,12 +74,12 @@ function ProductHowItWorks(props) {
               <div className={classes.item}>
                 <div className={classes.number}>1.</div>
                 <img
-                  src="/static/themes/onepirate/productHowItWorks1.svg"
-                  alt="suitcase"
+                  src={user}
+                  alt="registrarse"
                   className={classes.image}
                 />
                 <Typography variant="h5" align="center">
-                  Appointment every Wednesday 9am.
+                  Para poder pedir comida de BurgerTown a domicilio, debes registarte como cliente en la página 
                 </Typography>
               </div>
             </Grid>
@@ -84,12 +87,12 @@ function ProductHowItWorks(props) {
               <div className={classes.item}>
                 <div className={classes.number}>2.</div>
                 <img
-                  src="/static/themes/onepirate/productHowItWorks2.svg"
-                  alt="graph"
+                  src={iniciarSesion}
+                  alt="iniciar sesion"
                   className={classes.image}
                 />
                 <Typography variant="h5" align="center">
-                  First come, first served. Our offers are in limited quantities, so be quick.
+                  Una vez registrado, inicias sesión en la página web usando tus credenciales.
                 </Typography>
               </div>
             </Grid>
@@ -97,13 +100,13 @@ function ProductHowItWorks(props) {
               <div className={classes.item}>
                 <div className={classes.number}>3.</div>
                 <img
-                  src="/static/themes/onepirate/productHowItWorks3.svg"
-                  alt="clock"
+                  src={orden}
+                  alt="ordenar"
                   className={classes.image}
                 />
                 <Typography variant="h5" align="center">
-                  {'New offers every week. New experiences, new surprises. '}
-                  {'Your Sundays will no longer be alike.'}
+                  Habiendo iniciado sesión, puedes proceder a revisar el menú, agregar al carrito de compra los platos de interés,
+                  proceder a pagar y listo! En unos minutos te enviaremos tu pedido a la puerta de tu domicilio.
                 </Typography>
               </div>
             </Grid>
@@ -114,10 +117,8 @@ function ProductHowItWorks(props) {
           size="large"
           variant="contained"
           className={classes.button}
-          component="a"
-          href="/premium-themes/onepirate/sign-up/"
         >
-          Get started
+          Registrarme
         </Button>
       </Container>
     </section>
