@@ -6,7 +6,7 @@ import TextField from '@material-ui/core/TextField';
 import Paper from '@material-ui/core/Paper';
 import Box from '@material-ui/core/Box';
 import Grid from '@material-ui/core/Grid';
-import SupervisorAccountOutlinedIcon from '@material-ui/icons/SupervisorAccountOutlined';
+import AccountCircleOutlinedIcon from '@material-ui/icons/AccountCircleOutlined';
 import Typography from '@material-ui/core/Typography';
 import { makeStyles } from '@material-ui/core/styles';
 
@@ -15,7 +15,7 @@ const useStyles = makeStyles((theme) => ({
     height: '100vh',
   },
   image: {
-    backgroundImage: 'url(https://cdn.pixabay.com/photo/2015/04/20/13/30/kitchen-731351_960_720.jpg)',
+    backgroundImage: 'url(https://cdn.pixabay.com/photo/2015/03/26/10/07/restaurant-690975_960_720.jpg)',
     backgroundRepeat: 'no-repeat',
     backgroundColor:
       theme.palette.type === 'light' ? theme.palette.grey[50] : theme.palette.grey[900],
@@ -41,7 +41,7 @@ const useStyles = makeStyles((theme) => ({
   },
 }));
 
-export default function LoginAdmin() {
+export default function LoginClient() {
   const classes = useStyles();
 
   return (
@@ -51,10 +51,10 @@ export default function LoginAdmin() {
       <Grid item xs={12} sm={8} md={5} component={Paper} elevation={6} square>
         <div className={classes.paper}>
           <Avatar className={classes.avatar}>
-            <SupervisorAccountOutlinedIcon />
+            <AccountCircleOutlinedIcon />
           </Avatar>
           <Typography component='h1' variant='h5'>
-            Iniciar Sesión como Administrador
+            Iniciar Sesión como Cliente
           </Typography>
           <form className={classes.form} noValidate>
             <TextField
