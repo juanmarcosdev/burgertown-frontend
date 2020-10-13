@@ -89,56 +89,56 @@ function ProductCategories(props) {
   const images = [
     {
       url:
-        'https://images.unsplash.com/photo-1534081333815-ae5019106622?auto=format&fit=crop&w=400&q=80',
-      title: 'Snorkeling',
+        'https://cdn.pixabay.com/photo/2017/04/23/09/03/hamburger-2253349_960_720.jpg',
+      title: 'Hamburguesas',
       width: '40%',
     },
     {
       url:
-        'https://images.unsplash.com/photo-1531299204812-e6d44d9a185c?auto=format&fit=crop&w=400&q=80',
-      title: 'Massage',
-      width: '20%',
+        'https://st4.depositphotos.com/1692343/20098/i/450/depositphotos_200980630-stock-photo-homemade-peruvian-salchipapa-fries-mayo.jpg',
+      title: 'Salchipapas',
+      width: '25%',
     },
     {
       url:
-        'https://images.unsplash.com/photo-1476480862126-209bfaa8edc8?auto=format&fit=crop&w=400&q=80',
-      title: 'Hiking',
-      width: '40%',
+        'https://cdn.pixabay.com/photo/2016/11/21/15/52/appetizer-1846083_960_720.jpg',
+      title: 'Papas a la francesa',
+      width: '35%',
     },
     {
       url:
-        'https://images.unsplash.com/photo-1453747063559-36695c8771bd?auto=format&fit=crop&w=400&q=80',
-      title: 'Tour',
+        'https://cdn.pixabay.com/photo/2020/06/24/22/45/hot-dog-5337929_960_720.jpg',
+      title: 'Perros calientes',
       width: '38%',
     },
     {
       url:
-        'https://images.unsplash.com/photo-1523309996740-d5315f9cc28b?auto=format&fit=crop&w=400&q=80',
-      title: 'Gastronomy',
+        'https://cdn.pixabay.com/photo/2016/03/05/20/02/appetizer-1238615_960_720.jpg',
+      title: 'Sándwich',
       width: '38%',
     },
     {
       url:
-        'https://images.unsplash.com/photo-1534452203293-494d7ddbf7e0?auto=format&fit=crop&w=400&q=80',
-      title: 'Shopping',
+        'https://cdn.pixabay.com/photo/2017/06/29/20/09/mexican-2456038_960_720.jpg',
+      title: 'Burritos',
       width: '24%',
     },
     {
       url:
-        'https://images.unsplash.com/photo-1506941433945-99a2aa4bd50a?auto=format&fit=crop&w=400&q=80',
-      title: 'Walking',
+        'https://cdn.pixabay.com/photo/2020/09/13/15/41/steak-5568608_960_720.jpg',
+      title: 'A la parrilla',
       width: '40%',
     },
     {
       url:
-        'https://images.unsplash.com/photo-1533727937480-da3a97967e95?auto=format&fit=crop&w=400&q=80',
-      title: 'Fitness',
+        'https://cdn.pixabay.com/photo/2016/03/23/15/00/ice-cream-cone-1274894_960_720.jpg',
+      title: 'Postres',
       width: '20%',
     },
     {
       url:
-        'https://images.unsplash.com/photo-1518136247453-74e7b5265980?auto=format&fit=crop&w=400&q=80',
-      title: 'Reading',
+        'https://cdn.pixabay.com/photo/2016/08/23/08/53/tacos-1613795_960_720.jpg',
+      title: 'Tacos',
       width: '40%',
     },
   ];
