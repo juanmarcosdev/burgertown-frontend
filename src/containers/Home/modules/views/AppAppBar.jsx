@@ -9,7 +9,7 @@ import logo from '../../../../assets/static/burgertown_logo.png';
 
 const styles = (theme) => ({
   title: {
-    fontSize: 36,
+    fontSize: 30,
     fontFamily: '\'Sansita Swashed\', cursive;',
   },
   placeholder: toolbarStyles(theme).root,
