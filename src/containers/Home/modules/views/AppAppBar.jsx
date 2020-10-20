@@ -60,18 +60,9 @@ function AppAppBar(props) {
               variant='h6'
               underline='none'
               className={classes.rightLink}
-              href='/loginadmin'
+              href='/loginchooser'
             >
-              Iniciar Sesión como Admin
-            </Link>
-            <Link
-              color='inherit'
-              variant='h6'
-              underline='none'
-              className={classes.rightLink}
-              href='/logincliente'
-            >
-              Iniciar Sesión como Cliente
+              Iniciar Sesión
             </Link>
             <Link
               variant='h6'
