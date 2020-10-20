@@ -101,8 +101,8 @@ function ProductCategories(props) {
     },
     {
       url:
-        'https://cdn.pixabay.com/photo/2016/11/21/15/52/appetizer-1846083_960_720.jpg',
-      title: 'Papas a la francesa',
+        'https://cdn.pixabay.com/photo/2017/12/09/08/18/pizza-3007395_960_720.jpg',
+      title: 'Pizzas',
       width: '35%',
     },
     {
