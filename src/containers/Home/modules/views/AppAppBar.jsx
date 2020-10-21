@@ -47,7 +47,7 @@ function AppAppBar(props) {
             <img src={logo} alt='logo' width='60' height='60'/>
           </div>
           <Link
-            variant='h5'
+            variant='h6'
             underline='none'
             color='inherit'
             className={classes.title}
