@@ -5,6 +5,7 @@ import LoginAdmin from '../containers/LoginAdmin';
 import LoginClient from '../containers/LoginClient';
 import LoginChooser from '../containers/LoginChooser';
 import RegistroCliente from '../containers/RegistroCliente/RegistroCliente';
+import Fecha from '../containers/RegistroCliente/components/Fecha';
 
 const App = () => (
   <BrowserRouter>
@@ -14,6 +15,7 @@ const App = () => (
       <Route exact path='/logincliente' component={LoginClient} />
       <Route exact path='/loginchooser' component={LoginChooser} />
       <Route exact path='/registrocliente' component={RegistroCliente} />
+      <Route exact path='/fecha' component={Fecha} />
     </Switch>
   </BrowserRouter>
 );

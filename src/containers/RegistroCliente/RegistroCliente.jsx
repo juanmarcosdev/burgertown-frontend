@@ -9,6 +9,7 @@ import LockOutlinedIcon from '@material-ui/icons/LockOutlined';
 import Typography from '@material-ui/core/Typography';
 import { makeStyles } from '@material-ui/core/styles';
 import Container from '@material-ui/core/Container';
+import Fecha from './components/Fecha';
 
 const useStyles = makeStyles((theme) => ({
   paper: {
@@ -113,6 +114,9 @@ export default function RegistroCliente() {
                 autoComplete="current-password"
               />
             </Grid>
+            <Grid container justify="space-around">
+              <Fecha />
+            </Grid>
           </Grid>
           <Button
             type="submit"
@@ -123,14 +127,16 @@ export default function RegistroCliente() {
           >
             Registrarse
           </Button>
-          <Grid container justify="flex-end">
-            <Grid item>
-              <Link href="/loginchooser" variant="body2">
-                Ya tienes una cuenta? Inicia Sesión
-              </Link>
-            </Grid>
-          </Grid>
         </form>
+        <Button
+            type='button'
+            fullWidth
+            variant='contained'
+            color='main'
+            href='/'
+          >
+            Volver a la Página Principal
+          </Button>
       </div>
     </Container>
   );
