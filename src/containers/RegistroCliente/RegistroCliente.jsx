@@ -1,3 +1,4 @@
+import 'date-fns';
 import React from 'react';
 import Avatar from '@material-ui/core/Avatar';
 import Button from '@material-ui/core/Button';
@@ -9,7 +10,11 @@ import LockOutlinedIcon from '@material-ui/icons/LockOutlined';
 import Typography from '@material-ui/core/Typography';
 import { makeStyles } from '@material-ui/core/styles';
 import Container from '@material-ui/core/Container';
-import Fecha from './components/Fecha';
+import DateFnsUtils from '@date-io/date-fns';
+import {
+  MuiPickersUtilsProvider,
+  KeyboardDatePicker,
+} from '@material-ui/pickers';
 
 const useStyles = makeStyles((theme) => ({
   paper: {
@@ -33,6 +38,12 @@ const useStyles = makeStyles((theme) => ({
 
 export default function RegistroCliente() {
   const classes = useStyles();
+
+  const [selectedDate, setSelectedDate] = React.useState(new Date());
+
+  const handleDateChange = (date) => {
+    setSelectedDate(date);
+  };
 
   return (
     <Container component="main" maxWidth="xs">
@@ -115,7 +126,19 @@ export default function RegistroCliente() {
               />
             </Grid>
             <Grid container justify="space-around">
-              <Fecha />
+            <MuiPickersUtilsProvider utils={DateFnsUtils}>
+        <KeyboardDatePicker
+          margin="normal"
+          id="fechanacimiento"
+          label="Fecha de nacimiento"
+          format="dd/MM/yyyy"
+          value={selectedDate}
+          onChange={handleDateChange}
+          KeyboardButtonProps={{
+            'aria-label': 'change date',
+          }}
+        />
+    </MuiPickersUtilsProvider>
             </Grid>
           </Grid>
           <Button
