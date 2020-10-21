@@ -117,6 +117,7 @@ function ProductHowItWorks(props) {
           size="large"
           variant="contained"
           className={classes.button}
+          href='/registrocliente'
         >
           Registrarme
         </Button>
