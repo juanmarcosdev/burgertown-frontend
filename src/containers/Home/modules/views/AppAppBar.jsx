@@ -9,8 +9,7 @@ import logo from '../../../../assets/static/burgertown_logo.png';
 
 const styles = (theme) => ({
   title: {
-    fontSize: 27,
-    fontFamily: '\'Sansita Swashed\', cursive;',
+    fontSize: 24,
   },
   placeholder: toolbarStyles(theme).root,
   toolbar: {
@@ -48,6 +47,7 @@ function AppAppBar(props) {
             <img src={logo} alt='logo' width='60' height='60'/>
           </div>
           <Link
+            variant='h6'
             underline='none'
             color='inherit'
             className={classes.title}
