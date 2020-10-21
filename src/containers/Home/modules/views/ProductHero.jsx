@@ -47,6 +47,7 @@ function ProductHero(props) {
         variant="contained"
         size="large"
         className={classes.button}
+        href='/menu'
       >
         Ir al Menú
       </Button>
