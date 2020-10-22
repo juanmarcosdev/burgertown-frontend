@@ -3,18 +3,14 @@ import clsx from 'clsx';
 import { makeStyles } from '@material-ui/core/styles';
 import CssBaseline from '@material-ui/core/CssBaseline';
 import Drawer from '@material-ui/core/Drawer';
-import Box from '@material-ui/core/Box';
 import AppBar from '@material-ui/core/AppBar';
 import Toolbar from '@material-ui/core/Toolbar';
 import List from '@material-ui/core/List';
 import Typography from '@material-ui/core/Typography';
 import Divider from '@material-ui/core/Divider';
 import IconButton from '@material-ui/core/IconButton';
-import Badge from '@material-ui/core/Badge';
 import Container from '@material-ui/core/Container';
 import Grid from '@material-ui/core/Grid';
-import Paper from '@material-ui/core/Paper';
-import Link from '@material-ui/core/Link';
 import Button from '@material-ui/core/Button';
 import MenuIcon from '@material-ui/icons/Menu';
 import ChevronLeftIcon from '@material-ui/icons/ChevronLeft';
@@ -22,6 +18,9 @@ import { mainListItems, secondaryListItems } from './components/listItems';
 import Swal from 'sweetalert2';
 import { connect } from 'react-redux';
 import { getTrabajadores, resetTrabajadores } from '../../actions';
+import DeleteIcon from '@material-ui/icons/Delete';
+import SaveIcon from '@material-ui/icons/Save';
+import CloudUploadIcon from '@material-ui/icons/CloudUpload';
 
 
 
@@ -120,12 +119,13 @@ const DashboardAdmin = (props) => {
 
   const Swal = require('sweetalert2');
 
-  const handleGetTrabajadores = () => {
-    props.resetTrabajadores()
+  React.useEffect(() => {
     fetch('https://burgertown-backend.herokuapp.com/Trabajador/Get')
       .then(res => res.json())
       .then(data => props.getTrabajadores(data))
-  }
+  }, []);
+
+
 
 
 
@@ -173,18 +173,13 @@ const DashboardAdmin = (props) => {
           <div id='trabajadores'>
           <h2>Trabajadores</h2>
           <div style={{display: 'flex', flexDirection: 'row', justifyContent: 'center'}}>
-            <Button style={{margin: '5px'}} onClick={() => handleGetTrabajadores()} variant="contained" color="primary">
-              CONSULTAR TRABAJADORES
-            </Button>
-            <Button style={{margin: '5px'}} variant="contained" color="secondary">
+            <Button style={{margin: '5px'}} variant="contained" color="secondary" startIcon={<CloudUploadIcon />}>
               CREAR TRABAJADOR
             </Button>
           </div>
-          <div style={{display: 'flex', justifyContent: 'center'}}>
-          </div>
           <table>
             <thead>
-              <tr style={{display: 'flex', flexDirection: 'row', justifyContent: 'space-between', fontSize: 20}}>
+              <tr style={{display: 'flex', flexDirection: 'row', justifyContent: 'flex-start', fontSize: 17}}>
                 <td style={{margin: '10px'}}>ID</td>
                 <td style={{margin: '10px'}}>Documento</td>
                 <td style={{margin: '10px'}}>Nombre</td>
@@ -199,33 +194,53 @@ const DashboardAdmin = (props) => {
             <tbody>
               {
                 dataTrabajadores.length > 0 ? dataTrabajadores[0].data.map((item) => 
-                <tr style={{display: 'flex', flexDirection: 'row', justifyContent: 'space-around', fontSize: 14}} key={item.trabajador_id}>
+                <tr style={{display: 'flex', flexDirection: 'row', justifyContent: 'space-between', fontSize: 17}} key={item.trabajador_id}>
                   {
-                    <td style={{margin: '12px'}} key={item.trabajador_id}>{item.trabajador_id}</td>
+                    <td style={{margin: '14px'}} key={item.trabajador_id}>{item.trabajador_id}</td>
                   }
                   {
-                    <td style={{margin: '12px'}} key={item.trabajador_id}>{item.trabajador_documento}</td>
+                    <td style={{margin: '14px'}} key={item.trabajador_id}>{item.trabajador_documento}</td>
                   }
                   {
-                    <td style={{margin: '12px'}} key={item.trabajador_id}>{item.trabajador_nombre}</td>
+                    <td style={{margin: '14px'}} key={item.trabajador_id}>{item.trabajador_nombre}</td>
                   }
                   {
-                    <td style={{margin: '12px'}} key={item.trabajador_id}>{item.trabajador_apellido}</td>
+                    <td style={{margin: '14px'}} key={item.trabajador_id}>{item.trabajador_apellido}</td>
                   }
                   {
-                    <td style={{margin: '12px'}} key={item.trabajador_id}>{item.trabajador_celular}</td>
+                    <td style={{margin: '14px'}} key={item.trabajador_id}>{item.trabajador_celular}</td>
                   }
                   {
-                    <td style={{margin: '12px'}} key={item.trabajador_id}>{item.trabajador_contratacion}</td>
+                    <td style={{margin: '14px'}} key={item.trabajador_id}>{item.trabajador_contratacion}</td>
                   }
                   {
-                    <td style={{margin: '12px'}} key={item.trabajador_id}>{item.trabajador_cargo}</td>
+                    <td style={{margin: '14px'}} key={item.trabajador_id}>{item.trabajador_cargo}</td>
                   }
                   {
-                    <td style={{margin: '12px'}} key={item.trabajador_id}>{item.trabajador_direccion}</td>
+                    <td style={{margin: '14px'}} key={item.trabajador_id}>{item.trabajador_direccion}</td>
                   }
                   {
-                    <td style={{margin: '12px'}} key={item.trabajador_id}>{item.trabajador_estado === 1 ? `Activo` : `Inactivo`}</td>
+                    <td style={{margin: '14px'}} key={item.trabajador_id}>{item.trabajador_estado === 1 ? `Activo` : `Inactivo`}</td>
+                  }
+                  {
+                    <Button
+                    variant="contained"
+                    color="secondary"
+                    startIcon={<DeleteIcon />}
+                    style={{margin: '7px 14px 7px 14px'}}
+                  >
+                    Desactivar
+                  </Button>
+                  }
+                  {
+                    <Button
+                    variant="contained"
+                    color="secondary"
+                    startIcon={<SaveIcon />}
+                    style={{margin: '7px 14px 7px 14px'}}
+                  >
+                    Modificar
+                  </Button>
                   }
                   </tr>
                 ) 
