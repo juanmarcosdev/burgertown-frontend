@@ -15,9 +15,13 @@ import Container from '@material-ui/core/Container';
 import Grid from '@material-ui/core/Grid';
 import Paper from '@material-ui/core/Paper';
 import Link from '@material-ui/core/Link';
+import Button from '@material-ui/core/Button';
 import MenuIcon from '@material-ui/icons/Menu';
 import ChevronLeftIcon from '@material-ui/icons/ChevronLeft';
 import { mainListItems, secondaryListItems } from './components/listItems';
+import Swal from 'sweetalert2';
+import { connect } from 'react-redux';
+import { getTrabajadores, resetTrabajadores } from '../../actions';
 
 
 
@@ -102,7 +106,8 @@ const useStyles = makeStyles((theme) => ({
   },
 }));
 
-export default function DashboardAdmin() {
+const DashboardAdmin = (props) => {
+  const { dataTrabajadores } = props;
   const classes = useStyles();
   const [open, setOpen] = React.useState(true);
   const handleDrawerOpen = () => {
@@ -112,6 +117,17 @@ export default function DashboardAdmin() {
     setOpen(false);
   };
   const fixedHeightPaper = clsx(classes.paper, classes.fixedHeight);
+
+  const Swal = require('sweetalert2');
+
+  const handleGetTrabajadores = () => {
+    props.resetTrabajadores()
+    fetch('https://burgertown-backend.herokuapp.com/Trabajador/Get')
+      .then(res => res.json())
+      .then(data => props.getTrabajadores(data))
+  }
+
+
 
   return (
     <div className={classes.root}>
@@ -156,6 +172,62 @@ export default function DashboardAdmin() {
           {/* Relleno */}
           <div id='trabajadores'>
           <h2>Trabajadores</h2>
+          <div style={{display: 'flex', flexDirection: 'row', justifyContent: 'center'}}>
+            <Button style={{margin: '5px'}} onClick={() => handleGetTrabajadores()} variant="contained" color="primary">
+              CONSULTAR TRABAJADORES
+            </Button>
+            <Button style={{margin: '5px'}} variant="contained" color="secondary">
+              CREAR TRABAJADOR
+            </Button>
+          </div>
+          <div style={{display: 'flex', justifyContent: 'center'}}>
+          </div>
+          <table>
+            <thead>
+              <tr style={{display: 'flex', flexDirection: 'row', justifyContent: 'space-between', fontSize: 20}}>
+                <td style={{margin: '10px'}}>ID</td>
+                <td style={{margin: '10px'}}>Documento</td>
+                <td style={{margin: '10px'}}>Nombre</td>
+                <td style={{margin: '10px'}}>Apellido</td>
+                <td style={{margin: '10px'}}>Celular</td>
+                <td style={{margin: '10px'}}>Fecha contratacion</td>
+                <td style={{margin: '10px'}}>Cargo</td>
+                <td style={{margin: '10px'}}>Dirección</td>
+                <td style={{margin: '10px'}}>Estado</td>
+            </tr>
+            </thead>
+            <tbody>
+            <tr style={{display: 'flex', flexDirection: 'row', justifyContent: 'space-around', fontSize: 14}}>
+              {
+                dataTrabajadores.length > 0 ? dataTrabajadores[0].data.map((item) => <td style={{margin: '12px'}} key={item.trabajador_id}>{item.trabajador_id}</td>) : <div></div>
+              }
+              {
+                dataTrabajadores.length > 0 ? dataTrabajadores[0].data.map((item) => <td style={{margin: '12px'}} key={item.trabajador_id}>{item.trabajador_documento}</td>) : <div></div>
+              }
+              {
+                dataTrabajadores.length > 0 ? dataTrabajadores[0].data.map((item) => <td style={{margin: '12px'}} key={item.trabajador_id}>{item.trabajador_nombre}</td>) : <div></div>
+              }
+              {
+                dataTrabajadores.length > 0 ? dataTrabajadores[0].data.map((item) => <td style={{margin: '12px'}} key={item.trabajador_id}>{item.trabajador_apellido}</td>) : <div></div>
+              }
+              {
+                dataTrabajadores.length > 0 ? dataTrabajadores[0].data.map((item) => <td style={{margin: '12px'}} key={item.trabajador_id}>{item.trabajador_celular}</td>) : <div></div>
+              }
+              {
+                dataTrabajadores.length > 0 ? dataTrabajadores[0].data.map((item) => <td style={{margin: '12px'}} key={item.trabajador_id}>{item.trabajador_contratacion}</td>) : <div></div>
+              }
+              {
+                dataTrabajadores.length > 0 ? dataTrabajadores[0].data.map((item) => <td style={{margin: '12px'}} key={item.trabajador_id}>{item.trabajador_cargo}</td>) : <div></div>
+              }
+              {
+                dataTrabajadores.length > 0 ? dataTrabajadores[0].data.map((item) => <td style={{margin: '12px'}} key={item.trabajador_id}>{item.trabajador_direccion}</td>) : <div></div>
+              }
+              {
+                dataTrabajadores.length > 0 ? dataTrabajadores[0].data.map((item) => <td style={{margin: '12px'}} key={item.trabajador_id}>{item.trabajador_estado === 1 ? `Activo` : `Inactivo`}</td>) : <div></div>
+              }
+              </tr>
+            </tbody>
+          </table>
           </div>
           </Grid>
         </Container>
@@ -163,3 +235,16 @@ export default function DashboardAdmin() {
     </div>
   );
 }
+
+const mapStateToProps = (state) => {
+  return {
+    dataTrabajadores: state.dataTrabajadores,
+  }
+}
+
+const mapDispatchToProps = {
+  getTrabajadores,
+  resetTrabajadores,
+}
+
+export default connect(mapStateToProps, mapDispatchToProps)(DashboardAdmin);
