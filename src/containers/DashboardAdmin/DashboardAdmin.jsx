@@ -197,35 +197,40 @@ const DashboardAdmin = (props) => {
             </tr>
             </thead>
             <tbody>
-            <tr style={{display: 'flex', flexDirection: 'row', justifyContent: 'space-around', fontSize: 14}}>
               {
-                dataTrabajadores.length > 0 ? dataTrabajadores[0].data.map((item) => <td style={{margin: '12px'}} key={item.trabajador_id}>{item.trabajador_id}</td>) : <div></div>
+                dataTrabajadores.length > 0 ? dataTrabajadores[0].data.map((item) => 
+                <tr style={{display: 'flex', flexDirection: 'row', justifyContent: 'space-around', fontSize: 14}} key={item.trabajador_id}>
+                  {
+                    <td style={{margin: '12px'}} key={item.trabajador_id}>{item.trabajador_id}</td>
+                  }
+                  {
+                    <td style={{margin: '12px'}} key={item.trabajador_id}>{item.trabajador_documento}</td>
+                  }
+                  {
+                    <td style={{margin: '12px'}} key={item.trabajador_id}>{item.trabajador_nombre}</td>
+                  }
+                  {
+                    <td style={{margin: '12px'}} key={item.trabajador_id}>{item.trabajador_apellido}</td>
+                  }
+                  {
+                    <td style={{margin: '12px'}} key={item.trabajador_id}>{item.trabajador_celular}</td>
+                  }
+                  {
+                    <td style={{margin: '12px'}} key={item.trabajador_id}>{item.trabajador_contratacion}</td>
+                  }
+                  {
+                    <td style={{margin: '12px'}} key={item.trabajador_id}>{item.trabajador_cargo}</td>
+                  }
+                  {
+                    <td style={{margin: '12px'}} key={item.trabajador_id}>{item.trabajador_direccion}</td>
+                  }
+                  {
+                    <td style={{margin: '12px'}} key={item.trabajador_id}>{item.trabajador_estado === 1 ? `Activo` : `Inactivo`}</td>
+                  }
+                  </tr>
+                ) 
+                : <div></div>
               }
-              {
-                dataTrabajadores.length > 0 ? dataTrabajadores[0].data.map((item) => <td style={{margin: '12px'}} key={item.trabajador_id}>{item.trabajador_documento}</td>) : <div></div>
-              }
-              {
-                dataTrabajadores.length > 0 ? dataTrabajadores[0].data.map((item) => <td style={{margin: '12px'}} key={item.trabajador_id}>{item.trabajador_nombre}</td>) : <div></div>
-              }
-              {
-                dataTrabajadores.length > 0 ? dataTrabajadores[0].data.map((item) => <td style={{margin: '12px'}} key={item.trabajador_id}>{item.trabajador_apellido}</td>) : <div></div>
-              }
-              {
-                dataTrabajadores.length > 0 ? dataTrabajadores[0].data.map((item) => <td style={{margin: '12px'}} key={item.trabajador_id}>{item.trabajador_celular}</td>) : <div></div>
-              }
-              {
-                dataTrabajadores.length > 0 ? dataTrabajadores[0].data.map((item) => <td style={{margin: '12px'}} key={item.trabajador_id}>{item.trabajador_contratacion}</td>) : <div></div>
-              }
-              {
-                dataTrabajadores.length > 0 ? dataTrabajadores[0].data.map((item) => <td style={{margin: '12px'}} key={item.trabajador_id}>{item.trabajador_cargo}</td>) : <div></div>
-              }
-              {
-                dataTrabajadores.length > 0 ? dataTrabajadores[0].data.map((item) => <td style={{margin: '12px'}} key={item.trabajador_id}>{item.trabajador_direccion}</td>) : <div></div>
-              }
-              {
-                dataTrabajadores.length > 0 ? dataTrabajadores[0].data.map((item) => <td style={{margin: '12px'}} key={item.trabajador_id}>{item.trabajador_estado === 1 ? `Activo` : `Inactivo`}</td>) : <div></div>
-              }
-              </tr>
             </tbody>
           </table>
           </div>
