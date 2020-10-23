@@ -266,7 +266,7 @@ const DashboardAdmin = (props) => {
                 dataTrabajadores.length > 0 ? dataTrabajadores.filter((item) => item.trabajador_estado === 1).map((item) => 
                 <tr style={{display: 'flex', flexDirection: 'row', justifyContent: 'space-between', fontSize: 17}}>
                   {
-                    <td style={{margin: '14px'}} key={item.trabajador_id}>{item.trabajador_foto}</td>
+                    <td style={{margin: '14px'}} key={item.trabajador_foto}><img src={item.trabajador_foto} alt={item.trabajador_nombre} width="40" height="40"></img></td>
                   }
                   {
                     <td style={{margin: '14px'}} key={item.trabajador_id}>{item.trabajador_id}</td>
