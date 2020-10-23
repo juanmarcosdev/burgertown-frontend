@@ -17,10 +17,11 @@ import ChevronLeftIcon from '@material-ui/icons/ChevronLeft';
 import { mainListItems, secondaryListItems } from './components/listItems';
 import Swal from 'sweetalert2';
 import { connect } from 'react-redux';
-import { getTrabajadores, resetTrabajadores } from '../../actions';
+import { getTrabajadores, resetTrabajadores, deleteTrabajadores, activateTrabajador } from '../../actions';
 import DeleteIcon from '@material-ui/icons/Delete';
 import SaveIcon from '@material-ui/icons/Save';
 import CloudUploadIcon from '@material-ui/icons/CloudUpload';
+import PersonAddIcon from '@material-ui/icons/PersonAdd';
 
 
 
@@ -122,11 +123,26 @@ const DashboardAdmin = (props) => {
   React.useEffect(() => {
     fetch('https://burgertown-backend.herokuapp.com/Trabajador/Get')
       .then(res => res.json())
-      .then(data => props.getTrabajadores(data))
+      .then(data => {props.getTrabajadores(data.data)})
   }, []);
 
+  const handleUpdateTrabajadores = async (id) => {
+    await fetch(`https://burgertown-backend.herokuapp.com/Trabajador/${id}`, {
+      method: 'PUT',
+      headers: { "Content-Type": "application/json"},
+    })
+    props.deleteTrabajadores(id);
+  }
 
-
+  const handleActivateTrabajador = async (id) => {
+    await fetch(`https://burgertown-backend.herokuapp.com/Trabajador/${id}`, {
+      method: 'PUT',
+      headers: { "Content-Type": "application/json"},
+    })
+    await fetch(`https://burgertown-backend.herokuapp.com/Trabajador/${id}`)
+      .then(res => res.json())
+      .then(data => props.activateTrabajador(data.data))
+  }
 
 
   return (
@@ -176,6 +192,27 @@ const DashboardAdmin = (props) => {
             <Button style={{margin: '5px'}} variant="contained" color="secondary" startIcon={<CloudUploadIcon />}>
               CREAR TRABAJADOR
             </Button>
+            <Button style={{margin: '5px'}} variant="contained" color="secondary" startIcon={<PersonAddIcon />}
+            onClick={() => Swal.fire({
+              title: 'Inserte ID de trabajador a activar',
+              input: 'number',
+              inputAttributes: {
+                autocapitalize: 'off'
+              },
+              showCancelButton: true,
+              confirmButtonText: 'Activar',
+              showLoaderOnConfirm: true,
+              preConfirm: (id) => {
+                handleActivateTrabajador(id)
+              },
+              allowOutsideClick: () => !Swal.isLoading()
+            }).then((result) => {
+              if (result.isConfirmed) {
+                Swal.fire('Trabajador activado', '', 'success')
+              }
+            })}>
+              ACTIVAR TRABAJADOR MEDIANTE ID
+            </Button>
           </div>
           <table>
             <thead>
@@ -188,39 +225,35 @@ const DashboardAdmin = (props) => {
                 <td style={{margin: '10px'}}>Fecha contratacion</td>
                 <td style={{margin: '10px'}}>Cargo</td>
                 <td style={{margin: '10px'}}>Dirección</td>
-                <td style={{margin: '10px'}}>Estado</td>
             </tr>
             </thead>
             <tbody>
               {
-                dataTrabajadores.length > 0 ? dataTrabajadores[0].data.map((item) => 
-                <tr style={{display: 'flex', flexDirection: 'row', justifyContent: 'space-between', fontSize: 17}} key={item.trabajador_id}>
+                dataTrabajadores.length > 0 ? dataTrabajadores.filter((item) => item.trabajador_estado === 1).map((item) => 
+                <tr style={{display: 'flex', flexDirection: 'row', justifyContent: 'space-between', fontSize: 17}}>
                   {
                     <td style={{margin: '14px'}} key={item.trabajador_id}>{item.trabajador_id}</td>
                   }
                   {
-                    <td style={{margin: '14px'}} key={item.trabajador_id}>{item.trabajador_documento}</td>
+                    <td style={{margin: '14px'}} key={item.trabajador_documento}>{item.trabajador_documento}</td>
                   }
                   {
-                    <td style={{margin: '14px'}} key={item.trabajador_id}>{item.trabajador_nombre}</td>
+                    <td style={{margin: '14px'}} key={item.trabajador_nombre}>{item.trabajador_nombre}</td>
                   }
                   {
-                    <td style={{margin: '14px'}} key={item.trabajador_id}>{item.trabajador_apellido}</td>
+                    <td style={{margin: '14px'}} key={item.trabajador_apellido}>{item.trabajador_apellido}</td>
                   }
                   {
-                    <td style={{margin: '14px'}} key={item.trabajador_id}>{item.trabajador_celular}</td>
+                    <td style={{margin: '14px'}} key={item.trabajador_celular}>{item.trabajador_celular}</td>
                   }
                   {
-                    <td style={{margin: '14px'}} key={item.trabajador_id}>{item.trabajador_contratacion}</td>
+                    <td style={{margin: '14px'}} key={item.trabajador_contratacion}>{item.trabajador_contratacion}</td>
                   }
                   {
-                    <td style={{margin: '14px'}} key={item.trabajador_id}>{item.trabajador_cargo}</td>
+                    <td style={{margin: '14px'}} key={item.trabajador_cargo}>{item.trabajador_cargo}</td>
                   }
                   {
-                    <td style={{margin: '14px'}} key={item.trabajador_id}>{item.trabajador_direccion}</td>
-                  }
-                  {
-                    <td style={{margin: '14px'}} key={item.trabajador_id}>{item.trabajador_estado === 1 ? `Activo` : `Inactivo`}</td>
+                    <td style={{margin: '14px'}} key={item.trabajador_direccion}>{item.trabajador_direccion}</td>
                   }
                   {
                     <Button
@@ -228,6 +261,16 @@ const DashboardAdmin = (props) => {
                     color="secondary"
                     startIcon={<DeleteIcon />}
                     style={{margin: '7px 14px 7px 14px'}}
+                    onClick={() => Swal.fire({
+                      title: 'Deseas desactivar el Trabajador?',
+                      showCancelButton: true,
+                      confirmButtonText: `Desactivar`,
+                    }).then((result) => {
+                      if (result.isConfirmed) {
+                        handleUpdateTrabajadores(item.trabajador_id)
+                        Swal.fire('Trabajador desactivado', '', 'success')
+                      }
+                    })}
                   >
                     Desactivar
                   </Button>
@@ -265,6 +308,8 @@ const mapStateToProps = (state) => {
 const mapDispatchToProps = {
   getTrabajadores,
   resetTrabajadores,
+  deleteTrabajadores,
+  activateTrabajador,
 }
 
 export default connect(mapStateToProps, mapDispatchToProps)(DashboardAdmin);
