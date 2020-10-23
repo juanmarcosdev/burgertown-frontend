@@ -189,7 +189,7 @@ const DashboardAdmin = (props) => {
           <div id='trabajadores'>
           <h2>Trabajadores</h2>
           <div style={{display: 'flex', flexDirection: 'row', justifyContent: 'center'}}>
-            <Button style={{margin: '5px'}} variant="contained" color="secondary" startIcon={<CloudUploadIcon />}>
+            <Button style={{margin: '5px'}} variant="contained" color="secondary" startIcon={<CloudUploadIcon />} href='/createworker'>
               CREAR TRABAJADOR
             </Button>
             <Button style={{margin: '5px'}} variant="contained" color="secondary" startIcon={<PersonAddIcon />}
@@ -281,6 +281,7 @@ const DashboardAdmin = (props) => {
                     color="secondary"
                     startIcon={<SaveIcon />}
                     style={{margin: '7px 14px 7px 14px'}}
+                    href={`/modifyworker/${item.trabajador_id}`}
                   >
                     Modificar
                   </Button>

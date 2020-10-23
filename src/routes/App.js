@@ -7,6 +7,8 @@ import LoginChooser from '../containers/LoginChooser';
 import RegistroCliente from '../containers/RegistroCliente/RegistroCliente';
 import Menu from '../containers/Menu/Menu';
 import DashboardAdmin from '../containers/DashboardAdmin/DashboardAdmin';
+import CreateWorker from '../containers/DashboardAdmin/CreateWorker';
+import ModifyWorker from '../containers/DashboardAdmin/ModifyWorker';
 
 const App = () => (
   <BrowserRouter>
@@ -18,6 +20,8 @@ const App = () => (
       <Route exact path='/registrocliente' component={RegistroCliente} />
       <Route exact path='/menu' component={Menu} />
       <Route exact path='/dashboardadmin' component={DashboardAdmin} />
+      <Route exact path='/createworker' component={CreateWorker} />
+      <Route path='/modifyworker/:workerId' component={ModifyWorker} />
     </Switch>
   </BrowserRouter>
 );
