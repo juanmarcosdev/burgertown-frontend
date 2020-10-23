@@ -40,6 +40,7 @@ export default function CreateWorker() {
   const [address, setAddress] = React.useState('');
   const [position, setPosition] = React.useState('');
   const [password, setPassword] = React.useState('');
+  const [photo, setPhoto] = React.useState('');
 
   const handleSubmit = async (event) => {
     event.preventDefault();
@@ -51,16 +52,13 @@ export default function CreateWorker() {
       trabajador_cargo: position,
       trabajador_direccion: address,
       trabajador_password: password,
-      trabajador_foto: 'delete.jpg',
+      trabajador_foto: photo,
     }
     const response = await fetch(`https://burgertown-backend.herokuapp.com/Trabajador/Create`, {
       method: "POST",
       headers: { "Content-Type": "application/json"},
       body: JSON.stringify(newWorker)
     })
-    console.log(response.status)
-    console.log(response.statusText)
-    console.log(newWorker)
   }
 
   return (
@@ -73,7 +71,7 @@ export default function CreateWorker() {
         <Typography component="h1" variant="h5">
           Crear Trabajador
         </Typography>
-        <form className={classes.form} noValidate onSubmit={handleSubmit}>
+        <form className={classes.form} onSubmit={handleSubmit}>
           <Grid container spacing={2}>
             <Grid item xs={12} sm={6}>
               <TextField
@@ -146,6 +144,18 @@ export default function CreateWorker() {
                 name="cargo"
                 autoComplete="cargo"
                 onChange={(event) => {setPosition(event.target.value)}}
+              />
+            </Grid>
+            <Grid item xs={12}>
+              <TextField
+                variant="outlined"
+                required
+                fullWidth
+                id="foto"
+                label="URL Foto"
+                name="foto"
+                autoComplete="foto"
+                onChange={(event) => {setPhoto(event.target.value)}}
               />
             </Grid>
             <Grid item xs={12}>

@@ -35,9 +35,36 @@ const ModifyWorker = ({ match }) => {
   const classes = useStyles();
   const workerId = match.params.workerId
 
-  const handleSubmit = (event) => {
-      event.preventDefault();
-      
+  const [name, setName] = React.useState('');
+  const [surname, setSurname] = React.useState('');
+  const [phone, setPhone] = React.useState('');
+  const [document, setDocument] = React.useState('');
+  const [address, setAddress] = React.useState('');
+  const [position, setPosition] = React.useState('');
+  const [password, setPassword] = React.useState('');
+  const [photo, setPhoto] = React.useState('');
+
+  const handleSubmit = async (event) => {
+    event.preventDefault();
+    const newWorker = {
+      trabajador_documento: (document !== '' ? document : undefined),
+      trabajador_nombre: (name !== '' ? name : undefined),
+      trabajador_apellido: (surname !== '' ? surname : undefined),
+      trabajador_celular: (phone !== '' ? phone : undefined),
+      trabajador_cargo: (position !== '' ? position : undefined),
+      trabajador_direccion: (address !== '' ? address : undefined),
+      trabajador_password: (password != '' ? password : undefined),
+      trabajador_foto: (photo !== '' ? photo : undefined),
+    }
+    console.log(JSON.stringify(newWorker))
+    const targetUrl = `https://burgertown-backend.herokuapp.com/Trabajador/Edit/${workerId}`
+    const response = await fetch(targetUrl, {
+      method: "PUT",
+      headers: { "Content-Type": "application/json"},
+      body: JSON.stringify(newWorker)
+    })
+    console.log(response.status)
+    console.log(response.statusText)
   }
 
   return (
@@ -52,7 +79,7 @@ const ModifyWorker = ({ match }) => {
         </Typography>
         <form className={classes.form} noValidate onSubmit={handleSubmit}>
           <Grid container spacing={2}>
-            <Grid item xs={12} sm={6}>
+          <Grid item xs={12} sm={6}>
               <TextField
                 autoComplete="nombre"
                 name="nombre"
@@ -61,6 +88,7 @@ const ModifyWorker = ({ match }) => {
                 fullWidth
                 id="nombre"
                 label="Nombre"
+                onChange={(event) => {setName(event.target.value)}}
                 autoFocus
               />
             </Grid>
@@ -73,6 +101,7 @@ const ModifyWorker = ({ match }) => {
                 label="Apellido"
                 name="apellido"
                 autoComplete="apellido"
+                onChange={(event) => {setSurname(event.target.value)}}
               />
             </Grid>
             <Grid item xs={12}>
@@ -84,6 +113,7 @@ const ModifyWorker = ({ match }) => {
                 label="Celular"
                 name="celular"
                 autoComplete="celular"
+                onChange={(event) => {setPhone(event.target.value)}}
               />
             </Grid>
             <Grid item xs={12}>
@@ -95,6 +125,7 @@ const ModifyWorker = ({ match }) => {
                 label="Documento"
                 name="documento"
                 autoComplete="documento"
+                onChange={(event) => {setDocument(event.target.value)}}
               />
             </Grid>
             <Grid item xs={12}>
@@ -106,6 +137,7 @@ const ModifyWorker = ({ match }) => {
                 label="Dirección"
                 name="direccion"
                 autoComplete="direccion"
+                onChange={(event) => {setAddress(event.target.value)}}
               />
             </Grid>
             <Grid item xs={12}>
@@ -117,6 +149,19 @@ const ModifyWorker = ({ match }) => {
                 label="Cargo"
                 name="cargo"
                 autoComplete="cargo"
+                onChange={(event) => {setPosition(event.target.value)}}
+              />
+            </Grid>
+            <Grid item xs={12}>
+              <TextField
+                variant="outlined"
+                required
+                fullWidth
+                id="foto"
+                label="URL Foto"
+                name="foto"
+                autoComplete="foto"
+                onChange={(event) => {setPhoto(event.target.value)}}
               />
             </Grid>
             <Grid item xs={12}>
@@ -129,6 +174,7 @@ const ModifyWorker = ({ match }) => {
                 type="password"
                 id="password"
                 autoComplete="current-password"
+                onChange={(event) => {setPassword(event.target.value)}}
               />
             </Grid>
           </Grid>
