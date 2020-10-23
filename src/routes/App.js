@@ -9,6 +9,7 @@ import Menu from '../containers/Menu/Menu';
 import DashboardAdmin from '../containers/DashboardAdmin/DashboardAdmin';
 import CreateWorker from '../containers/DashboardAdmin/CreateWorker';
 import ModifyWorker from '../containers/DashboardAdmin/ModifyWorker';
+import CreateClient from '../containers/DashboardAdmin/CreateClient';
 
 const App = () => (
   <BrowserRouter>
@@ -22,6 +23,7 @@ const App = () => (
       <Route exact path='/dashboardadmin' component={DashboardAdmin} />
       <Route exact path='/createworker' component={CreateWorker} />
       <Route path='/modifyworker/:workerId' component={ModifyWorker} />
+      <Route exact path='/createclient' component={CreateClient} />
     </Switch>
   </BrowserRouter>
 );

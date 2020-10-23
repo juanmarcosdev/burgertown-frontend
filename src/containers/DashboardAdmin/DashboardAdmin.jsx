@@ -17,11 +17,17 @@ import ChevronLeftIcon from '@material-ui/icons/ChevronLeft';
 import { mainListItems, secondaryListItems } from './components/listItems';
 import Swal from 'sweetalert2';
 import { connect } from 'react-redux';
-import { getTrabajadores, resetTrabajadores, deleteTrabajadores, activateTrabajador } from '../../actions';
+import { getTrabajadores, deleteTrabajadores, activateTrabajador, getClientes, deleteClientes, activateCliente } from '../../actions';
 import DeleteIcon from '@material-ui/icons/Delete';
 import SaveIcon from '@material-ui/icons/Save';
 import CloudUploadIcon from '@material-ui/icons/CloudUpload';
 import PersonAddIcon from '@material-ui/icons/PersonAdd';
+import WorkIcon from '@material-ui/icons/Work';
+import AccountCircleIcon from '@material-ui/icons/AccountCircle';
+import BusinessIcon from '@material-ui/icons/Business';
+import CategoryIcon from '@material-ui/icons/Category';
+import FastfoodIcon from '@material-ui/icons/Fastfood';
+import AssignmentIcon from '@material-ui/icons/Assignment';
 
 
 
@@ -107,7 +113,7 @@ const useStyles = makeStyles((theme) => ({
 }));
 
 const DashboardAdmin = (props) => {
-  const { dataTrabajadores } = props;
+  const { dataTrabajadores, dataClientes } = props;
   const classes = useStyles();
   const [open, setOpen] = React.useState(true);
   const handleDrawerOpen = () => {
@@ -126,6 +132,12 @@ const DashboardAdmin = (props) => {
       .then(data => {props.getTrabajadores(data.data)})
   }, []);
 
+  React.useEffect(() => {
+    fetch('https://burgertown-backend.herokuapp.com/Cliente/Get')
+      .then(res => res.json())
+      .then(data => {props.getClientes(data.data)})
+  }, []);
+
   const handleUpdateTrabajadores = async (id) => {
     await fetch(`https://burgertown-backend.herokuapp.com/Trabajador/${id}`, {
       method: 'PUT',
@@ -142,6 +154,26 @@ const DashboardAdmin = (props) => {
     await fetch(`https://burgertown-backend.herokuapp.com/Trabajador/${id}`)
       .then(res => res.json())
       .then(data => props.activateTrabajador(data.data))
+  }
+
+  // Clientes
+
+  const handleUpdateClientes = async (id) => {
+    await fetch(`https://burgertown-backend.herokuapp.com/Cliente/${id}`, {
+      method: 'PUT',
+      headers: { "Content-Type": "application/json"},
+    })
+    props.deleteClientes(id);
+  }
+
+  const handleActivateCliente = async (id) => {
+    await fetch(`https://burgertown-backend.herokuapp.com/Cliente/${id}`, {
+      method: 'PUT',
+      headers: { "Content-Type": "application/json"},
+    })
+    await fetch(`https://burgertown-backend.herokuapp.com/Cliente/${id}`)
+      .then(res => res.json())
+      .then(data => props.activateCliente(data.data))
   }
 
 
@@ -185,9 +217,10 @@ const DashboardAdmin = (props) => {
         <div className={classes.appBarSpacer} />
         <Container maxWidth="lg" className={classes.container}>
           <Grid container spacing={3}>
-          {/* Relleno */}
           <div id='trabajadores'>
-          <h2>Trabajadores</h2>
+            <div style={{display: 'flex', flexDirection: 'row'}}>
+            <WorkIcon style={{marginTop: '20px', marginRight: '5px'}}/><h2>Trabajadores</h2>
+            </div>
           <div style={{display: 'flex', flexDirection: 'row', justifyContent: 'center'}}>
             <Button style={{margin: '5px'}} variant="contained" color="secondary" startIcon={<CloudUploadIcon />} href='/createworker'>
               CREAR TRABAJADOR
@@ -217,6 +250,7 @@ const DashboardAdmin = (props) => {
           <table>
             <thead>
               <tr style={{display: 'flex', flexDirection: 'row', justifyContent: 'flex-start', fontSize: 17}}>
+                <td style={{margin: '10px'}}>Foto</td>
                 <td style={{margin: '10px'}}>ID</td>
                 <td style={{margin: '10px'}}>Documento</td>
                 <td style={{margin: '10px'}}>Nombre</td>
@@ -231,6 +265,9 @@ const DashboardAdmin = (props) => {
               {
                 dataTrabajadores.length > 0 ? dataTrabajadores.filter((item) => item.trabajador_estado === 1).map((item) => 
                 <tr style={{display: 'flex', flexDirection: 'row', justifyContent: 'space-between', fontSize: 17}}>
+                  {
+                    <td style={{margin: '14px'}} key={item.trabajador_id}>{item.trabajador_foto}</td>
+                  }
                   {
                     <td style={{margin: '14px'}} key={item.trabajador_id}>{item.trabajador_id}</td>
                   }
@@ -293,6 +330,111 @@ const DashboardAdmin = (props) => {
             </tbody>
           </table>
           </div>
+          <div id='clientes'>
+            <div style={{display: 'flex', flexDirection: 'row'}}>
+            <AccountCircleIcon style={{marginTop: '20px', marginRight: '5px'}}/><h2>Clientes</h2>
+            </div>
+          <div style={{display: 'flex', flexDirection: 'row', justifyContent: 'center'}}>
+            <Button style={{margin: '5px'}} variant="contained" color="secondary" startIcon={<CloudUploadIcon />} href='/createclient'>
+              CREAR CLIENTE
+            </Button>
+            <Button style={{margin: '5px'}} variant="contained" color="secondary" startIcon={<PersonAddIcon />}
+            onClick={() => Swal.fire({
+              title: 'Inserte ID de cliente a activar',
+              input: 'number',
+              inputAttributes: {
+                autocapitalize: 'off'
+              },
+              showCancelButton: true,
+              confirmButtonText: 'Activar',
+              showLoaderOnConfirm: true,
+              preConfirm: (id) => {
+                handleActivateCliente(id)
+              },
+              allowOutsideClick: () => !Swal.isLoading()
+            }).then((result) => {
+              if (result.isConfirmed) {
+                Swal.fire('Cliente activado', '', 'success')
+              }
+            })}>
+              ACTIVAR CLIENTE MEDIANTE ID
+            </Button>
+          </div>
+          <table>
+            <thead>
+              <tr style={{display: 'flex', flexDirection: 'row', justifyContent: 'flex-start', fontSize: 17}}>
+                <td style={{margin: '18px'}}>ID</td>
+                <td style={{margin: '18px'}}>Documento</td>
+                <td style={{margin: '18px'}}>Nombre</td>
+                <td style={{margin: '18px'}}>Apellido</td>
+                <td style={{margin: '18px'}}>Celular</td>
+                <td style={{margin: '18px'}}>Fecha nacimiento</td>
+                <td style={{margin: '18px'}}>Dirección</td>
+            </tr>
+            </thead>
+            <tbody>
+              {
+                dataClientes.length > 0 ? dataClientes.filter((item) => item.cliente_estado === 1).map((item) => 
+                <tr style={{display: 'flex', flexDirection: 'row', justifyContent: 'space-between', fontSize: 17}}>
+                  {
+                    <td style={{margin: '14px'}} key={item.cliente_id}>{item.cliente_id}</td>
+                  }
+                  {
+                    <td style={{margin: '14px'}} key={item.cliente_documento}>{item.cliente_documento}</td>
+                  }
+                  {
+                    <td style={{margin: '14px'}} key={item.cliente_nombre}>{item.cliente_nombre}</td>
+                  }
+                  {
+                    <td style={{margin: '14px'}} key={item.cliente_apellido}>{item.cliente_apellido}</td>
+                  }
+                  {
+                    <td style={{margin: '14px'}} key={item.cliente_celular}>{item.cliente_celular}</td>
+                  }
+                  {
+                    <td style={{margin: '14px'}} key={item.cliente_fecha_nacimiento}>{item.cliente_fecha_nacimiento}</td>
+                  }
+                  {
+                    <td style={{margin: '14px'}} key={item.cliente_direccion}>{item.cliente_direccion}</td>
+                  }
+                  {
+                    <Button
+                    variant="contained"
+                    color="secondary"
+                    startIcon={<DeleteIcon />}
+                    style={{margin: '7px 14px 7px 14px'}}
+                    onClick={() => Swal.fire({
+                      title: 'Deseas desactivar el Cliente?',
+                      showCancelButton: true,
+                      confirmButtonText: `Desactivar`,
+                    }).then((result) => {
+                      if (result.isConfirmed) {
+                        handleUpdateClientes(item.cliente_id)
+                        Swal.fire('Cliente desactivado', '', 'success')
+                      }
+                    })}
+                  >
+                    Desactivar
+                  </Button>
+                  }
+                  {
+                    <Button
+                    variant="contained"
+                    color="secondary"
+                    startIcon={<SaveIcon />}
+                    style={{margin: '7px 14px 7px 14px'}}
+                    href={`/modifyclient/${item.client_id}`}
+                  >
+                    Modificar
+                  </Button>
+                  }
+                  </tr>
+                ) 
+                : <div></div>
+              }
+            </tbody>
+          </table>
+          </div>
           </Grid>
         </Container>
       </main>
@@ -303,14 +445,17 @@ const DashboardAdmin = (props) => {
 const mapStateToProps = (state) => {
   return {
     dataTrabajadores: state.dataTrabajadores,
+    dataClientes: state.dataClientes,
   }
 }
 
 const mapDispatchToProps = {
   getTrabajadores,
-  resetTrabajadores,
   deleteTrabajadores,
   activateTrabajador,
+  getClientes,
+  deleteClientes,
+  activateCliente,
 }
 
 export default connect(mapStateToProps, mapDispatchToProps)(DashboardAdmin);

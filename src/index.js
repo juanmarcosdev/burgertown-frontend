@@ -6,7 +6,8 @@ import reducer from './reducers';
 import App from './routes/App';
 
 const initialState = {
-  'dataTrabajadores': []
+  'dataTrabajadores': [],
+  'dataClientes': []
 }
 
 const store = createStore(reducer, initialState);

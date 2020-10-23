@@ -18,7 +18,7 @@ export const mainListItems = (
       </ListItemIcon>
       <ListItemText primary="Trabajadores" />
     </ListItem>
-    <ListItem button component="a" href="#">
+    <ListItem button component="a" href="#clientes">
       <ListItemIcon>
         <AccountCircleIcon />
       </ListItemIcon>

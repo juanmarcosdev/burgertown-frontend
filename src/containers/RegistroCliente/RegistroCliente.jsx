@@ -55,7 +55,7 @@ export default function RegistroCliente() {
         <Typography component="h1" variant="h5">
           Registrarse como Cliente
         </Typography>
-        <form className={classes.form} noValidate>
+        <form className={classes.form}>
           <Grid container spacing={2}>
             <Grid item xs={12} sm={6}>
               <TextField

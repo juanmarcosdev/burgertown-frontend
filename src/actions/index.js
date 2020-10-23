@@ -3,10 +3,6 @@ export const getTrabajadores = (payload) => ({
     payload,
 });
 
-export const resetTrabajadores = () => ({
-    type: 'RESET_TRABAJADORES',
-});
-
 export const deleteTrabajadores = (payload) => ({
     type: 'DELETE_TRABAJADORES',
     payload,
@@ -14,5 +10,22 @@ export const deleteTrabajadores = (payload) => ({
 
 export const activateTrabajador = (payload) => ({
     type: 'ACTIVATE_TRABAJADOR',
+    payload,
+});
+
+// Clientes
+
+export const getClientes = (payload) => ({
+    type: 'GET_CLIENTES',
+    payload,
+});
+
+export const deleteClientes = (payload) => ({
+    type: 'DELETE_CLIENTES',
+    payload,
+});
+
+export const activateCliente = (payload) => ({
+    type: 'ACTIVATE_CLIENTE',
     payload,
 });
