@@ -33,6 +33,36 @@ const useStyles = makeStyles((theme) => ({
 export default function CreateWorker() {
   const classes = useStyles();
 
+  const [name, setName] = React.useState('');
+  const [surname, setSurname] = React.useState('');
+  const [phone, setPhone] = React.useState('');
+  const [document, setDocument] = React.useState('');
+  const [address, setAddress] = React.useState('');
+  const [position, setPosition] = React.useState('');
+  const [password, setPassword] = React.useState('');
+
+  const handleSubmit = async (event) => {
+    event.preventDefault();
+    const newWorker = {
+      trabajador_documento: document,
+      trabajador_nombre: name,
+      trabajador_apellido: surname,
+      trabajador_celular: phone,
+      trabajador_cargo: position,
+      trabajador_direccion: address,
+      trabajador_password: password,
+      trabajador_foto: 'delete.jpg',
+    }
+    const response = await fetch(`https://burgertown-backend.herokuapp.com/Trabajador/Create`, {
+      method: "POST",
+      headers: { "Content-Type": "application/json"},
+      body: JSON.stringify(newWorker)
+    })
+    console.log(response.status)
+    console.log(response.statusText)
+    console.log(newWorker)
+  }
+
   return (
     <Container component="main" maxWidth="xs">
       <CssBaseline />
@@ -43,7 +73,7 @@ export default function CreateWorker() {
         <Typography component="h1" variant="h5">
           Crear Trabajador
         </Typography>
-        <form className={classes.form} noValidate>
+        <form className={classes.form} noValidate onSubmit={handleSubmit}>
           <Grid container spacing={2}>
             <Grid item xs={12} sm={6}>
               <TextField
@@ -54,6 +84,7 @@ export default function CreateWorker() {
                 fullWidth
                 id="nombre"
                 label="Nombre"
+                onChange={(event) => {setName(event.target.value)}}
                 autoFocus
               />
             </Grid>
@@ -66,6 +97,7 @@ export default function CreateWorker() {
                 label="Apellido"
                 name="apellido"
                 autoComplete="apellido"
+                onChange={(event) => {setSurname(event.target.value)}}
               />
             </Grid>
             <Grid item xs={12}>
@@ -77,6 +109,7 @@ export default function CreateWorker() {
                 label="Celular"
                 name="celular"
                 autoComplete="celular"
+                onChange={(event) => {setPhone(event.target.value)}}
               />
             </Grid>
             <Grid item xs={12}>
@@ -88,6 +121,7 @@ export default function CreateWorker() {
                 label="Documento"
                 name="documento"
                 autoComplete="documento"
+                onChange={(event) => {setDocument(event.target.value)}}
               />
             </Grid>
             <Grid item xs={12}>
@@ -99,6 +133,7 @@ export default function CreateWorker() {
                 label="Dirección"
                 name="direccion"
                 autoComplete="direccion"
+                onChange={(event) => {setAddress(event.target.value)}}
               />
             </Grid>
             <Grid item xs={12}>
@@ -110,6 +145,7 @@ export default function CreateWorker() {
                 label="Cargo"
                 name="cargo"
                 autoComplete="cargo"
+                onChange={(event) => {setPosition(event.target.value)}}
               />
             </Grid>
             <Grid item xs={12}>
@@ -122,6 +158,7 @@ export default function CreateWorker() {
                 type="password"
                 id="password"
                 autoComplete="current-password"
+                onChange={(event) => {setPassword(event.target.value)}}
               />
             </Grid>
           </Grid>

@@ -35,6 +35,11 @@ const ModifyWorker = ({ match }) => {
   const classes = useStyles();
   const workerId = match.params.workerId
 
+  const handleSubmit = (event) => {
+      event.preventDefault();
+      
+  }
+
   return (
     <Container component="main" maxWidth="xs">
       <CssBaseline />
@@ -45,7 +50,7 @@ const ModifyWorker = ({ match }) => {
         <Typography component="h1" variant="h5">
           Modificar Trabajador con ID {workerId}
         </Typography>
-        <form className={classes.form} noValidate>
+        <form className={classes.form} noValidate onSubmit={handleSubmit}>
           <Grid container spacing={2}>
             <Grid item xs={12} sm={6}>
               <TextField
