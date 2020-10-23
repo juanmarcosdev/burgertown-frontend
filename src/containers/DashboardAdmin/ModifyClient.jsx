@@ -1,3 +1,4 @@
+import 'date-fns';
 import React from 'react';
 import Avatar from '@material-ui/core/Avatar';
 import Button from '@material-ui/core/Button';
@@ -9,6 +10,12 @@ import LockOutlinedIcon from '@material-ui/icons/LockOutlined';
 import Typography from '@material-ui/core/Typography';
 import { makeStyles } from '@material-ui/core/styles';
 import Container from '@material-ui/core/Container';
+import DateFnsUtils from '@date-io/date-fns';
+import 'dateformat';
+import {
+  MuiPickersUtilsProvider,
+  KeyboardDatePicker,
+} from '@material-ui/pickers';
 import { withRouter } from 'react-router-dom';
 
 const useStyles = makeStyles((theme) => ({
@@ -31,39 +38,50 @@ const useStyles = makeStyles((theme) => ({
   },
 }));
 
-const ModifyWorker = ({ match }) => {
+export default function CreateClient({ match }) {
   const classes = useStyles();
-  const workerId = match.params.workerId
+  const clientId = match.params.clientId;
+  
+
+  const dateFormat = require('dateformat');
 
   const [name, setName] = React.useState('');
   const [surname, setSurname] = React.useState('');
   const [phone, setPhone] = React.useState('');
   const [document, setDocument] = React.useState('');
   const [address, setAddress] = React.useState('');
-  const [position, setPosition] = React.useState('');
   const [password, setPassword] = React.useState('');
-  const [photo, setPhoto] = React.useState('');
+  const [selectedDate, setSelectedDate] = React.useState(new Date());
+
+  const handleDateChange = (date) => {
+    setSelectedDate(date);
+  };
+
+  const birthdayFormat = dateFormat(selectedDate, "dd-mm-yyyy");
+  const now = new Date();
+  const nowFormat = dateFormat(now, "dd-mm-yyyy");
 
   const handleSubmit = async (event) => {
     event.preventDefault();
-    const newWorker = {
-      trabajador_documento: (document !== '' ? document : undefined),
-      trabajador_nombre: (name !== '' ? name : undefined),
-      trabajador_apellido: (surname !== '' ? surname : undefined),
-      trabajador_celular: (phone !== '' ? phone : undefined),
-      trabajador_cargo: (position !== '' ? position : undefined),
-      trabajador_direccion: (address !== '' ? address : undefined),
-      trabajador_password: (password !== '' ? password : undefined),
-      trabajador_foto: (photo !== '' ? photo : undefined),
+    const newClient = {
+      cliente_documento: (document !== '' ? document : undefined),
+      cliente_nombre: (name !== '' ? name : undefined),
+      cliente_apellido: (surname !== '' ? surname : undefined),
+      cliente_celular: (phone !== '' ? phone : undefined),
+      cliente_direccion: (address !== '' ? address : undefined),
+      cliente_password: (password !== '' ? password : undefined),
+      cliente_fecha_nacimiento: (birthdayFormat !== nowFormat ?  birthdayFormat : undefined),
     }
-    console.log(JSON.stringify(newWorker))
-    const targetUrl = `https://burgertown-backend.herokuapp.com/Trabajador/Edit/${workerId}`
-    const response = await fetch(targetUrl, {
+    console.log(JSON.stringify(newClient));
+    const response = await fetch(`https://burgertown-backend.herokuapp.com/Cliente/Edit/${clientId}`, {
       method: "PUT",
-      headers: { "Content-Type": "application/json" },
-      body: JSON.stringify(newWorker)
+      headers: { "Content-Type": "application/json"},
+      body: JSON.stringify(newClient)
     })
+    console.log(response.status)
+    console.log(response.statusText)
   }
+
 
   return (
     <Container component="main" maxWidth="xs">
@@ -73,11 +91,11 @@ const ModifyWorker = ({ match }) => {
           <LockOutlinedIcon />
         </Avatar>
         <Typography component="h1" variant="h5">
-          Modificar Trabajador con ID {workerId}
+        Modificar Cliente con ID {clientId}
         </Typography>
         <form className={classes.form} noValidate onSubmit={handleSubmit}>
           <Grid container spacing={2}>
-          <Grid item xs={12} sm={6}>
+            <Grid item xs={12} sm={6}>
               <TextField
                 autoComplete="nombre"
                 name="nombre"
@@ -143,30 +161,6 @@ const ModifyWorker = ({ match }) => {
                 variant="outlined"
                 required
                 fullWidth
-                id="cargo"
-                label="Cargo"
-                name="cargo"
-                autoComplete="cargo"
-                onChange={(event) => {setPosition(event.target.value)}}
-              />
-            </Grid>
-            <Grid item xs={12}>
-              <TextField
-                variant="outlined"
-                required
-                fullWidth
-                id="foto"
-                label="URL Foto"
-                name="foto"
-                autoComplete="foto"
-                onChange={(event) => {setPhoto(event.target.value)}}
-              />
-            </Grid>
-            <Grid item xs={12}>
-              <TextField
-                variant="outlined"
-                required
-                fullWidth
                 name="password"
                 label="Contraseña"
                 type="password"
@@ -174,6 +168,21 @@ const ModifyWorker = ({ match }) => {
                 autoComplete="current-password"
                 onChange={(event) => {setPassword(event.target.value)}}
               />
+            </Grid>
+            <Grid container justify="space-around">
+            <MuiPickersUtilsProvider utils={DateFnsUtils}>
+        <KeyboardDatePicker
+          margin="normal"
+          id="fechanacimiento"
+          label="Fecha de nacimiento"
+          format="dd/MM/yyyy"
+          value={selectedDate}
+          onChange={handleDateChange}
+          KeyboardButtonProps={{
+            'aria-label': 'change date',
+          }}
+        />
+    </MuiPickersUtilsProvider>
             </Grid>
           </Grid>
           <Button
@@ -183,7 +192,7 @@ const ModifyWorker = ({ match }) => {
             color="primary"
             className={classes.submit}
           >
-            Modificar Trabajador
+            Modificar Cliente
           </Button>
         </form>
         <Button
@@ -199,5 +208,3 @@ const ModifyWorker = ({ match }) => {
     </Container>
   );
 }
-
-export default withRouter(ModifyWorker)

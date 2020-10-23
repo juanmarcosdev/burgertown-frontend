@@ -423,7 +423,7 @@ const DashboardAdmin = (props) => {
                     color="secondary"
                     startIcon={<SaveIcon />}
                     style={{margin: '7px 14px 7px 14px'}}
-                    href={`/modifyclient/${item.client_id}`}
+                    href={`/modifyclient/${item.cliente_id}`}
                   >
                     Modificar
                   </Button>

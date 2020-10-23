@@ -10,6 +10,7 @@ import DashboardAdmin from '../containers/DashboardAdmin/DashboardAdmin';
 import CreateWorker from '../containers/DashboardAdmin/CreateWorker';
 import ModifyWorker from '../containers/DashboardAdmin/ModifyWorker';
 import CreateClient from '../containers/DashboardAdmin/CreateClient';
+import ModifyClient from '../containers/DashboardAdmin/ModifyClient';
 
 const App = () => (
   <BrowserRouter>
@@ -24,6 +25,7 @@ const App = () => (
       <Route exact path='/createworker' component={CreateWorker} />
       <Route path='/modifyworker/:workerId' component={ModifyWorker} />
       <Route exact path='/createclient' component={CreateClient} />
+      <Route path='/modifyclient/:clientId' component={ModifyClient} />
     </Switch>
   </BrowserRouter>
 );
