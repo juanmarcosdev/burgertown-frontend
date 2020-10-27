@@ -450,6 +450,7 @@ const DashboardAdmin = (props) => {
           <table>
             <thead>
               <tr style={{display: 'flex', flexDirection: 'row', justifyContent: 'flex-start', fontSize: 17}}>
+                <td td style={{margin: '18px'}}>Foto</td>
                 <td style={{margin: '18px'}}>ID</td>
                 <td style={{margin: '18px'}}>Documento</td>
                 <td style={{margin: '18px'}}>Nombre</td>
@@ -463,6 +464,9 @@ const DashboardAdmin = (props) => {
               {
                 dataClientes.length > 0 ? dataClientes.filter((item) => item.cliente_estado === 1).map((item) => 
                 <tr style={{display: 'flex', flexDirection: 'row', justifyContent: 'space-between', fontSize: 17}}>
+                  {
+                    <td style={{margin: '14px'}} key={item.cliente_foto}><img src={item.cliente_foto} alt={item.cliente_nombre} width="40" height="40"></img></td>
+                  }
                   {
                     <td style={{margin: '14px'}} key={item.cliente_id}>{item.cliente_id}</td>
                   }

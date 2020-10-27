@@ -51,6 +51,7 @@ const ModifyClient = ({ match }) => {
   const [document, setDocument] = React.useState('');
   const [address, setAddress] = React.useState('');
   const [password, setPassword] = React.useState('');
+  const [photo, setPhoto] = React.useState('');
   const [selectedDate, setSelectedDate] = React.useState(new Date());
 
   const handleDateChange = (date) => {
@@ -72,6 +73,7 @@ const ModifyClient = ({ match }) => {
       cliente_direccion: (address !== '' ? address : undefined),
       cliente_password: (password !== '' ? password : undefined),
       cliente_fecha_nacimiento: (birthdayFormat !== nowFormat ?  birthdayFormat : undefined),
+      cliente_foto: (photo !== '' ? photo : undefined),
     }
     console.log(JSON.stringify(newClient));
     const response = await fetch(`https://burgertown-backend.herokuapp.com/Cliente/Edit/${clientId}`, {
@@ -155,6 +157,18 @@ const ModifyClient = ({ match }) => {
                 name="direccion"
                 autoComplete="direccion"
                 onChange={(event) => {setAddress(event.target.value)}}
+              />
+            </Grid>
+            <Grid item xs={12}>
+              <TextField
+                variant="outlined"
+                required
+                fullWidth
+                id="photo"
+                label="photo"
+                name="photo"
+                autoComplete="photo"
+                onChange={(event) => {setPhoto(event.target.value)}}
               />
             </Grid>
             <Grid item xs={12}>

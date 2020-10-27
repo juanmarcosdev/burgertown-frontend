@@ -49,6 +49,7 @@ export default function CreateClient() {
   const [document, setDocument] = React.useState('');
   const [address, setAddress] = React.useState('');
   const [password, setPassword] = React.useState('');
+  const [photo, setPhoto] = React.useState('');
   const [selectedDate, setSelectedDate] = React.useState(new Date());
 
   const handleDateChange = (date) => {
@@ -67,6 +68,7 @@ export default function CreateClient() {
       cliente_direccion: address,
       cliente_password: password,
       cliente_fecha_nacimiento: birthdayFormat,
+      cliente_foto: photo,
     }
     console.log(newClient);
     const response = await fetch(`https://burgertown-backend.herokuapp.com/Cliente/Create`, {
@@ -148,6 +150,18 @@ export default function CreateClient() {
                 name="direccion"
                 autoComplete="direccion"
                 onChange={(event) => {setAddress(event.target.value)}}
+              />
+            </Grid>
+            <Grid item xs={12}>
+              <TextField
+                variant="outlined"
+                required
+                fullWidth
+                id="photo"
+                label="photo"
+                name="photo"
+                autoComplete="photo"
+                onChange={(event) => {setPhoto(event.target.value)}}
               />
             </Grid>
             <Grid item xs={12}>
