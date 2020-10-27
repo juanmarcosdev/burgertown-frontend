@@ -17,7 +17,7 @@ import ChevronLeftIcon from '@material-ui/icons/ChevronLeft';
 import { mainListItems, secondaryListItems } from './components/listItems';
 import Swal from 'sweetalert2';
 import { connect } from 'react-redux';
-import { getTrabajadores, deleteTrabajadores, activateTrabajador, getClientes, deleteClientes, activateCliente } from '../../actions';
+import { getTrabajadores, deleteTrabajadores, activateTrabajador, getClientes, deleteClientes, activateCliente, getCategorias, deleteCategorias, activateCategoria } from '../../actions';
 import DeleteIcon from '@material-ui/icons/Delete';
 import SaveIcon from '@material-ui/icons/Save';
 import CloudUploadIcon from '@material-ui/icons/CloudUpload';
@@ -113,7 +113,7 @@ const useStyles = makeStyles((theme) => ({
 }));
 
 const DashboardAdmin = (props) => {
-  const { dataTrabajadores, dataClientes } = props;
+  const { dataTrabajadores, dataClientes, dataCategorias } = props;
   const classes = useStyles();
   const [open, setOpen] = React.useState(true);
   const handleDrawerOpen = () => {
@@ -137,6 +137,14 @@ const DashboardAdmin = (props) => {
       .then(res => res.json())
       .then(data => {props.getClientes(data.data)})
   }, []);
+
+  React.useEffect(() => {
+    fetch('https://burgertown-backend.herokuapp.com/Categoria/Get')
+      .then(res => res.json())
+      .then(data => {props.getCategorias(data.data)})
+  }, []);
+
+  // Trabajadores
 
   const handleUpdateTrabajadores = async (id) => {
     await fetch(`https://burgertown-backend.herokuapp.com/Trabajador/${id}`, {
@@ -163,7 +171,8 @@ const DashboardAdmin = (props) => {
       method: 'PUT',
       headers: { "Content-Type": "application/json"},
     })
-    props.deleteClientes(id);
+    console.log("U CLIENTE")
+    props.deleteClientes(id); 
   }
 
   const handleActivateCliente = async (id) => {
@@ -174,6 +183,27 @@ const DashboardAdmin = (props) => {
     await fetch(`https://burgertown-backend.herokuapp.com/Cliente/${id}`)
       .then(res => res.json())
       .then(data => props.activateCliente(data.data))
+  }
+
+  // Categorias
+
+  const handleUpdateCategorias = async (id) => {
+    await fetch(`https://burgertown-backend.herokuapp.com/Categoria/${id}`, {
+      method: 'PUT',
+      headers: { "Content-Type": "application/json"},
+    })
+    console.log("U CATEGORIA")
+    props.deleteCategorias(id)
+  }
+
+  const handleActivateCategoria = async (id) => {
+    await fetch(`https://burgertown-backend.herokuapp.com/Categoria/${id}`, {
+      method: 'PUT',
+      headers: { "Content-Type": "application/json"},
+    })
+    await fetch(`https://burgertown-backend.herokuapp.com/Categoria/${id}`)
+      .then(res => res.json())
+      .then(data => props.activateCategoria(data.data))
   }
 
 
@@ -221,7 +251,7 @@ const DashboardAdmin = (props) => {
             <div style={{display: 'flex', flexDirection: 'row'}}>
             <WorkIcon style={{marginTop: '20px', marginRight: '5px'}}/><h2>Trabajadores</h2>
             </div>
-          <div style={{display: 'flex', flexDirection: 'row', justifyContent: 'center'}}>
+          <div style={{display: 'flex', flexDirection: 'row', justifyContent: 'flex-start'}}>
             <Button style={{margin: '5px'}} variant="contained" color="secondary" startIcon={<CloudUploadIcon />} href='/createworker'>
               CREAR TRABAJADOR
             </Button>
@@ -334,7 +364,7 @@ const DashboardAdmin = (props) => {
             <div style={{display: 'flex', flexDirection: 'row'}}>
             <AccountCircleIcon style={{marginTop: '20px', marginRight: '5px'}}/><h2>Clientes</h2>
             </div>
-          <div style={{display: 'flex', flexDirection: 'row', justifyContent: 'center'}}>
+          <div style={{display: 'flex', flexDirection: 'row', justifyContent: 'flex-start'}}>
             <Button style={{margin: '5px'}} variant="contained" color="secondary" startIcon={<CloudUploadIcon />} href='/createclient'>
               CREAR CLIENTE
             </Button>
@@ -435,6 +465,95 @@ const DashboardAdmin = (props) => {
             </tbody>
           </table>
           </div>
+          <div id='categorias'>
+            <div style={{display: 'flex', flexDirection: 'row'}}>
+            <CategoryIcon style={{marginTop: '20px', marginRight: '5px'}}/><h2>Categorias</h2>
+            </div>
+          <div style={{display: 'flex', flexDirection: 'row', justifyContent: 'flex-start'}}>
+            <Button style={{margin: '5px'}} variant="contained" color="secondary" startIcon={<CloudUploadIcon />} href='/createcategory'>
+              CREAR CATEGORIA
+            </Button>
+            <Button style={{margin: '5px'}} variant="contained" color="secondary" startIcon={<PersonAddIcon />}
+            onClick={() => Swal.fire({
+              title: 'Inserte ID de categoria a activar',
+              input: 'number',
+              inputAttributes: {
+                autocapitalize: 'off'
+              },
+              showCancelButton: true,
+              confirmButtonText: 'Activar',
+              showLoaderOnConfirm: true,
+              preConfirm: (id) => {
+                handleActivateCategoria(id)
+              },
+              allowOutsideClick: () => !Swal.isLoading()
+            }).then((result) => {
+              if (result.isConfirmed) {
+                Swal.fire('Categoria activada', '', 'success')
+              }
+            })}>
+              ACTIVAR CATEGORIA MEDIANTE ID
+            </Button>
+          </div>
+          <table>
+            <thead>
+              <tr style={{display: 'flex', flexDirection: 'row', justifyContent: 'flex-start', fontSize: 17}}>
+                <td style={{margin: '18px'}}>ID</td>
+                <td style={{margin: '18px'}}>Nombre</td>
+                <td style={{margin: '18px'}}>Descripcion</td>
+            </tr>
+            </thead>
+            <tbody>
+              {
+                dataCategorias.length > 0 ? dataCategorias.filter((item) => item.categoria_estado === 1).map((item) => 
+                <tr style={{display: 'flex', flexDirection: 'row', justifyContent: 'space-between', fontSize: 17}}>
+                  {
+                    <td style={{margin: '14px'}} key={item.categoria_id}>{item.categoria_id}</td>
+                  }
+                  {
+                    <td style={{margin: '14px'}} key={item.categoria_nombre}>{item.categoria_nombre}</td>
+                  }
+                  {
+                    <td style={{margin: '14px'}} key={item.categoria_descripcion}>{item.categoria_descripcion}</td>
+                  }
+                  {
+                    <Button
+                    variant="contained"
+                    color="secondary"
+                    startIcon={<DeleteIcon />}
+                    style={{margin: '7px 14px 7px 14px'}}
+                    onClick={() => Swal.fire({
+                      title: 'Deseas desactivar la Categoria?',
+                      showCancelButton: true,
+                      confirmButtonText: `Desactivar`,
+                    }).then((result) => {
+                      if (result.isConfirmed) {
+                        handleUpdateCategorias(item.categoria_id)
+                        Swal.fire('Categoria desactivada', '', 'success')
+                      }
+                    })}
+                  >
+                    Desactivar
+                  </Button>
+                  }
+                  {
+                    <Button
+                    variant="contained"
+                    color="secondary"
+                    startIcon={<SaveIcon />}
+                    style={{margin: '7px 14px 7px 14px'}}
+                    href={`/modifycategory/${item.categoria_id}`}
+                  >
+                    Modificar
+                  </Button>
+                  }
+                  </tr>
+                ) 
+                : <div></div>
+              }
+            </tbody>
+          </table>
+          </div>
           </Grid>
         </Container>
       </main>
@@ -446,6 +565,7 @@ const mapStateToProps = (state) => {
   return {
     dataTrabajadores: state.dataTrabajadores,
     dataClientes: state.dataClientes,
+    dataCategorias: state.dataCategorias,
   }
 }
 
@@ -456,6 +576,9 @@ const mapDispatchToProps = {
   getClientes,
   deleteClientes,
   activateCliente,
+  getCategorias,
+  deleteCategorias,
+  activateCategoria,
 }
 
 export default connect(mapStateToProps, mapDispatchToProps)(DashboardAdmin);

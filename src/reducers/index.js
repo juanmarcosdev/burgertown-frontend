@@ -30,6 +30,21 @@ const reducer = (state, action) => {
                 ...state,
                 dataClientes: [...state.dataClientes, action.payload]
             };
+        case 'GET_CATEGORIAS':
+            return {
+                ...state,
+                dataCategorias: action.payload,
+            };
+        case 'DELETE_CATEGORIAS':
+            return {
+                ...state,
+                dataCategorias: state.dataCategorias.filter((items) => items.categoria_id !== action.payload),
+            };
+        case 'ACTIVATE_CATEGORIA':
+            return {
+                ...state,
+                dataCategorias: [...state.dataCategorias, action.payload]
+            };
         default:
             return state;
     }

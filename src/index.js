@@ -7,7 +7,8 @@ import App from './routes/App';
 
 const initialState = {
   'dataTrabajadores': [],
-  'dataClientes': []
+  'dataClientes': [],
+  'dataCategorias': [],
 }
 
 const store = createStore(reducer, initialState);

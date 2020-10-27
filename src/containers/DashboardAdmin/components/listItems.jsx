@@ -24,19 +24,19 @@ export const mainListItems = (
       </ListItemIcon>
       <ListItemText primary="Clientes" />
     </ListItem>
-    <ListItem button>
+    <ListItem button component="a" href="#sedes">
       <ListItemIcon>
         <BusinessIcon />
       </ListItemIcon>
       <ListItemText primary="Sedes" />
     </ListItem>
-    <ListItem button>
+    <ListItem button component="a" href="#categorias">
       <ListItemIcon>
         <CategoryIcon />
       </ListItemIcon>
       <ListItemText primary="Categorias" />
     </ListItem>
-    <ListItem button>
+    <ListItem button component="a" href="#productos">
       <ListItemIcon>
         <FastfoodIcon />
       </ListItemIcon>

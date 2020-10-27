@@ -29,3 +29,20 @@ export const activateCliente = (payload) => ({
     type: 'ACTIVATE_CLIENTE',
     payload,
 });
+
+// Categorias
+
+export const getCategorias = (payload) => ({
+    type: 'GET_CATEGORIAS',
+    payload,
+});
+
+export const deleteCategorias = (payload) => ({
+    type: 'DELETE_CATEGORIAS',
+    payload,
+});
+
+export const activateCategoria = (payload) => ({
+    type: 'ACTIVATE_CATEGORIA',
+    payload,
+});
