@@ -11,6 +11,8 @@ import CreateWorker from '../containers/DashboardAdmin/CreateWorker';
 import ModifyWorker from '../containers/DashboardAdmin/ModifyWorker';
 import CreateClient from '../containers/DashboardAdmin/CreateClient';
 import ModifyClient from '../containers/DashboardAdmin/ModifyClient';
+import CreateCategory from '../containers/DashboardAdmin/CreateCategory';
+import ModifyCategory from '../containers/DashboardAdmin/ModifyCategory';
 
 const App = () => (
   <BrowserRouter>
@@ -26,6 +28,8 @@ const App = () => (
       <Route path='/modifyworker/:workerId' component={ModifyWorker} />
       <Route exact path='/createclient' component={CreateClient} />
       <Route path='/modifyclient/:clientId' component={ModifyClient} />
+      <Route exact path='/createcategory' component={CreateCategory} />
+      <Route path='/modifycategory/:categoryId' component={ModifyCategory} />
     </Switch>
   </BrowserRouter>
 );
