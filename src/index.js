@@ -9,6 +9,7 @@ const initialState = {
   'dataTrabajadores': [],
   'dataClientes': [],
   'dataCategorias': [],
+  'dataSedes': [],
 }
 
 const store = createStore(reducer, initialState);

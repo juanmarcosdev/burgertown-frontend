@@ -13,10 +13,9 @@ import Container from '@material-ui/core/Container';
 import DateFnsUtils from '@date-io/date-fns';
 import 'dateformat';
 import {
-  MuiPickersUtilsProvider,
-  KeyboardDatePicker,
-} from '@material-ui/pickers';
-import { withRouter } from 'react-router-dom';
+    MuiPickersUtilsProvider,
+    KeyboardTimePicker,
+  } from '@material-ui/pickers';
 
 const useStyles = makeStyles((theme) => ({
   paper: {
@@ -38,46 +37,43 @@ const useStyles = makeStyles((theme) => ({
   },
 }));
 
-export default function CreateClient({ match }) {
+export default function CreateSede() {
   const classes = useStyles();
-  const clientId = match.params.clientId;
   
 
   const dateFormat = require('dateformat');
 
   const [name, setName] = React.useState('');
-  const [surname, setSurname] = React.useState('');
-  const [phone, setPhone] = React.useState('');
-  const [document, setDocument] = React.useState('');
   const [address, setAddress] = React.useState('');
-  const [password, setPassword] = React.useState('');
-  const [selectedDate, setSelectedDate] = React.useState(new Date());
+  const [city, setCity] = React.useState('');
+  const [selectedDate1, setSelectedDate1] = React.useState(new Date());
+  const [selectedDate2, setSelectedDate2] = React.useState(new Date());
 
-  const handleDateChange = (date) => {
-    setSelectedDate(date);
+  const handleDateChange1 = (date) => {
+    setSelectedDate1(date);
   };
 
-  const birthdayFormat = dateFormat(selectedDate, "dd-mm-yyyy");
-  
+  const handleDateChange2 = (date) => {
+    setSelectedDate2(date);
+  };
+
+  const hora1 = dateFormat(selectedDate1, "hh:MM TT");
+  const hora2 = dateFormat(selectedDate2, "hh:MM TT");
 
   const handleSubmit = async (event) => {
-    const now = new Date();
-    const nowFormat = dateFormat(now, "dd-mm-yyyy");
     event.preventDefault();
-    const newClient = {
-      cliente_documento: (document !== '' ? document : undefined),
-      cliente_nombre: (name !== '' ? name : undefined),
-      cliente_apellido: (surname !== '' ? surname : undefined),
-      cliente_celular: (phone !== '' ? phone : undefined),
-      cliente_direccion: (address !== '' ? address : undefined),
-      cliente_password: (password !== '' ? password : undefined),
-      cliente_fecha_nacimiento: (birthdayFormat !== nowFormat ?  birthdayFormat : undefined),
+    const newSede = {
+        sede_nombre: name,
+        sede_direccion: address,
+        sede_ciudad: city,
+        sede_horario_apertura: hora1,
+        sede_horario_cierre: hora2,
     }
-    console.log(JSON.stringify(newClient));
-    const response = await fetch(`https://burgertown-backend.herokuapp.com/Cliente/Edit/${clientId}`, {
-      method: "PUT",
+    console.log(newSede);
+    const response = await fetch(`https://burgertown-backend.herokuapp.com/Sede/Create`, {
+      method: "POST",
       headers: { "Content-Type": "application/json"},
-      body: JSON.stringify(newClient)
+      body: JSON.stringify(newSede)
     })
     console.log(response.status)
     console.log(response.statusText)
@@ -92,11 +88,11 @@ export default function CreateClient({ match }) {
           <LockOutlinedIcon />
         </Avatar>
         <Typography component="h1" variant="h5">
-        Modificar Cliente con ID {clientId}
+          Crear Sede
         </Typography>
-        <form className={classes.form} noValidate onSubmit={handleSubmit}>
+        <form className={classes.form} onSubmit={handleSubmit}>
           <Grid container spacing={2}>
-            <Grid item xs={12} sm={6}>
+            <Grid item xs={12}>
               <TextField
                 autoComplete="nombre"
                 name="nombre"
@@ -107,42 +103,6 @@ export default function CreateClient({ match }) {
                 label="Nombre"
                 onChange={(event) => {setName(event.target.value)}}
                 autoFocus
-              />
-            </Grid>
-            <Grid item xs={12} sm={6}>
-              <TextField
-                variant="outlined"
-                required
-                fullWidth
-                id="apellido"
-                label="Apellido"
-                name="apellido"
-                autoComplete="apellido"
-                onChange={(event) => {setSurname(event.target.value)}}
-              />
-            </Grid>
-            <Grid item xs={12}>
-              <TextField
-                variant="outlined"
-                required
-                fullWidth
-                id="celular"
-                label="Celular"
-                name="celular"
-                autoComplete="celular"
-                onChange={(event) => {setPhone(event.target.value)}}
-              />
-            </Grid>
-            <Grid item xs={12}>
-              <TextField
-                variant="outlined"
-                required
-                fullWidth
-                id="documento"
-                label="Documento"
-                name="documento"
-                autoComplete="documento"
-                onChange={(event) => {setDocument(event.target.value)}}
               />
             </Grid>
             <Grid item xs={12}>
@@ -159,29 +119,38 @@ export default function CreateClient({ match }) {
             </Grid>
             <Grid item xs={12}>
               <TextField
+                autoComplete="ciudad"
+                name="ciudad"
                 variant="outlined"
                 required
                 fullWidth
-                name="password"
-                label="Contraseña"
-                type="password"
-                id="password"
-                autoComplete="current-password"
-                onChange={(event) => {setPassword(event.target.value)}}
+                id="ciudad"
+                label="Ciudad"
+                onChange={(event) => {setCity(event.target.value)}}
+                autoFocus
               />
             </Grid>
             <Grid container justify="space-around">
             <MuiPickersUtilsProvider utils={DateFnsUtils}>
-        <KeyboardDatePicker
-          margin="normal"
-          id="fechanacimiento"
-          label="Fecha de nacimiento"
-          format="dd/MM/yyyy"
-          value={selectedDate}
-          onChange={handleDateChange}
-          KeyboardButtonProps={{
-            'aria-label': 'change date',
-          }}
+            <KeyboardTimePicker
+            margin="normal"
+            id="horaapertura"
+            label="Horario de Apertura"
+            value={selectedDate1}
+            onChange={handleDateChange1}
+            KeyboardButtonProps={{
+                'aria-label': 'change time',
+            }}
+        />
+        <KeyboardTimePicker
+            margin="normal"
+            id="horacierre"
+            label="Horario de Cierre"
+            value={selectedDate2}
+            onChange={handleDateChange2}
+            KeyboardButtonProps={{
+                'aria-label': 'change time',
+            }}
         />
     </MuiPickersUtilsProvider>
             </Grid>
@@ -193,7 +162,7 @@ export default function CreateClient({ match }) {
             color="primary"
             className={classes.submit}
           >
-            Modificar Cliente
+            Crear Sede
           </Button>
         </form>
         <Button

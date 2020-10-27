@@ -13,6 +13,8 @@ import CreateClient from '../containers/DashboardAdmin/CreateClient';
 import ModifyClient from '../containers/DashboardAdmin/ModifyClient';
 import CreateCategory from '../containers/DashboardAdmin/CreateCategory';
 import ModifyCategory from '../containers/DashboardAdmin/ModifyCategory';
+import CreateSede from '../containers/DashboardAdmin/CreateSede';
+import ModifySede from '../containers/DashboardAdmin/ModifySede';
 
 const App = () => (
   <BrowserRouter>
@@ -30,6 +32,8 @@ const App = () => (
       <Route path='/modifyclient/:clientId' component={ModifyClient} />
       <Route exact path='/createcategory' component={CreateCategory} />
       <Route path='/modifycategory/:categoryId' component={ModifyCategory} />
+      <Route exact path='/createsede' component={CreateSede} />
+      <Route path='/modifysede/:sedeId' component={ModifySede} />
     </Switch>
   </BrowserRouter>
 );

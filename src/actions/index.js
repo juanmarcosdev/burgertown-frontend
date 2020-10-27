@@ -46,3 +46,20 @@ export const activateCategoria = (payload) => ({
     type: 'ACTIVATE_CATEGORIA',
     payload,
 });
+
+// Sedes
+
+export const getSedes = (payload) => ({
+    type: 'GET_SEDES',
+    payload,
+});
+
+export const deleteSedes = (payload) => ({
+    type: 'DELETE_SEDES',
+    payload,
+});
+
+export const activateSede = (payload) => ({
+    type: 'ACTIVATE_SEDE',
+    payload,
+});

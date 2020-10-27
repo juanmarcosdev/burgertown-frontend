@@ -17,7 +17,10 @@ import ChevronLeftIcon from '@material-ui/icons/ChevronLeft';
 import { mainListItems, secondaryListItems } from './components/listItems';
 import Swal from 'sweetalert2';
 import { connect } from 'react-redux';
-import { getTrabajadores, deleteTrabajadores, activateTrabajador, getClientes, deleteClientes, activateCliente, getCategorias, deleteCategorias, activateCategoria } from '../../actions';
+import { getTrabajadores, deleteTrabajadores, activateTrabajador, 
+         getClientes, deleteClientes, activateCliente, 
+         getCategorias, deleteCategorias, activateCategoria, 
+         getSedes, deleteSedes, activateSede } from '../../actions';
 import DeleteIcon from '@material-ui/icons/Delete';
 import SaveIcon from '@material-ui/icons/Save';
 import CloudUploadIcon from '@material-ui/icons/CloudUpload';
@@ -113,7 +116,7 @@ const useStyles = makeStyles((theme) => ({
 }));
 
 const DashboardAdmin = (props) => {
-  const { dataTrabajadores, dataClientes, dataCategorias } = props;
+  const { dataTrabajadores, dataClientes, dataCategorias, dataSedes } = props;
   const classes = useStyles();
   const [open, setOpen] = React.useState(true);
   const handleDrawerOpen = () => {
@@ -125,6 +128,8 @@ const DashboardAdmin = (props) => {
   const fixedHeightPaper = clsx(classes.paper, classes.fixedHeight);
 
   const Swal = require('sweetalert2');
+
+  // componentDidMount()
 
   React.useEffect(() => {
     fetch('https://burgertown-backend.herokuapp.com/Trabajador/Get')
@@ -142,6 +147,12 @@ const DashboardAdmin = (props) => {
     fetch('https://burgertown-backend.herokuapp.com/Categoria/Get')
       .then(res => res.json())
       .then(data => {props.getCategorias(data.data)})
+  }, []);
+
+  React.useEffect(() => {
+    fetch('https://burgertown-backend.herokuapp.com/Sede/Get')
+      .then(res => res.json())
+      .then(data => {props.getSedes(data.data)})
   }, []);
 
   // Trabajadores
@@ -192,7 +203,6 @@ const DashboardAdmin = (props) => {
       method: 'PUT',
       headers: { "Content-Type": "application/json"},
     })
-    console.log("U CATEGORIA")
     props.deleteCategorias(id)
   }
 
@@ -204,6 +214,26 @@ const DashboardAdmin = (props) => {
     await fetch(`https://burgertown-backend.herokuapp.com/Categoria/${id}`)
       .then(res => res.json())
       .then(data => props.activateCategoria(data.data))
+  }
+
+  // Sedes
+
+  const handleUpdateSedes = async (id) => {
+    await fetch(`https://burgertown-backend.herokuapp.com/Sede/${id}`, {
+      method: 'PUT',
+      headers: { "Content-Type": "application/json"},
+    })
+    props.deleteSedes(id)
+  }
+
+  const handleActivateSede = async (id) => {
+    await fetch(`https://burgertown-backend.herokuapp.com/Sede/${id}`, {
+      method: 'PUT',
+      headers: { "Content-Type": "application/json"},
+    })
+    await fetch(`https://burgertown-backend.herokuapp.com/Sede/${id}`)
+      .then(res => res.json())
+      .then(data => props.activateSede(data.data))
   }
 
 
@@ -465,6 +495,107 @@ const DashboardAdmin = (props) => {
             </tbody>
           </table>
           </div>
+          <div id='sedes'>
+            <div style={{display: 'flex', flexDirection: 'row'}}>
+            <BusinessIcon style={{marginTop: '20px', marginRight: '5px'}}/><h2>Sedes</h2>
+            </div>
+          <div style={{display: 'flex', flexDirection: 'row', justifyContent: 'flex-start'}}>
+            <Button style={{margin: '5px'}} variant="contained" color="secondary" startIcon={<CloudUploadIcon />} href='/createsede'>
+              CREAR SEDE
+            </Button>
+            <Button style={{margin: '5px'}} variant="contained" color="secondary" startIcon={<PersonAddIcon />}
+            onClick={() => Swal.fire({
+              title: 'Inserte ID de sede a activar',
+              input: 'number',
+              inputAttributes: {
+                autocapitalize: 'off'
+              },
+              showCancelButton: true,
+              confirmButtonText: 'Activar',
+              showLoaderOnConfirm: true,
+              preConfirm: (id) => {
+                handleActivateSede(id)
+              },
+              allowOutsideClick: () => !Swal.isLoading()
+            }).then((result) => {
+              if (result.isConfirmed) {
+                Swal.fire('Sede activada', '', 'success')
+              }
+            })}>
+              ACTIVAR SEDE MEDIANTE ID
+            </Button>
+          </div>
+          <table>
+            <thead>
+              <tr style={{display: 'flex', flexDirection: 'row', justifyContent: 'flex-start', fontSize: 17}}>
+                <td style={{margin: '18px'}}>ID</td>
+                <td style={{margin: '18px'}}>Nombre</td>
+                <td style={{margin: '18px'}}>Dirección</td>
+                <td style={{margin: '18px'}}>Ciudad</td>
+                <td style={{margin: '18px'}}>Horario de Apertura</td>
+                <td style={{margin: '18px'}}>Horario de Cierre</td>
+            </tr>
+            </thead>
+            <tbody>
+              {
+                dataSedes.length > 0 ? dataSedes.filter((item) => item.sede_estado === 1).map((item) => 
+                <tr style={{display: 'flex', flexDirection: 'row', justifyContent: 'space-between', fontSize: 17}}>
+                  {
+                    <td style={{margin: '14px'}} key={item.sede_id}>{item.sede_id}</td>
+                  }
+                  {
+                    <td style={{margin: '14px'}} key={item.sede_nombre}>{item.sede_nombre}</td>
+                  }
+                  {
+                    <td style={{margin: '14px'}} key={item.sede_direccion}>{item.sede_direccion}</td>
+                  }
+                  {
+                    <td style={{margin: '14px'}} key={item.sede_ciudad}>{item.sede_ciudad}</td>
+                  }
+                  {
+                    <td style={{margin: '14px'}} key={item.sede_horario_apertura}>{item.sede_horario_apertura}</td>
+                  }
+                  {
+                    <td style={{margin: '14px'}} key={item.sede_horario_cierre}>{item.sede_horario_cierre}</td>
+                  }
+                  {
+                    <Button
+                    variant="contained"
+                    color="secondary"
+                    startIcon={<DeleteIcon />}
+                    style={{margin: '7px 14px 7px 14px'}}
+                    onClick={() => Swal.fire({
+                      title: 'Deseas desactivar la Sede?',
+                      showCancelButton: true,
+                      confirmButtonText: `Desactivar`,
+                    }).then((result) => {
+                      if (result.isConfirmed) {
+                        handleUpdateSedes(item.sede_id)
+                        Swal.fire('Sede desactivada', '', 'success')
+                      }
+                    })}
+                  >
+                    Desactivar
+                  </Button>
+                  }
+                  {
+                    <Button
+                    variant="contained"
+                    color="secondary"
+                    startIcon={<SaveIcon />}
+                    style={{margin: '7px 14px 7px 14px'}}
+                    href={`/modifysede/${item.sede_id}`}
+                  >
+                    Modificar
+                  </Button>
+                  }
+                  </tr>
+                ) 
+                : <div></div>
+              }
+            </tbody>
+          </table>
+          </div>
           <div id='categorias'>
             <div style={{display: 'flex', flexDirection: 'row'}}>
             <CategoryIcon style={{marginTop: '20px', marginRight: '5px'}}/><h2>Categorias</h2>
@@ -566,6 +697,7 @@ const mapStateToProps = (state) => {
     dataTrabajadores: state.dataTrabajadores,
     dataClientes: state.dataClientes,
     dataCategorias: state.dataCategorias,
+    dataSedes: state.dataSedes,
   }
 }
 
@@ -579,6 +711,9 @@ const mapDispatchToProps = {
   getCategorias,
   deleteCategorias,
   activateCategoria,
+  getSedes,
+  deleteSedes,
+  activateSede,
 }
 
 export default connect(mapStateToProps, mapDispatchToProps)(DashboardAdmin);

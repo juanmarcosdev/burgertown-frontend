@@ -45,6 +45,21 @@ const reducer = (state, action) => {
                 ...state,
                 dataCategorias: [...state.dataCategorias, action.payload]
             };
+        case 'GET_SEDES':
+            return {
+                ...state,
+                dataSedes: action.payload,
+            };
+        case 'DELETE_SEDES':
+            return {
+                ...state,
+                dataSedes: state.dataSedes.filter((items) => items.sede_id !== action.payload),
+            };
+        case 'ACTIVATE_SEDE':
+            return {
+                ...state,
+                dataSedes: [...state.dataSedes, action.payload]
+            };
         default:
             return state;
     }
