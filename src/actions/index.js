@@ -63,3 +63,20 @@ export const activateSede = (payload) => ({
     type: 'ACTIVATE_SEDE',
     payload,
 });
+
+// Sedes
+
+export const getProductos = (payload) => ({
+    type: 'GET_PRODUCTOS',
+    payload,
+});
+
+export const deleteProductos = (payload) => ({
+    type: 'DELETE_PRODUCTOS',
+    payload,
+});
+
+export const activateProducto = (payload) => ({
+    type: 'ACTIVATE_PRODUCTO',
+    payload,
+});

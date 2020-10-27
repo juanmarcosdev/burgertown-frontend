@@ -31,7 +31,7 @@ const useStyles = makeStyles((theme) => ({
   },
 }));
 
-export default function ModifyCategory({ match }) {
+const ModifyCategory = ({ match }) => {
   const classes = useStyles();
   const categoryId = match.params.categoryId
 
@@ -112,3 +112,5 @@ export default function ModifyCategory({ match }) {
     </Container>
   );
 }
+
+export default withRouter(ModifyCategory)

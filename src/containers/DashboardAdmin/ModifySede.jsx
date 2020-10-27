@@ -38,7 +38,7 @@ const useStyles = makeStyles((theme) => ({
   },
 }));
 
-export default function ModifySede({ match }) {
+const ModifySede = ({ match }) => {
   const classes = useStyles();
   const sedeId = match.params.sedeId;
   
@@ -184,3 +184,5 @@ export default function ModifySede({ match }) {
     </Container>
   );
 }
+
+export default withRouter(ModifySede)

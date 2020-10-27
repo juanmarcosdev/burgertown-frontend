@@ -15,6 +15,8 @@ import CreateCategory from '../containers/DashboardAdmin/CreateCategory';
 import ModifyCategory from '../containers/DashboardAdmin/ModifyCategory';
 import CreateSede from '../containers/DashboardAdmin/CreateSede';
 import ModifySede from '../containers/DashboardAdmin/ModifySede';
+import CreateProduct from '../containers/DashboardAdmin/CreateProduct';
+import ModifyProduct from '../containers/DashboardAdmin/ModifyProduct';
 
 const App = () => (
   <BrowserRouter>
@@ -34,6 +36,8 @@ const App = () => (
       <Route path='/modifycategory/:categoryId' component={ModifyCategory} />
       <Route exact path='/createsede' component={CreateSede} />
       <Route path='/modifysede/:sedeId' component={ModifySede} />
+      <Route exact path='/createproduct' component={CreateProduct} />
+      <Route path='/modifyproduct/:productId' component={ModifyProduct} />
     </Switch>
   </BrowserRouter>
 );

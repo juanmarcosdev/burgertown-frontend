@@ -20,7 +20,8 @@ import { connect } from 'react-redux';
 import { getTrabajadores, deleteTrabajadores, activateTrabajador, 
          getClientes, deleteClientes, activateCliente, 
          getCategorias, deleteCategorias, activateCategoria, 
-         getSedes, deleteSedes, activateSede } from '../../actions';
+         getSedes, deleteSedes, activateSede,
+         getProductos, deleteProductos, activateProducto } from '../../actions';
 import DeleteIcon from '@material-ui/icons/Delete';
 import SaveIcon from '@material-ui/icons/Save';
 import CloudUploadIcon from '@material-ui/icons/CloudUpload';
@@ -116,7 +117,7 @@ const useStyles = makeStyles((theme) => ({
 }));
 
 const DashboardAdmin = (props) => {
-  const { dataTrabajadores, dataClientes, dataCategorias, dataSedes } = props;
+  const { dataTrabajadores, dataClientes, dataCategorias, dataSedes, dataProductos } = props;
   const classes = useStyles();
   const [open, setOpen] = React.useState(true);
   const handleDrawerOpen = () => {
@@ -153,6 +154,12 @@ const DashboardAdmin = (props) => {
     fetch('https://burgertown-backend.herokuapp.com/Sede/Get')
       .then(res => res.json())
       .then(data => {props.getSedes(data.data)})
+  }, []);
+
+  React.useEffect(() => {
+    fetch('https://burgertown-backend.herokuapp.com/Producto/Get')
+      .then(res => res.json())
+      .then(data => {props.getProductos(data.data)})
   }, []);
 
   // Trabajadores
@@ -234,6 +241,26 @@ const DashboardAdmin = (props) => {
     await fetch(`https://burgertown-backend.herokuapp.com/Sede/${id}`)
       .then(res => res.json())
       .then(data => props.activateSede(data.data))
+  }
+
+  // Productos
+
+  const handleUpdateProductos = async (id) => {
+    await fetch(`https://burgertown-backend.herokuapp.com/Producto/${id}`, {
+      method: 'PUT',
+      headers: { "Content-Type": "application/json"},
+    })
+    props.deleteProductos(id)
+  }
+
+  const handleActivateProducto = async (id) => {
+    await fetch(`https://burgertown-backend.herokuapp.com/Producto/${id}`, {
+      method: 'PUT',
+      headers: { "Content-Type": "application/json"},
+    })
+    await fetch(`https://burgertown-backend.herokuapp.com/Producto/${id}`)
+      .then(res => res.json())
+      .then(data => props.activateProducto(data.data))
   }
 
 
@@ -685,6 +712,119 @@ const DashboardAdmin = (props) => {
             </tbody>
           </table>
           </div>
+          <div id='productos'>
+            <div style={{display: 'flex', flexDirection: 'row'}}>
+            <FastfoodIcon style={{marginTop: '20px', marginRight: '5px'}}/><h2>Productos</h2>
+            </div>
+          <div style={{display: 'flex', flexDirection: 'row', justifyContent: 'flex-start'}}>
+            <Button style={{margin: '5px'}} variant="contained" color="secondary" startIcon={<CloudUploadIcon />} href='/createproduct'>
+              CREAR PRODUCTO
+            </Button>
+            <Button style={{margin: '5px'}} variant="contained" color="secondary" startIcon={<PersonAddIcon />}
+            onClick={() => Swal.fire({
+              title: 'Inserte ID de producto a activar',
+              input: 'number',
+              inputAttributes: {
+                autocapitalize: 'off'
+              },
+              showCancelButton: true,
+              confirmButtonText: 'Activar',
+              showLoaderOnConfirm: true,
+              preConfirm: (id) => {
+                handleActivateProducto(id)
+              },
+              allowOutsideClick: () => !Swal.isLoading()
+            }).then((result) => {
+              if (result.isConfirmed) {
+                Swal.fire('Producto activado', '', 'success')
+              }
+            })}>
+              ACTIVAR PRODUCTO MEDIANTE ID
+            </Button>
+          </div>
+          <table>
+            <thead>
+              <tr style={{display: 'flex', flexDirection: 'row', justifyContent: 'flex-start', fontSize: 17}}>
+                <td style={{margin: '18px'}}>Imagen</td>
+                <td style={{margin: '18px'}}>ID</td>
+                <td style={{margin: '18px'}}>Nombre</td>
+                <td style={{margin: '18px'}}>Descripcion</td>
+                <td style={{margin: '18px'}}>Existencias</td>
+                <td style={{margin: '18px'}}>Precio</td>
+                <td style={{margin: '18px'}}>Descuento</td>
+                <td style={{margin: '18px'}}>IVA</td>
+                <td style={{margin: '18px'}}>ID Categoria</td>
+              </tr>
+            </thead>
+            <tbody>
+              {
+                dataProductos.length > 0 ? dataProductos.filter((item) => item.producto_estado === 1).map((item) => 
+                <tr style={{display: 'flex', flexDirection: 'row', justifyContent: 'space-around', fontSize: 17}}>
+                  {
+                    <td style={{margin: '14px'}} key={item.producto_imagen}><img src={item.producto_imagen} alt={item.producto_imagen} width="40" height="40"></img></td>
+                  }
+                  {
+                    <td style={{margin: '14px'}} key={item.producto_codigo}>{item.producto_codigo}</td>
+                  }
+                  {
+                    <td style={{margin: '14px'}} key={item.producto_nombre}>{item.producto_nombre}</td>
+                  }
+                  {
+                    <td style={{margin: '14px'}} key={item.producto_descripcion}>{item.producto_descripcion}</td>
+                  }
+                  {
+                    <td style={{margin: '14px'}} key={item.producto_existencias}>{item.producto_existencias}</td>
+                  }
+                  {
+                    <td style={{margin: '14px'}} key={item.producto_precio}>{item.producto_precio}</td>
+                  }
+                  {
+                    <td style={{margin: '14px'}} key={item.producto_descuento}>{item.producto_descuento}</td>
+                  }
+                  {
+                    <td style={{margin: '14px'}} key={item.producto_iva}>{item.producto_iva}</td>
+                  }
+                  {
+                    <td style={{margin: '14px'}} key={item.categoria_id}>{item.categoria_id}</td>
+                  }
+                  {
+                    <Button
+                    variant="contained"
+                    color="secondary"
+                    startIcon={<DeleteIcon />}
+                    style={{margin: '7px 14px 7px 14px'}}
+                    onClick={() => Swal.fire({
+                      title: 'Deseas desactivar el Producto?',
+                      showCancelButton: true,
+                      confirmButtonText: `Desactivar`,
+                    }).then((result) => {
+                      if (result.isConfirmed) {
+                        handleUpdateProductos(item.producto_codigo)
+                        Swal.fire('Producto desactivado', '', 'success')
+                      }
+                    })}
+                  >
+                    Desactivar
+                  </Button>
+                  }
+                  {
+                    <Button
+                    variant="contained"
+                    color="secondary"
+                    startIcon={<SaveIcon />}
+                    style={{margin: '7px 14px 7px 14px'}}
+                    href={`/modifyproduct/${item.producto_codigo}`}
+                  >
+                    Modificar
+                  </Button>
+                  }
+                  </tr>
+                ) 
+                : <div></div>
+              }
+            </tbody>
+          </table>
+          </div>
           </Grid>
         </Container>
       </main>
@@ -698,6 +838,7 @@ const mapStateToProps = (state) => {
     dataClientes: state.dataClientes,
     dataCategorias: state.dataCategorias,
     dataSedes: state.dataSedes,
+    dataProductos: state.dataProductos,
   }
 }
 
@@ -714,6 +855,9 @@ const mapDispatchToProps = {
   getSedes,
   deleteSedes,
   activateSede,
+  getProductos,
+  deleteProductos,
+  activateProducto,
 }
 
 export default connect(mapStateToProps, mapDispatchToProps)(DashboardAdmin);

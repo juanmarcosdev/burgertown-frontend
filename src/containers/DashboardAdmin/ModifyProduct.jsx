@@ -1,4 +1,3 @@
-import 'date-fns';
 import React from 'react';
 import Avatar from '@material-ui/core/Avatar';
 import Button from '@material-ui/core/Button';
@@ -10,12 +9,6 @@ import LockOutlinedIcon from '@material-ui/icons/LockOutlined';
 import Typography from '@material-ui/core/Typography';
 import { makeStyles } from '@material-ui/core/styles';
 import Container from '@material-ui/core/Container';
-import DateFnsUtils from '@date-io/date-fns';
-import 'dateformat';
-import {
-  MuiPickersUtilsProvider,
-  KeyboardDatePicker,
-} from '@material-ui/pickers';
 import { withRouter } from 'react-router-dom';
 
 const useStyles = makeStyles((theme) => ({
@@ -38,51 +31,38 @@ const useStyles = makeStyles((theme) => ({
   },
 }));
 
-const ModifyClient = ({ match }) => {
+const ModifyProduct = ({ match }) => {
   const classes = useStyles();
-  const clientId = match.params.clientId;
-  
-
-  const dateFormat = require('dateformat');
+  const productId = match.params.productId;
 
   const [name, setName] = React.useState('');
-  const [surname, setSurname] = React.useState('');
-  const [phone, setPhone] = React.useState('');
-  const [document, setDocument] = React.useState('');
-  const [address, setAddress] = React.useState('');
-  const [password, setPassword] = React.useState('');
-  const [selectedDate, setSelectedDate] = React.useState(new Date());
-
-  const handleDateChange = (date) => {
-    setSelectedDate(date);
-  };
-
-  const birthdayFormat = dateFormat(selectedDate, "dd-mm-yyyy");
-  
+  const [description, setDescription] = React.useState('');
+  const [image, setImage] = React.useState('');
+  const [exist, setExist] = React.useState('');
+  const [price, setPrice] = React.useState('');
+  const [discount, setDiscount] = React.useState('');
+  const [iva, setIva] = React.useState('');
 
   const handleSubmit = async (event) => {
-    const now = new Date();
-    const nowFormat = dateFormat(now, "dd-mm-yyyy");
     event.preventDefault();
-    const newClient = {
-      cliente_documento: (document !== '' ? document : undefined),
-      cliente_nombre: (name !== '' ? name : undefined),
-      cliente_apellido: (surname !== '' ? surname : undefined),
-      cliente_celular: (phone !== '' ? phone : undefined),
-      cliente_direccion: (address !== '' ? address : undefined),
-      cliente_password: (password !== '' ? password : undefined),
-      cliente_fecha_nacimiento: (birthdayFormat !== nowFormat ?  birthdayFormat : undefined),
+    const newProduct = {
+      producto_nombre: (name !== '' ? name : undefined),
+      producto_descripcion: (description !== '' ? description : undefined),
+      producto_imagen: (image !== '' ? image: undefined),
+      producto_existencias: (exist !== '' ? parseInt(exist) : undefined),
+      producto_precio: (price !== '' ? parseInt(price) : undefined),
+      producto_descuento: (discount !== '' ? parseInt(discount) : undefined),
+      producto_iva: (iva !== '' ? parseInt(iva) : undefined),
     }
-    console.log(JSON.stringify(newClient));
-    const response = await fetch(`https://burgertown-backend.herokuapp.com/Cliente/Edit/${clientId}`, {
+    console.log(JSON.stringify(newProduct));
+    const response = await fetch(`https://burgertown-backend.herokuapp.com/Producto/Edit/${productId}`, {
       method: "PUT",
       headers: { "Content-Type": "application/json"},
-      body: JSON.stringify(newClient)
+      body: JSON.stringify(newProduct)
     })
     console.log(response.status)
     console.log(response.statusText)
   }
-
 
   return (
     <Container component="main" maxWidth="xs">
@@ -92,11 +72,11 @@ const ModifyClient = ({ match }) => {
           <LockOutlinedIcon />
         </Avatar>
         <Typography component="h1" variant="h5">
-        Modificar Cliente con ID {clientId}
+          Modificar Producto con ID {productId}
         </Typography>
         <form className={classes.form} noValidate onSubmit={handleSubmit}>
           <Grid container spacing={2}>
-            <Grid item xs={12} sm={6}>
+            <Grid item xs={12}>
               <TextField
                 autoComplete="nombre"
                 name="nombre"
@@ -109,81 +89,83 @@ const ModifyClient = ({ match }) => {
                 autoFocus
               />
             </Grid>
-            <Grid item xs={12} sm={6}>
+            <Grid item xs={12}>
               <TextField
+                autoComplete="descripcion"
+                name="descripcion"
                 variant="outlined"
                 required
                 fullWidth
-                id="apellido"
-                label="Apellido"
-                name="apellido"
-                autoComplete="apellido"
-                onChange={(event) => {setSurname(event.target.value)}}
+                id="descripcion"
+                label="Descripcion"
+                onChange={(event) => {setDescription(event.target.value)}}
+                autoFocus
               />
             </Grid>
             <Grid item xs={12}>
               <TextField
+                autoComplete="image"
+                name="image"
                 variant="outlined"
                 required
                 fullWidth
-                id="celular"
-                label="Celular"
-                name="celular"
-                autoComplete="celular"
-                onChange={(event) => {setPhone(event.target.value)}}
+                id="imagen"
+                label="URL Imagen"
+                onChange={(event) => {setImage(event.target.value)}}
+                autoFocus
               />
             </Grid>
             <Grid item xs={12}>
               <TextField
+                autoComplete="exist"
+                name="exist"
                 variant="outlined"
                 required
                 fullWidth
-                id="documento"
-                label="Documento"
-                name="documento"
-                autoComplete="documento"
-                onChange={(event) => {setDocument(event.target.value)}}
+                id="exist"
+                label="Existencias"
+                onChange={(event) => {setExist(event.target.value)}}
+                autoFocus
               />
             </Grid>
             <Grid item xs={12}>
               <TextField
+                autoComplete="price"
+                name="price"
                 variant="outlined"
                 required
                 fullWidth
-                id="direccion"
-                label="Dirección"
-                name="direccion"
-                autoComplete="direccion"
-                onChange={(event) => {setAddress(event.target.value)}}
+                id="price"
+                label="Precio"
+                onChange={(event) => {setPrice(event.target.value)}}
+                autoFocus
               />
             </Grid>
             <Grid item xs={12}>
               <TextField
+                autoComplete="discount"
+                name="discount"
                 variant="outlined"
                 required
                 fullWidth
-                name="password"
-                label="Contraseña"
-                type="password"
-                id="password"
-                autoComplete="current-password"
-                onChange={(event) => {setPassword(event.target.value)}}
+                id="discount"
+                label="Porcentaje de Descuento"
+                onChange={(event) => {setDiscount(event.target.value)}}
+                autoFocus
               />
             </Grid>
-            <Grid container justify="space-around">
-            <MuiPickersUtilsProvider utils={DateFnsUtils}>
-        <KeyboardDatePicker
-          margin="normal"
-          id="fechanacimiento"
-          label="Fecha de nacimiento"
-          format="dd/MM/yyyy"
-          value={selectedDate}
-          onChange={handleDateChange}
-          KeyboardButtonProps={{
-            'aria-label': 'change date',
-          }}
-        />
-    </MuiPickersUtilsProvider>
+            <Grid item xs={12}>
+              <TextField
+                autoComplete="iva"
+                name="iva"
+                variant="outlined"
+                required
+                fullWidth
+                id="iva"
+                label="IVA"
+                onChange={(event) => {setIva(event.target.value)}}
+                autoFocus
+              />
             </Grid>
           </Grid>
           <Button
@@ -193,7 +175,7 @@ const ModifyClient = ({ match }) => {
             color="primary"
             className={classes.submit}
           >
-            Modificar Cliente
+            Modificar Producto
           </Button>
         </form>
         <Button
@@ -210,4 +192,4 @@ const ModifyClient = ({ match }) => {
   );
 }
 
-export default withRouter(ModifyClient)
+export default withRouter(ModifyProduct)

@@ -60,6 +60,21 @@ const reducer = (state, action) => {
                 ...state,
                 dataSedes: [...state.dataSedes, action.payload]
             };
+        case 'GET_PRODUCTOS':
+            return {
+                ...state,
+                dataProductos: action.payload,
+            };
+        case 'DELETE_PRODUCTOS':
+            return {
+                ...state,
+                dataProductos: state.dataProductos.filter((items) => items.producto_codigo !== action.payload),
+            };
+        case 'ACTIVATE_PRODUCTO':
+            return {
+                ...state,
+                dataProductos: [...state.dataProductos, action.payload]
+            };
         default:
             return state;
     }

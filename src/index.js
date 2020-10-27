@@ -10,6 +10,7 @@ const initialState = {
   'dataClientes': [],
   'dataCategorias': [],
   'dataSedes': [],
+  'dataProductos': [],
 }
 
 const store = createStore(reducer, initialState);
