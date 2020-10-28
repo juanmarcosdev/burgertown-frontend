@@ -9,6 +9,7 @@ import Grid from '@material-ui/core/Grid';
 import SupervisorAccountOutlinedIcon from '@material-ui/icons/SupervisorAccountOutlined';
 import Typography from '@material-ui/core/Typography';
 import { makeStyles } from '@material-ui/core/styles';
+import Swal from 'sweetalert2';
 
 const useStyles = makeStyles((theme) => ({
   root: {
@@ -41,8 +42,37 @@ const useStyles = makeStyles((theme) => ({
   },
 }));
 
-export default function LoginAdmin() {
+export default function LoginAdmin(props) {
   const classes = useStyles();
+
+  const [document, setDocument] = React.useState('');
+  const [password, setPassword] = React.useState('');
+
+  const handleSubmit = async (event) => {
+    event.preventDefault();
+    const response = await fetch(`https://burgertown-backend.herokuapp.com/Trabajador/Login/${document}`, {
+      method: "PUT",
+      headers: { "Content-Type": "application/json"},
+      body: JSON.stringify({ trabajador_password: password })
+    }).then(res => res.json()).then(data => {
+      localStorage.setItem('token', data.token)
+      localStorage.setItem('typeUser', data.typeUser)
+      if(localStorage.getItem('token') === 'undefined') {
+        Swal.fire({
+          icon: 'error',
+          title: 'Oops...',
+          text: 'Inicio de sesión Admin Fallido',
+        })
+      } else {
+        Swal.fire(
+          'Inicio de Sesión exitoso',
+          'Iniciaste sesión como Admin exitosamente',
+          'success'
+        )
+        props.history.push('/dashboardadmin');
+      }
+    })
+  }
 
   return (
     <Grid container component='main' className={classes.root}>
@@ -56,16 +86,17 @@ export default function LoginAdmin() {
           <Typography component='h1' variant='h5'>
             Iniciar Sesión como Administrador
           </Typography>
-          <form className={classes.form} noValidate>
+          <form className={classes.form} onSubmit={handleSubmit}>
             <TextField
               variant='outlined'
               margin='normal'
               required
               fullWidth
-              id='email'
-              label='Correo electrónico'
-              name='email'
-              autoComplete='email'
+              id='document'
+              label='Número de documento'
+              name='document'
+              autoComplete='document'
+              onChange={(event) => {setDocument(event.target.value)}}
               autoFocus
             />
             <TextField
@@ -78,6 +109,7 @@ export default function LoginAdmin() {
               type='password'
               id='password'
               autoComplete='current-password'
+              onChange={(event) => {setPassword(event.target.value)}}
             />
             <Button
               type='submit'

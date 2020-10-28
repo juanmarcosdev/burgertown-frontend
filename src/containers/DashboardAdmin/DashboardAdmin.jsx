@@ -133,31 +133,60 @@ const DashboardAdmin = (props) => {
   // componentDidMount()
 
   React.useEffect(() => {
-    fetch('https://burgertown-backend.herokuapp.com/Trabajador/Get')
-      .then(res => res.json())
+    fetch('https://burgertown-backend.herokuapp.com/Trabajador/Get', 
+    {
+      method: 'GET',
+      headers: { "Content-Type": "application/json",
+                 token: localStorage.token
+               },
+    }).then(res => res.json())
       .then(data => {props.getTrabajadores(data.data)})
   }, []);
 
   React.useEffect(() => {
-    fetch('https://burgertown-backend.herokuapp.com/Cliente/Get')
+    fetch('https://burgertown-backend.herokuapp.com/Cliente/Get',
+    {
+      method: 'GET',
+      headers: { "Content-Type": "application/json",
+                 token: localStorage.token
+               },
+    })
       .then(res => res.json())
       .then(data => {props.getClientes(data.data)})
   }, []);
 
   React.useEffect(() => {
-    fetch('https://burgertown-backend.herokuapp.com/Categoria/Get')
+    fetch('https://burgertown-backend.herokuapp.com/Categoria/Get',
+    {
+      method: 'GET',
+      headers: { "Content-Type": "application/json",
+                 token: localStorage.token
+               },
+    })
       .then(res => res.json())
       .then(data => {props.getCategorias(data.data)})
   }, []);
 
   React.useEffect(() => {
-    fetch('https://burgertown-backend.herokuapp.com/Sede/Get')
+    fetch('https://burgertown-backend.herokuapp.com/Sede/Get',
+    {
+      method: 'GET',
+      headers: { "Content-Type": "application/json",
+                 token: localStorage.token
+               },
+    })
       .then(res => res.json())
       .then(data => {props.getSedes(data.data)})
   }, []);
 
   React.useEffect(() => {
-    fetch('https://burgertown-backend.herokuapp.com/Producto/Get')
+    fetch('https://burgertown-backend.herokuapp.com/Producto/Get',
+    {
+      method: 'GET',
+      headers: { "Content-Type": "application/json",
+                 token: localStorage.token
+               },
+    })
       .then(res => res.json())
       .then(data => {props.getProductos(data.data)})
   }, []);
@@ -167,7 +196,7 @@ const DashboardAdmin = (props) => {
   const handleUpdateTrabajadores = async (id) => {
     await fetch(`https://burgertown-backend.herokuapp.com/Trabajador/${id}`, {
       method: 'PUT',
-      headers: { "Content-Type": "application/json"},
+      headers: { "Content-Type": "application/json", token: localStorage.token},
     })
     props.deleteTrabajadores(id);
   }
@@ -175,9 +204,12 @@ const DashboardAdmin = (props) => {
   const handleActivateTrabajador = async (id) => {
     await fetch(`https://burgertown-backend.herokuapp.com/Trabajador/${id}`, {
       method: 'PUT',
-      headers: { "Content-Type": "application/json"},
+      headers: { "Content-Type": "application/json", token: localStorage.token},
     })
-    await fetch(`https://burgertown-backend.herokuapp.com/Trabajador/${id}`)
+    await fetch(`https://burgertown-backend.herokuapp.com/Trabajador/${id}`, {
+      method: 'GET',
+      headers: { "Content-Type": "application/json", token: localStorage.token},
+    })
       .then(res => res.json())
       .then(data => props.activateTrabajador(data.data))
   }
@@ -187,18 +219,20 @@ const DashboardAdmin = (props) => {
   const handleUpdateClientes = async (id) => {
     await fetch(`https://burgertown-backend.herokuapp.com/Cliente/${id}`, {
       method: 'PUT',
-      headers: { "Content-Type": "application/json"},
+      headers: { "Content-Type": "application/json", token: localStorage.token},
     })
-    console.log("U CLIENTE")
     props.deleteClientes(id); 
   }
 
   const handleActivateCliente = async (id) => {
     await fetch(`https://burgertown-backend.herokuapp.com/Cliente/${id}`, {
       method: 'PUT',
-      headers: { "Content-Type": "application/json"},
+      headers: { "Content-Type": "application/json", token: localStorage.token},
     })
-    await fetch(`https://burgertown-backend.herokuapp.com/Cliente/${id}`)
+    await fetch(`https://burgertown-backend.herokuapp.com/Cliente/${id}`, {
+      method: 'GET',
+      headers: { "Content-Type": "application/json", token: localStorage.token},
+    })
       .then(res => res.json())
       .then(data => props.activateCliente(data.data))
   }
@@ -208,7 +242,7 @@ const DashboardAdmin = (props) => {
   const handleUpdateCategorias = async (id) => {
     await fetch(`https://burgertown-backend.herokuapp.com/Categoria/${id}`, {
       method: 'PUT',
-      headers: { "Content-Type": "application/json"},
+      headers: { "Content-Type": "application/json", token: localStorage.token},
     })
     props.deleteCategorias(id)
   }
@@ -216,9 +250,12 @@ const DashboardAdmin = (props) => {
   const handleActivateCategoria = async (id) => {
     await fetch(`https://burgertown-backend.herokuapp.com/Categoria/${id}`, {
       method: 'PUT',
-      headers: { "Content-Type": "application/json"},
+      headers: { "Content-Type": "application/json", token: localStorage.token},
     })
-    await fetch(`https://burgertown-backend.herokuapp.com/Categoria/${id}`)
+    await fetch(`https://burgertown-backend.herokuapp.com/Categoria/${id}`, {
+      method: 'GET',
+      headers: { "Content-Type": "application/json", token: localStorage.token},
+    })
       .then(res => res.json())
       .then(data => props.activateCategoria(data.data))
   }
@@ -228,7 +265,7 @@ const DashboardAdmin = (props) => {
   const handleUpdateSedes = async (id) => {
     await fetch(`https://burgertown-backend.herokuapp.com/Sede/${id}`, {
       method: 'PUT',
-      headers: { "Content-Type": "application/json"},
+      headers: { "Content-Type": "application/json", token: localStorage.token},
     })
     props.deleteSedes(id)
   }
@@ -236,9 +273,12 @@ const DashboardAdmin = (props) => {
   const handleActivateSede = async (id) => {
     await fetch(`https://burgertown-backend.herokuapp.com/Sede/${id}`, {
       method: 'PUT',
-      headers: { "Content-Type": "application/json"},
+      headers: { "Content-Type": "application/json", token: localStorage.token},
     })
-    await fetch(`https://burgertown-backend.herokuapp.com/Sede/${id}`)
+    await fetch(`https://burgertown-backend.herokuapp.com/Sede/${id}`, {
+      method: 'GET',
+      headers: { "Content-Type": "application/json", token: localStorage.token},
+    })
       .then(res => res.json())
       .then(data => props.activateSede(data.data))
   }
@@ -248,7 +288,7 @@ const DashboardAdmin = (props) => {
   const handleUpdateProductos = async (id) => {
     await fetch(`https://burgertown-backend.herokuapp.com/Producto/${id}`, {
       method: 'PUT',
-      headers: { "Content-Type": "application/json"},
+      headers: { "Content-Type": "application/json", token: localStorage.token},
     })
     props.deleteProductos(id)
   }
@@ -256,9 +296,12 @@ const DashboardAdmin = (props) => {
   const handleActivateProducto = async (id) => {
     await fetch(`https://burgertown-backend.herokuapp.com/Producto/${id}`, {
       method: 'PUT',
-      headers: { "Content-Type": "application/json"},
+      headers: { "Content-Type": "application/json", token: localStorage.token},
     })
-    await fetch(`https://burgertown-backend.herokuapp.com/Producto/${id}`)
+    await fetch(`https://burgertown-backend.herokuapp.com/Producto/${id}`, {
+      method: 'GET',
+      headers: { "Content-Type": "application/json", token: localStorage.token},
+    })
       .then(res => res.json())
       .then(data => props.activateProducto(data.data))
   }
