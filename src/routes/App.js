@@ -17,6 +17,7 @@ import CreateSede from '../containers/DashboardAdmin/CreateSede';
 import ModifySede from '../containers/DashboardAdmin/ModifySede';
 import CreateProduct from '../containers/DashboardAdmin/CreateProduct';
 import ModifyProduct from '../containers/DashboardAdmin/ModifyProduct';
+import NotFound from '../containers/NotFound';
 
 const App = () => (
   <BrowserRouter>
@@ -38,6 +39,7 @@ const App = () => (
       <Route path='/modifysede/:sedeId' component={ModifySede} />
       <Route exact path='/createproduct' component={CreateProduct} />
       <Route path='/modifyproduct/:productId' component={ModifyProduct} />
+      <Route component={NotFound} />
     </Switch>
   </BrowserRouter>
 );

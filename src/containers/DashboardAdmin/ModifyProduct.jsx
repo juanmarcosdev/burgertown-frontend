@@ -57,7 +57,7 @@ const ModifyProduct = ({ match }) => {
     console.log(JSON.stringify(newProduct));
     const response = await fetch(`https://burgertown-backend.herokuapp.com/Producto/Edit/${productId}`, {
       method: "PUT",
-      headers: { "Content-Type": "application/json"},
+      headers: { "Content-Type": "application/json", token: localStorage.token},
       body: JSON.stringify(newProduct)
     })
     console.log(response.status)

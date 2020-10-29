@@ -78,7 +78,7 @@ const ModifySede = ({ match }) => {
     console.log(JSON.stringify(newSede));
     const response = await fetch(`https://burgertown-backend.herokuapp.com/Sede/Edit/${sedeId}`, {
       method: "PUT",
-      headers: { "Content-Type": "application/json"},
+      headers: { "Content-Type": "application/json", token: localStorage.token},
       body: JSON.stringify(newSede)
     })
     console.log(response.status)

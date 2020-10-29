@@ -72,7 +72,7 @@ export default function CreateSede() {
     console.log(newSede);
     const response = await fetch(`https://burgertown-backend.herokuapp.com/Sede/Create`, {
       method: "POST",
-      headers: { "Content-Type": "application/json"},
+      headers: { "Content-Type": "application/json", token: localStorage.token},
       body: JSON.stringify(newSede)
     })
     console.log(response.status)

@@ -78,7 +78,7 @@ const ModifyClient = ({ match }) => {
     console.log(JSON.stringify(newClient));
     const response = await fetch(`https://burgertown-backend.herokuapp.com/Cliente/Edit/${clientId}`, {
       method: "PUT",
-      headers: { "Content-Type": "application/json"},
+      headers: { "Content-Type": "application/json", token: localStorage.token},
       body: JSON.stringify(newClient)
     })
     console.log(response.status)

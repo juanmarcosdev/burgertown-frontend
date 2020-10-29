@@ -44,7 +44,7 @@ export default function CreateCategory() {
     }
     const response = await fetch(`https://burgertown-backend.herokuapp.com/Categoria/Create`, {
       method: "POST",
-      headers: { "Content-Type": "application/json"},
+      headers: { "Content-Type": "application/json", token: localStorage.token},
       body: JSON.stringify(newCategory)
     })
   }

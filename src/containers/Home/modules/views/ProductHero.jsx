@@ -47,9 +47,9 @@ function ProductHero(props) {
         variant="contained"
         size="large"
         className={classes.button}
-        href='/menu'
+        href='/registrocliente'
       >
-        Ir al Menú
+        Registrarme
       </Button>
       <Typography variant="body2" color="inherit" className={classes.more}>
         También somos expertos en todo tipo de comida rápida americana y colombiana. Descubre la auténtica experiencia de comida rápida con nosotros!

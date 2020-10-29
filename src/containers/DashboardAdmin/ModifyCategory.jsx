@@ -46,7 +46,7 @@ const ModifyCategory = ({ match }) => {
     }
     const response = await fetch(`https://burgertown-backend.herokuapp.com/Categoria/Edit/${categoryId}`, {
       method: "PUT",
-      headers: { "Content-Type": "application/json"},
+      headers: { "Content-Type": "application/json", token: localStorage.token},
       body: JSON.stringify(newCategory)
     })
   }

@@ -6,6 +6,8 @@ import Link from '@material-ui/core/Link';
 import AppBar from '../components/AppBar';
 import Toolbar, { styles as toolbarStyles } from '../components/Toolbar';
 import logo from '../../../../assets/static/burgertown_logo.png';
+import Swal from 'sweetalert2';
+import { withRouter } from 'react-router-dom';
 
 const styles = (theme) => ({
   title: {
@@ -36,8 +38,10 @@ const styles = (theme) => ({
   },
 });
 
-function AppAppBar(props) {
-  const { classes } = props;
+const AppAppBar = (props) => {
+  const { classes, history } = props
+  console.log(props)
+
 
   return (
     <div>
@@ -51,10 +55,12 @@ function AppAppBar(props) {
             underline='none'
             color='inherit'
             className={classes.title}
+            href='/'
           >
             BurgerTown
           </Link>
-          <div className={classes.right}>
+          {
+            localStorage.token === undefined ? <div className={classes.right}>
             <Link
               color='inherit'
               variant='h6'
@@ -72,7 +78,35 @@ function AppAppBar(props) {
             >
               Registrarse
             </Link>
+          </div> : <div className={classes.right}>
+            <Link
+              component='button'
+              color='inherit'
+              variant='h6'
+              underline='none'
+              className={classes.rightLink}
+              onClick={() => {
+                Swal.fire({
+                  title: 'Deseas cerrar sesión?',
+                  showDenyButton: true,
+                  showCancelButton: true,
+                  confirmButtonText: `Cerrar Sesión`,
+                  denyButtonText: `NO Cerrar Sesión`,
+                }).then((result) => {
+                  if (result.isConfirmed) {
+                    localStorage.clear();
+                    Swal.fire('Cerraste sesión exitosamente', '', 'success')
+                    history.push('/');
+                  } else if (result.isDenied) {
+                    Swal.fire('No cerraste sesión', '', 'error')
+                  }
+                })
+              }}
+            >
+              Cerrar Sesión
+            </Link>
           </div>
+          }
         </Toolbar>
       </AppBar>
       <div className={classes.placeholder} />
@@ -84,4 +118,4 @@ AppAppBar.propTypes = {
   classes: PropTypes.object.isRequired,
 };
 
-export default withStyles(styles)(AppAppBar);
+export default withStyles(styles)(withRouter(AppAppBar));

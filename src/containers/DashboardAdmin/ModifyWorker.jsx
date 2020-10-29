@@ -60,7 +60,7 @@ const ModifyWorker = ({ match }) => {
     const targetUrl = `https://burgertown-backend.herokuapp.com/Trabajador/Edit/${workerId}`
     const response = await fetch(targetUrl, {
       method: "PUT",
-      headers: { "Content-Type": "application/json" },
+      headers: { "Content-Type": "application/json", token: localStorage.token},
       body: JSON.stringify(newWorker)
     })
   }

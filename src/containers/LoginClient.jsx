@@ -9,6 +9,7 @@ import Grid from '@material-ui/core/Grid';
 import AccountCircleOutlinedIcon from '@material-ui/icons/AccountCircleOutlined';
 import Typography from '@material-ui/core/Typography';
 import { makeStyles } from '@material-ui/core/styles';
+import Swal from 'sweetalert2';
 
 const useStyles = makeStyles((theme) => ({
   root: {
@@ -41,8 +42,39 @@ const useStyles = makeStyles((theme) => ({
   },
 }));
 
-export default function LoginClient() {
+export default function LoginClient(props) {
   const classes = useStyles();
+
+  const [phone, setPhone] = React.useState('');
+  const [password, setPassword] = React.useState('');
+
+  const handleSubmit = async (event) => {
+    event.preventDefault();
+    console.log(phone)
+    console.log(password)
+    const response = await fetch(`https://burgertown-backend.herokuapp.com/Cliente/Login/${phone}`, {
+      method: "PUT",
+      headers: { "Content-Type": "application/json"},
+      body: JSON.stringify({ cliente_password: password })
+    }).then(res => res.json()).then(data => {
+      localStorage.setItem('token', data.token)
+      localStorage.setItem('typeUser', data.typeUser)
+      if(localStorage.getItem('token') === 'undefined') {
+        Swal.fire({
+          icon: 'error',
+          title: 'Oops...',
+          text: 'Inicio de sesión Cliente Fallido',
+        })
+      } else {
+        Swal.fire(
+          'Inicio de Sesión exitoso',
+          'Iniciaste sesión como Cliente exitosamente',
+          'success'
+        )
+        props.history.push('/menu');
+      }
+    })
+  }
 
   return (
     <Grid container component='main' className={classes.root}>
@@ -56,16 +88,17 @@ export default function LoginClient() {
           <Typography component='h1' variant='h5'>
             Iniciar Sesión como Cliente
           </Typography>
-          <form className={classes.form} noValidate>
+          <form className={classes.form} onSubmit={handleSubmit}>
             <TextField
               variant='outlined'
               margin='normal'
               required
               fullWidth
-              id='email'
-              label='Correo electrónico'
-              name='email'
-              autoComplete='email'
+              id='phone'
+              label='Celular'
+              name='phone'
+              autoComplete='phone'
+              onChange={(event) => {setPhone(event.target.value)}}
               autoFocus
             />
             <TextField
@@ -78,6 +111,7 @@ export default function LoginClient() {
               type='password'
               id='password'
               autoComplete='current-password'
+              onChange={(event) => {setPassword(event.target.value)}}
             />
             <Button
               type='submit'
