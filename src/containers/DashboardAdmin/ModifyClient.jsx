@@ -17,6 +17,7 @@ import {
   KeyboardDatePicker,
 } from '@material-ui/pickers';
 import { withRouter } from 'react-router-dom';
+import Swal from 'sweetalert2';
 
 const useStyles = makeStyles((theme) => ({
   paper: {
@@ -81,8 +82,19 @@ const ModifyClient = ({ match }) => {
       headers: { "Content-Type": "application/json", token: localStorage.token},
       body: JSON.stringify(newClient)
     })
-    console.log(response.status)
-    console.log(response.statusText)
+    if(response.status === 200) {
+      Swal.fire(
+        'Cliente modificado',
+        'Cliente modificado exitosamente!',
+        'success'
+      )
+    } else {
+      Swal.fire(
+        'Error al modificar cliente',
+        'Hubo un error modificando el cliente',
+        'error'
+      )
+    }
   }
 
 

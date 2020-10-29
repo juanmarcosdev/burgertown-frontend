@@ -16,6 +16,7 @@ import {
     MuiPickersUtilsProvider,
     KeyboardTimePicker,
   } from '@material-ui/pickers';
+import Swal from 'sweetalert2';
 
 const useStyles = makeStyles((theme) => ({
   paper: {
@@ -75,8 +76,19 @@ export default function CreateSede() {
       headers: { "Content-Type": "application/json", token: localStorage.token},
       body: JSON.stringify(newSede)
     })
-    console.log(response.status)
-    console.log(response.statusText)
+    if(response.status === 200) {
+      Swal.fire(
+        'Sede creada',
+        'Sede creada exitosamente!',
+        'success'
+      )
+    } else {
+      Swal.fire(
+        'Error al crear sede',
+        'Hubo un error creando la sede',
+        'error'
+      )
+    }
   }
 
 

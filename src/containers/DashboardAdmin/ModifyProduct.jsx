@@ -10,6 +10,7 @@ import Typography from '@material-ui/core/Typography';
 import { makeStyles } from '@material-ui/core/styles';
 import Container from '@material-ui/core/Container';
 import { withRouter } from 'react-router-dom';
+import Swal from 'sweetalert2';
 
 const useStyles = makeStyles((theme) => ({
   paper: {
@@ -60,8 +61,19 @@ const ModifyProduct = ({ match }) => {
       headers: { "Content-Type": "application/json", token: localStorage.token},
       body: JSON.stringify(newProduct)
     })
-    console.log(response.status)
-    console.log(response.statusText)
+    if(response.status === 200) {
+      Swal.fire(
+        'Producto modificado',
+        'Producto modificado exitosamente!',
+        'success'
+      )
+    } else {
+      Swal.fire(
+        'Error al modificar producto',
+        'Hubo un error modificando el producto',
+        'error'
+      )
+    }
   }
 
   return (

@@ -16,6 +16,7 @@ import {
   MuiPickersUtilsProvider,
   KeyboardDatePicker,
 } from '@material-ui/pickers';
+import Swal from 'sweetalert2';
 
 const useStyles = makeStyles((theme) => ({
   paper: {
@@ -76,6 +77,19 @@ export default function CreateClient() {
       headers: { "Content-Type": "application/json", token: localStorage.token},
       body: JSON.stringify(newClient)
     })
+    if(response.status === 200) {
+      Swal.fire(
+        'Cliente creado',
+        'Cliente creado exitosamente!',
+        'success'
+      )
+    } else {
+      Swal.fire(
+        'Error al crear cliente',
+        'Hubo un error creando el cliente',
+        'error'
+      )
+    }
   }
 
 

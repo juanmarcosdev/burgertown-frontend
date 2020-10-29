@@ -17,6 +17,7 @@ import {
     KeyboardTimePicker,
   } from '@material-ui/pickers';
 import { withRouter } from 'react-router-dom';
+import Swal from 'sweetalert2';
 
 const useStyles = makeStyles((theme) => ({
   paper: {
@@ -81,8 +82,19 @@ const ModifySede = ({ match }) => {
       headers: { "Content-Type": "application/json", token: localStorage.token},
       body: JSON.stringify(newSede)
     })
-    console.log(response.status)
-    console.log(response.statusText)
+    if(response.status === 200) {
+      Swal.fire(
+        'Sede modificada',
+        'Sede modificada exitosamente!',
+        'success'
+      )
+    } else {
+      Swal.fire(
+        'Error al modificar sede',
+        'Hubo un error modificando la sede',
+        'error'
+      )
+    }
   }
 
 

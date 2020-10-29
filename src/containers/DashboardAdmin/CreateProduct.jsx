@@ -9,6 +9,7 @@ import LockOutlinedIcon from '@material-ui/icons/LockOutlined';
 import Typography from '@material-ui/core/Typography';
 import { makeStyles } from '@material-ui/core/styles';
 import Container from '@material-ui/core/Container';
+import Swal from 'sweetalert2';
 
 const useStyles = makeStyles((theme) => ({
   paper: {
@@ -60,8 +61,19 @@ export default function CreateProduct() {
       headers: { "Content-Type": "application/json", token: localStorage.token},
       body: JSON.stringify(newProduct)
     })
-    console.log(response.status)
-    console.log(response.statusText)
+    if(response.status === 200) {
+      Swal.fire(
+        'Producto creado',
+        'Producto creado exitosamente!',
+        'success'
+      )
+    } else {
+      Swal.fire(
+        'Error al crear producto',
+        'Hubo un error creando el producto',
+        'error'
+      )
+    }
   }
 
   return (

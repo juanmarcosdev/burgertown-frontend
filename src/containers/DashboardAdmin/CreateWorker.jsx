@@ -9,6 +9,7 @@ import LockOutlinedIcon from '@material-ui/icons/LockOutlined';
 import Typography from '@material-ui/core/Typography';
 import { makeStyles } from '@material-ui/core/styles';
 import Container from '@material-ui/core/Container';
+import Swal from 'sweetalert2';
 
 const useStyles = makeStyles((theme) => ({
   paper: {
@@ -59,6 +60,19 @@ export default function CreateWorker() {
       headers: { "Content-Type": "application/json", token: localStorage.token},
       body: JSON.stringify(newWorker)
     })
+    if(response.status === 200) {
+      Swal.fire(
+        'Trabajador creado',
+        'Trabajador creado exitosamente!',
+        'success'
+      )
+    } else {
+      Swal.fire(
+        'Error al crear trabajador',
+        'Hubo un error creando el trabajador',
+        'error'
+      )
+    }
   }
 
   return (

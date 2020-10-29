@@ -334,7 +334,6 @@ const DashboardAdmin = (props) => {
                 Swal.fire({
                   title: 'Deseas cerrar sesión?',
                   showDenyButton: true,
-                  showCancelButton: true,
                   confirmButtonText: `Cerrar Sesión`,
                   denyButtonText: `NO Cerrar Sesión`,
                 }).then((result) => {

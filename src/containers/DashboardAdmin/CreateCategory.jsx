@@ -9,6 +9,7 @@ import LockOutlinedIcon from '@material-ui/icons/LockOutlined';
 import Typography from '@material-ui/core/Typography';
 import { makeStyles } from '@material-ui/core/styles';
 import Container from '@material-ui/core/Container';
+import Swal from 'sweetalert2';
 
 const useStyles = makeStyles((theme) => ({
   paper: {
@@ -47,6 +48,19 @@ export default function CreateCategory() {
       headers: { "Content-Type": "application/json", token: localStorage.token},
       body: JSON.stringify(newCategory)
     })
+    if(response.status === 200) {
+      Swal.fire(
+        'Categoría creada',
+        'Categoría creada exitosamente!',
+        'success'
+      )
+    } else {
+      Swal.fire(
+        'Error al crear categoría',
+        'Hubo un error creando la categoría',
+        'error'
+      )
+    }
   }
 
   return (
