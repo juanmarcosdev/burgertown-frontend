@@ -40,7 +40,6 @@ const styles = (theme) => ({
 
 const AppAppBar = (props) => {
   const { classes, history } = props
-  console.log(props)
 
 
   return (
@@ -89,7 +88,6 @@ const AppAppBar = (props) => {
                 Swal.fire({
                   title: 'Deseas cerrar sesión?',
                   showDenyButton: true,
-                  showCancelButton: true,
                   confirmButtonText: `Cerrar Sesión`,
                   denyButtonText: `NO Cerrar Sesión`,
                 }).then((result) => {

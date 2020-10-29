@@ -80,3 +80,15 @@ export const activateProducto = (payload) => ({
     type: 'ACTIVATE_PRODUCTO',
     payload,
 });
+
+// Menu
+
+export const getMenu = (payload) => ({
+    type: 'GET_MENU',
+    payload,
+});
+
+export const getMenuProductos = (payload) => ({
+    type: 'GET_MENU_PRODUCTOS',
+    payload,
+});

@@ -11,6 +11,8 @@ const initialState = {
   'dataCategorias': [],
   'dataSedes': [],
   'dataProductos': [],
+  'dataMenu': [],
+  'dataMenuProductos': [],
 }
 
 const store = createStore(reducer, initialState);

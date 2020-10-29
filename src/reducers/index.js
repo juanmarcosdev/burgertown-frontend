@@ -75,6 +75,16 @@ const reducer = (state, action) => {
                 ...state,
                 dataProductos: [...state.dataProductos, action.payload]
             };
+        case 'GET_MENU':
+            return {
+                ...state,
+                dataMenu: action.payload,
+            };
+        case 'GET_MENU_PRODUCTOS':
+            return {
+                ...state,
+                dataMenuProductos: [...state.dataMenuProductos, action.payload],
+            };
         default:
             return state;
     }
