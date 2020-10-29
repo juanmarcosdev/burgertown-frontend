@@ -11,10 +11,12 @@ import Typography from '@material-ui/core/Typography';
 import { makeStyles } from '@material-ui/core/styles';
 import Container from '@material-ui/core/Container';
 import DateFnsUtils from '@date-io/date-fns';
+import 'dateformat';
 import {
   MuiPickersUtilsProvider,
   KeyboardDatePicker,
 } from '@material-ui/pickers';
+import Swal from 'sweetalert2';
 
 const useStyles = makeStyles((theme) => ({
   paper: {
@@ -38,12 +40,58 @@ const useStyles = makeStyles((theme) => ({
 
 export default function RegistroCliente() {
   const classes = useStyles();
+  
 
+  const dateFormat = require('dateformat');
+
+  const [name, setName] = React.useState('');
+  const [surname, setSurname] = React.useState('');
+  const [phone, setPhone] = React.useState('');
+  const [document, setDocument] = React.useState('');
+  const [address, setAddress] = React.useState('');
+  const [password, setPassword] = React.useState('');
+  const [photo, setPhoto] = React.useState('');
   const [selectedDate, setSelectedDate] = React.useState(new Date());
 
   const handleDateChange = (date) => {
     setSelectedDate(date);
   };
+
+  const birthdayFormat = dateFormat(selectedDate, "dd-mm-yyyy");
+
+  const handleSubmit = async (event) => {
+    event.preventDefault();
+    const newClient = {
+      cliente_documento: document,
+      cliente_nombre: name,
+      cliente_apellido: surname,
+      cliente_celular: phone,
+      cliente_direccion: address,
+      cliente_password: password,
+      cliente_fecha_nacimiento: birthdayFormat,
+      cliente_foto: photo,
+    }
+    console.log(newClient);
+    const response = await fetch(`https://burgertown-backend.herokuapp.com/Cliente/Create`, {
+      method: "POST",
+      headers: { "Content-Type": "application/json"},
+      body: JSON.stringify(newClient)
+    })
+    if(response.status === 200) {
+      Swal.fire(
+        'Cliente creado',
+        'Cliente creado exitosamente!',
+        'success'
+      )
+    } else {
+      Swal.fire(
+        'Error al crear cliente',
+        'Hubo un error creando el cliente',
+        'error'
+      )
+    }
+  }
+
 
   return (
     <Container component="main" maxWidth="xs">
@@ -55,7 +103,7 @@ export default function RegistroCliente() {
         <Typography component="h1" variant="h5">
           Registrarse como Cliente
         </Typography>
-        <form className={classes.form}>
+        <form className={classes.form} onSubmit={handleSubmit}>
           <Grid container spacing={2}>
             <Grid item xs={12} sm={6}>
               <TextField
@@ -66,6 +114,7 @@ export default function RegistroCliente() {
                 fullWidth
                 id="nombre"
                 label="Nombre"
+                onChange={(event) => {setName(event.target.value)}}
                 autoFocus
               />
             </Grid>
@@ -78,6 +127,7 @@ export default function RegistroCliente() {
                 label="Apellido"
                 name="apellido"
                 autoComplete="apellido"
+                onChange={(event) => {setSurname(event.target.value)}}
               />
             </Grid>
             <Grid item xs={12}>
@@ -89,6 +139,7 @@ export default function RegistroCliente() {
                 label="Celular"
                 name="celular"
                 autoComplete="celular"
+                onChange={(event) => {setPhone(event.target.value)}}
               />
             </Grid>
             <Grid item xs={12}>
@@ -100,6 +151,7 @@ export default function RegistroCliente() {
                 label="Documento"
                 name="documento"
                 autoComplete="documento"
+                onChange={(event) => {setDocument(event.target.value)}}
               />
             </Grid>
             <Grid item xs={12}>
@@ -111,6 +163,19 @@ export default function RegistroCliente() {
                 label="Dirección"
                 name="direccion"
                 autoComplete="direccion"
+                onChange={(event) => {setAddress(event.target.value)}}
+              />
+            </Grid>
+            <Grid item xs={12}>
+              <TextField
+                variant="outlined"
+                required
+                fullWidth
+                id="photo"
+                label="photo"
+                name="photo"
+                autoComplete="photo"
+                onChange={(event) => {setPhoto(event.target.value)}}
               />
             </Grid>
             <Grid item xs={12}>
@@ -123,6 +188,7 @@ export default function RegistroCliente() {
                 type="password"
                 id="password"
                 autoComplete="current-password"
+                onChange={(event) => {setPassword(event.target.value)}}
               />
             </Grid>
             <Grid container justify="space-around">
@@ -148,7 +214,7 @@ export default function RegistroCliente() {
             color="primary"
             className={classes.submit}
           >
-            Registrarse
+            Registrarme
           </Button>
         </form>
         <Button
@@ -156,9 +222,9 @@ export default function RegistroCliente() {
             fullWidth
             variant='contained'
             color='main'
-            href='/'
+            href='/dashboardadmin'
           >
-            Volver a la Página Principal
+            Volver a Panel de Administración
           </Button>
       </div>
     </Container>

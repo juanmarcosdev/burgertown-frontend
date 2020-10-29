@@ -74,7 +74,7 @@ export default function CreateClient() {
     console.log(newClient);
     const response = await fetch(`https://burgertown-backend.herokuapp.com/Cliente/Create`, {
       method: "POST",
-      headers: { "Content-Type": "application/json", token: localStorage.token},
+      headers: { "Content-Type": "application/json"},
       body: JSON.stringify(newClient)
     })
     if(response.status === 200) {
