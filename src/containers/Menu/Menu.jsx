@@ -10,7 +10,8 @@ const Menu = () => {
     return (
         <div>
             {
-                localStorage.token !== undefined && localStorage.typeUser === '1' ? <div><AppAppBar />
+                localStorage.token !== undefined && localStorage.typeUser === '1' ? 
+                <div><AppAppBar />
                 <Categories>
                 <h3 style={{fontSize: 24, color: 'white', backgroundColor: '#28282A', margin: 0, padding: '20px'}}>Pizza</h3>
                     <Carousel>

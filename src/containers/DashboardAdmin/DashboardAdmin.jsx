@@ -33,6 +33,8 @@ import CategoryIcon from '@material-ui/icons/Category';
 import FastfoodIcon from '@material-ui/icons/Fastfood';
 import AssignmentIcon from '@material-ui/icons/Assignment';
 import NotFound from '../NotFound';
+import ExitToAppIcon from '@material-ui/icons/ExitToApp';
+import Badge from '@material-ui/core/Badge';
 
 
 
@@ -118,7 +120,7 @@ const useStyles = makeStyles((theme) => ({
 }));
 
 const DashboardAdmin = (props) => {
-  const { dataTrabajadores, dataClientes, dataCategorias, dataSedes, dataProductos } = props;
+  const { dataTrabajadores, dataClientes, dataCategorias, dataSedes, dataProductos, history } = props;
   const classes = useStyles();
   const [open, setOpen] = React.useState(true);
   const handleDrawerOpen = () => {
@@ -327,6 +329,27 @@ const DashboardAdmin = (props) => {
             <Typography component="h1" variant="h6" color="inherit" noWrap className={classes.title}>
               Panel de Administrador
             </Typography>
+            <IconButton color="inherit">
+            <Badge color="secondary" onClick={() => {
+                Swal.fire({
+                  title: 'Deseas cerrar sesión?',
+                  showDenyButton: true,
+                  showCancelButton: true,
+                  confirmButtonText: `Cerrar Sesión`,
+                  denyButtonText: `NO Cerrar Sesión`,
+                }).then((result) => {
+                  if (result.isConfirmed) {
+                    localStorage.clear();
+                    Swal.fire('Cerraste sesión exitosamente', '', 'success')
+                    history.push('/');
+                  } else if (result.isDenied) {
+                    Swal.fire('No cerraste sesión', '', 'error')
+                  }
+                })
+              }}>
+              <ExitToAppIcon />
+            </Badge>
+          </IconButton>
           </Toolbar>
         </AppBar>
         <Drawer
