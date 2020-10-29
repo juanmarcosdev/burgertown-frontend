@@ -23,18 +23,7 @@ const Menu = (props) => {
         }).then(res => res.json())
           .then(data => {
             props.getMenu(data.data)
-            console.log(data.data)
-            // let requests = data.data.map(item => fetch(`https://burgertown-backend.herokuapp.com/Producto/Categoria/${item.categoria_id}`,
-            // {
-            //     method: 'GET',
-            //     headers: { "Content-Type": "application/json",
-            //                 token: localStorage.token
-            // }}))
-            // Promise.all(requests)
-            // .then(responses => responses.forEach(
-            //     response => response.json().then(res => props.getMenuProductos(res)))
-            // );
-            })
+            console.log(data.data)})
       }, []);
     
     return (

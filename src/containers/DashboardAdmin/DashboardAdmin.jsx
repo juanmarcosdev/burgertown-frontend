@@ -143,7 +143,10 @@ const DashboardAdmin = (props) => {
                  token: localStorage.token
                },
     }).then(res => res.json())
-      .then(data => {props.getTrabajadores(data.data)})
+      .then(data => {
+        props.getTrabajadores(data.data)
+        console.log(data.data)
+      })
   }, []);
 
   React.useEffect(() => {
@@ -155,7 +158,9 @@ const DashboardAdmin = (props) => {
                },
     })
       .then(res => res.json())
-      .then(data => {props.getClientes(data.data)})
+      .then(data => {
+        props.getClientes(data.data)
+        console.log(data.data)})
   }, []);
 
   React.useEffect(() => {
