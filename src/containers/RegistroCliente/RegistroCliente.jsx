@@ -57,7 +57,7 @@ export default function RegistroCliente() {
     setSelectedDate(date);
   };
 
-  const birthdayFormat = dateFormat(selectedDate, "dd-mm-yyyy");
+  const birthdayFormat = dateFormat(selectedDate, "yyyy-mm-dd");
 
   const handleSubmit = async (event) => {
     event.preventDefault();
