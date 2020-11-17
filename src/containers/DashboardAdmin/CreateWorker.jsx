@@ -42,6 +42,8 @@ export default function CreateWorker() {
   const [position, setPosition] = React.useState('');
   const [password, setPassword] = React.useState('');
   const [photo, setPhoto] = React.useState('');
+  const [idsede, setIdsede] = React.useState('');
+  
 
   const handleSubmit = async (event) => {
     event.preventDefault();
@@ -54,6 +56,7 @@ export default function CreateWorker() {
       trabajador_direccion: address,
       trabajador_password: password,
       trabajador_foto: photo,
+      sede_id: parseInt(idsede),
     }
     const response = await fetch(`https://burgertown-backend.herokuapp.com/Trabajador/Create`, {
       method: "POST",
@@ -158,6 +161,18 @@ export default function CreateWorker() {
                 name="cargo"
                 autoComplete="cargo"
                 onChange={(event) => {setPosition(event.target.value)}}
+              />
+            </Grid>
+            <Grid item xs={12}>
+              <TextField
+                variant="outlined"
+                required
+                fullWidth
+                id="sedeid"
+                label="Sede ID"
+                name="sedeid"
+                autoComplete="sedeid"
+                onChange={(event) => {setIdsede(event.target.value)}}
               />
             </Grid>
             <Grid item xs={12}>

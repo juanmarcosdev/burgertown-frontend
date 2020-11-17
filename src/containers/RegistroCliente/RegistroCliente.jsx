@@ -222,9 +222,9 @@ export default function RegistroCliente() {
             fullWidth
             variant='contained'
             color='main'
-            href='/dashboardadmin'
+            href='/'
           >
-            Volver a Panel de Administración
+            Volver a Página Principal
           </Button>
       </div>
     </Container>
