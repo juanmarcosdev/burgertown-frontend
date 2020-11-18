@@ -43,7 +43,8 @@ const Menu = (props) => {
                         </Categories>
                         ) : <div></div>
                     }
-                </div>: 
+                </div>
+                : 
                 <NotFound />
             }
             {

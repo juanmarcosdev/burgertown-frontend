@@ -4,7 +4,7 @@
   "description": "",
   "main": "index.js",
   "scripts": {
-    "test": "echo \"Error: no test specified\" && exit 1",
+    "test": "jest",
     "build": "webpack --mode production",
     "dev": "webpack-dev-server --open --mode development",
     "start": "node server/server.js"
@@ -26,7 +26,10 @@
     "clsx": "^1.1.1",
     "date-fns": "^2.16.1",
     "dateformat": "^3.0.3",
+    "enzyme": "^3.11.0",
+    "enzyme-adapter-react-16": "^1.15.5",
     "express": "^4.17.1",
+    "jest": "^26.6.3",
     "json-server": "^0.16.2",
     "prop-types": "^15.7.2",
     "react": "^16.13.1",

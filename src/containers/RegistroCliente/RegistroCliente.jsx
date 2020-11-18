@@ -57,38 +57,53 @@ export default function RegistroCliente() {
     setSelectedDate(date);
   };
 
+  const dateToday = new Date();
+  const formatedToday = dateFormat(dateToday, "yyyy-mm-dd");
+
   const birthdayFormat = dateFormat(selectedDate, "yyyy-mm-dd");
+
+  Function.prototype.called = false;
+  Function.prototype.dateError = false;
 
   const handleSubmit = async (event) => {
     event.preventDefault();
-    const newClient = {
-      cliente_documento: document,
-      cliente_nombre: name,
-      cliente_apellido: surname,
-      cliente_celular: phone,
-      cliente_direccion: address,
-      cliente_password: password,
-      cliente_fecha_nacimiento: birthdayFormat,
-      cliente_foto: photo,
-    }
-    console.log(newClient);
-    const response = await fetch(`https://burgertown-backend.herokuapp.com/Cliente/Create`, {
-      method: "POST",
-      headers: { "Content-Type": "application/json"},
-      body: JSON.stringify(newClient)
-    })
-    if(response.status === 200) {
+    handleSubmit.called = true;
+    if(selectedDate === dateToday || selectedDate > dateToday) {
+      handleSubmit.dateError = true;
       Swal.fire(
-        'Cliente creado',
-        'Cliente creado exitosamente!',
-        'success'
-      )
-    } else {
-      Swal.fire(
-        'Error al crear cliente',
-        'Hubo un error creando el cliente',
+        'Error',
+        'La fecha de nacimiento no puede ser igual o mayor a la fecha actual',
         'error'
       )
+    } else {
+      const newClient = {
+        cliente_documento: document,
+        cliente_nombre: name,
+        cliente_apellido: surname,
+        cliente_celular: phone,
+        cliente_direccion: address,
+        cliente_password: password,
+        cliente_fecha_nacimiento: birthdayFormat,
+        cliente_foto: photo,
+      }
+      const response = await fetch(`https://burgertown-backend.herokuapp.com/Cliente/Create`, {
+        method: "POST",
+        headers: { "Content-Type": "application/json"},
+        body: JSON.stringify(newClient)
+      })
+      if(response.status === 200) {
+        Swal.fire(
+          'Cliente creado',
+          'Cliente creado exitosamente!',
+          'success'
+        )
+      } else {
+        Swal.fire(
+          'Error al crear cliente',
+          'Hubo un error creando el cliente',
+          'error'
+        )
+      }
     }
   }
 
@@ -114,6 +129,7 @@ export default function RegistroCliente() {
                 fullWidth
                 id="nombre"
                 label="Nombre"
+                value={name}
                 onChange={(event) => {setName(event.target.value)}}
                 autoFocus
               />
@@ -125,6 +141,7 @@ export default function RegistroCliente() {
                 fullWidth
                 id="apellido"
                 label="Apellido"
+                value={surname}
                 name="apellido"
                 autoComplete="apellido"
                 onChange={(event) => {setSurname(event.target.value)}}
@@ -137,6 +154,7 @@ export default function RegistroCliente() {
                 fullWidth
                 id="celular"
                 label="Celular"
+                value={phone}
                 name="celular"
                 autoComplete="celular"
                 onChange={(event) => {setPhone(event.target.value)}}
@@ -149,6 +167,7 @@ export default function RegistroCliente() {
                 fullWidth
                 id="documento"
                 label="Documento"
+                value={document}
                 name="documento"
                 autoComplete="documento"
                 onChange={(event) => {setDocument(event.target.value)}}
@@ -161,6 +180,7 @@ export default function RegistroCliente() {
                 fullWidth
                 id="direccion"
                 label="Dirección"
+                value={address}
                 name="direccion"
                 autoComplete="direccion"
                 onChange={(event) => {setAddress(event.target.value)}}
@@ -172,7 +192,8 @@ export default function RegistroCliente() {
                 required
                 fullWidth
                 id="photo"
-                label="photo"
+                label="URL Foto"
+                value={photo}
                 name="photo"
                 autoComplete="photo"
                 onChange={(event) => {setPhoto(event.target.value)}}
@@ -186,6 +207,7 @@ export default function RegistroCliente() {
                 name="password"
                 label="Contraseña"
                 type="password"
+                value={password}
                 id="password"
                 autoComplete="current-password"
                 onChange={(event) => {setPassword(event.target.value)}}
@@ -212,6 +234,7 @@ export default function RegistroCliente() {
             fullWidth
             variant="contained"
             color="primary"
+            id="buttonsubmit"
             className={classes.submit}
           >
             Registrarme
