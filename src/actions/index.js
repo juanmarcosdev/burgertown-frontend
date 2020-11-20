@@ -92,3 +92,12 @@ export const getMenuProductos = (payload) => ({
     type: 'GET_MENU_PRODUCTOS',
     payload,
 });
+
+export const getProductoIndividual = (payload) => ({
+    type: 'GET_PRODUCTO_INDIVIDUAL',
+    payload,
+});
+
+export const cleanProductoIndividual = () => ({
+    type: 'CLEAN_PRODUCTO_INDIVIDUAL',
+});

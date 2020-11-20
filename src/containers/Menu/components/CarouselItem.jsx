@@ -1,22 +1,24 @@
 import React from 'react';
 import '../../../assets/styles/components/CarouselItem.css';
-import plusIcon from '../../../assets/static/plus-icon.png';
+import carritoIcon from '../../../assets/static/plus-icon.png';
+import viewProduct from '../../../assets/static/plus.png';
 
-const CarouselItem = (
-  // { cover, title, year, contentRating, duration }
-  ) => (
+const CarouselItem = (props) => {
+  const { categoria_id, producto_codigo, producto_descripcion, producto_descuento, producto_estado, producto_existencias, producto_imagen, producto_iva, producto_nombre, producto_precio } = props;
+  return (
   <div className='carousel-item'>
-    <img className='carousel-item__img' src='https://cdn.pixabay.com/photo/2017/09/22/19/05/casserole-dish-2776735_960_720.jpg' alt='comida rica' />
+    <img className='carousel-item__img' src={producto_imagen} alt='comida rica' />
     <div className='carousel-item__details'>
       <div>
-        <img className='carousel-item__details--img' src={plusIcon} alt='Plus Icon' />
+        <img className='carousel-item__details--img' src={viewProduct} alt='view product' />
+        <img className='carousel-item__details--img' src={carritoIcon} alt='Plus Icon' />
       </div>
-      <p className='carousel-item__details--title'>Plato delicioso</p>
+      <p className='carousel-item__details--title'>{producto_nombre}</p>
       <p className='carousel-item__details--subtitle'>
-        {`Deliciosa comida`}
+        {producto_descripcion}
       </p>
     </div>
   </div>
-);
+)};
 
 export default CarouselItem;

@@ -23,13 +23,28 @@ const Menu = (props) => {
         }).then(res => res.json())
           .then(data => {
             props.getMenu(data.data)
-            console.log(data.data)})
+            console.log(data.data)
+        })
+      }, []);
+
+      React.useEffect(() => {
+        fetch('https://burgertown-backend.herokuapp.com/Producto/Menu/Get', 
+        {
+          method: 'GET',
+          headers: { "Content-Type": "application/json",
+                     token: localStorage.token
+                   },
+        }).then(res => res.json())
+          .then(data => {
+            props.getMenuProductos(data.flat())
+            console.log(data.flat())
+        })
       }, []);
     
     return (
         <div>
             {
-                localStorage.token !== undefined && localStorage.typeUser === '1' ?
+                // localStorage.token !== undefined && localStorage.typeUser === '1' ?
                 <div> 
                     <AppAppBar />
                     {
@@ -37,18 +52,18 @@ const Menu = (props) => {
                         <Categories>
                             <h3 style={{fontSize: 24, color: 'white', backgroundColor: '#28282A', margin: 0, padding: '20px'}}>{item.categoria_nombre}</h3>
                                 <Carousel>
-                                    <CarouselItem>
-                                    </CarouselItem>
+                                    {
+                                        dataMenuProductos.filter(product => product.categoria_id === item.categoria_id).map(card =>
+                                            <CarouselItem key={card.producto_codigo} {...card} isList>
+                                            </CarouselItem>)
+                                    }
                                 </Carousel>
                         </Categories>
                         ) : <div></div>
                     }
                 </div>
-                : 
-                <NotFound />
-            }
-            {
-                console.log(dataMenuProductos[0])
+                // : 
+                // <NotFound />
             }
         </div>
     );

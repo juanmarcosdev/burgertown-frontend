@@ -83,8 +83,18 @@ const reducer = (state, action) => {
         case 'GET_MENU_PRODUCTOS':
             return {
                 ...state,
-                dataMenuProductos: [...state.dataMenuProductos, action.payload],
+                dataMenuProductos: action.payload,
             };
+        case 'GET_PRODUCTO_INDIVIDUAL':
+            return {
+                ...state,
+                dataProductoIndividual: action.payload,
+            }
+        case 'CLEAN_PRODUCTO_INDIVIDUAL':
+            return {
+                ...state,
+                dataProductoIndividual: {},
+            }
         default:
             return state;
     }

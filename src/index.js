@@ -13,6 +13,7 @@ const initialState = {
   'dataProductos': [],
   'dataMenu': [],
   'dataMenuProductos': [],
+  'dataProductoIndividual': {},
 }
 
 const store = createStore(reducer, initialState);
