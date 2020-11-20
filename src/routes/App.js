@@ -19,6 +19,7 @@ import CreateProduct from '../containers/DashboardAdmin/CreateProduct';
 import ModifyProduct from '../containers/DashboardAdmin/ModifyProduct';
 import NotFound from '../containers/NotFound';
 import Product from '../containers/Product';
+import CarritoCompra from '../containers/CarritoCompra';
 
 const App = () => (
   <BrowserRouter>
@@ -41,6 +42,7 @@ const App = () => (
       <Route exact path='/createproduct' component={CreateProduct} />
       <Route path='/modifyproduct/:productId' component={ModifyProduct} />
       <Route path='/product/:productId' component={Product} />
+      <Route exact path='/carritocompra' component={CarritoCompra} />
       <Route component={NotFound} />
     </Switch>
   </BrowserRouter>

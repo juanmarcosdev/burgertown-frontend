@@ -95,6 +95,16 @@ const reducer = (state, action) => {
                 ...state,
                 carritoCompras: [...state.carritoCompras, action.payload]
             }
+        case 'ADD_ID_PRODUCTO_LLEVAR':
+            return {
+                ...state,
+                idProductosALlevar: [...state.idProductosALlevar, action.payload]
+            }
+        case 'ADD_CANTIDAD_PRODUCTO_LLEVAR':
+            return {
+                ...state,
+                cantidadProductosALlevar: [...state.cantidadProductosALlevar, action.payload]
+            }
         default:
             return state;
     }

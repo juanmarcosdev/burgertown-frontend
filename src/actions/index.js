@@ -102,3 +102,13 @@ export const sendCarritoProducto = (payload) => ({
     type: 'SEND_CARRITO_PRODUCTO',
     payload,
 });
+
+export const addIdProductoLlevar = (payload) => ({
+    type: 'ADD_ID_PRODUCTO_LLEVAR',
+    payload,
+});
+
+export const addCantidadProductoLlevar = (payload) => ({
+    type: 'ADD_CANTIDAD_PRODUCTO_LLEVAR',
+    payload,
+});

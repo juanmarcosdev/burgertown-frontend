@@ -15,6 +15,8 @@ const initialState = {
   'dataMenuProductos': [],
   'dataProductoIndividual': {},
   'carritoCompras': [],
+  'idProductosALlevar': [],
+  'cantidadProductosALlevar': [],
 }
 
 const store = createStore(reducer, initialState);

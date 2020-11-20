@@ -16,6 +16,10 @@ const Menu = (props) => {
     // componentDidMount()
 
     React.useEffect(() => {
+        localStorage.removeItem("shopping_cart");
+        localStorage.removeItem("id_productos_a_pagar");
+        localStorage.removeItem("cantidad_productos_a_pagar");
+        localStorage.removeItem("total_a_pagar");
         fetch('https://burgertown-backend.herokuapp.com/Categoria/Get/Cliente', 
         {
           method: 'GET',
@@ -42,6 +46,12 @@ const Menu = (props) => {
             // console.log(data.flat())
         })
       }, []);
+
+      const handleCheckout = (cart) => {
+        // console.log(cart);
+        localStorage.setItem("shopping_cart", JSON.stringify(cart));
+        props.history.push('/carritocompra');
+      }
     
     return (
         <div>
@@ -64,11 +74,11 @@ const Menu = (props) => {
                         ) : <div></div>
                     }
                     <div style={{display: 'flex', justifyContent: 'center'}}>
-                    <Button variant="contained" size="large" color="secondary">Ir al Carrito a Checkout</Button>
+                    <Button variant="contained" size="large" color="secondary" onClick={() => handleCheckout(carritoCompras)}>Ir al Carrito a Checkout</Button>
                     </div>
-                    {
+                    {/* {
                       console.log(carritoCompras)
-                    }
+                    } */}
                 </div>
     
                 // : 
