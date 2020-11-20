@@ -98,6 +98,7 @@ export const getProductoIndividual = (payload) => ({
     payload,
 });
 
-export const cleanProductoIndividual = () => ({
-    type: 'CLEAN_PRODUCTO_INDIVIDUAL',
+export const sendCarritoProducto = (payload) => ({
+    type: 'SEND_CARRITO_PRODUCTO',
+    payload,
 });

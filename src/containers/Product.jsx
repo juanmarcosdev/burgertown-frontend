@@ -57,10 +57,7 @@ const Product = (props) => {
   
   
         <div className="columns2">
-          <Button id="addCart" variant="contained" color="primary">
-            Añadir al Carrito
-          </Button>
-          <Button id="backMenu" variant="contained" color="secondary">
+          <Button id="backMenu" variant="contained" color="secondary" href='/menu'>
             Volver al Menú
           </Button>
         </div>

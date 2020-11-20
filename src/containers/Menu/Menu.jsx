@@ -7,9 +7,11 @@ import CarouselItem from './components/CarouselItem';
 import NotFound from '../NotFound';
 import { getMenu, getMenuProductos } from '../../actions';
 import { connect } from 'react-redux';
+import { Button } from '@material-ui/core';
 
 const Menu = (props) => {
-    const { dataMenu, dataMenuProductos } = props;
+    const { dataMenu, dataMenuProductos, carritoCompras } = props;
+
 
     // componentDidMount()
 
@@ -23,7 +25,7 @@ const Menu = (props) => {
         }).then(res => res.json())
           .then(data => {
             props.getMenu(data.data)
-            console.log(data.data)
+            // console.log(data.data)
         })
       }, []);
 
@@ -37,7 +39,7 @@ const Menu = (props) => {
         }).then(res => res.json())
           .then(data => {
             props.getMenuProductos(data.flat())
-            console.log(data.flat())
+            // console.log(data.flat())
         })
       }, []);
     
@@ -61,7 +63,14 @@ const Menu = (props) => {
                         </Categories>
                         ) : <div></div>
                     }
+                    <div style={{display: 'flex', justifyContent: 'center'}}>
+                    <Button variant="contained" size="large" color="secondary">Ir al Carrito a Checkout</Button>
+                    </div>
+                    {
+                      console.log(carritoCompras)
+                    }
                 </div>
+    
                 // : 
                 // <NotFound />
             }
@@ -73,6 +82,7 @@ const mapStateToProps = (state) => {
     return {
       dataMenu: state.dataMenu,
       dataMenuProductos: state.dataMenuProductos,
+      carritoCompras: state.carritoCompras,
     }
 }
 

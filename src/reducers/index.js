@@ -90,10 +90,10 @@ const reducer = (state, action) => {
                 ...state,
                 dataProductoIndividual: action.payload,
             }
-        case 'CLEAN_PRODUCTO_INDIVIDUAL':
+        case 'SEND_CARRITO_PRODUCTO':
             return {
                 ...state,
-                dataProductoIndividual: {},
+                carritoCompras: [...state.carritoCompras, action.payload]
             }
         default:
             return state;
