@@ -317,8 +317,9 @@ const DashboardAdmin = (props) => {
 
   return (
     <div>
-      {
-        localStorage.token !== undefined && localStorage.typeUser === '2' ? <div className={classes.root}>
+      {/* {
+        localStorage.token !== undefined && localStorage.typeUser === '2' ? */}
+         <div className={classes.root}>
         <CssBaseline />
         <AppBar position="absolute" className={clsx(classes.appBar, open && classes.appBarShift)}>
           <Toolbar className={classes.toolbar}>
@@ -905,7 +906,8 @@ const DashboardAdmin = (props) => {
             </Grid>
           </Container>
         </main>
-              </div> : <NotFound /> }
+              </div> 
+              {/* : <NotFound /> } */}
     </div>
   );
 }
