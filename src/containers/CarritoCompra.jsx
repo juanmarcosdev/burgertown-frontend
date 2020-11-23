@@ -11,7 +11,7 @@ const CarritoCompra = (props) => {
     const { idProductosALlevar, cantidadProductosALlevar } = props;
     const [arrayPrecios, setArrayPrecios] = React.useState([]);
     const [total, setTotal] = React.useState(0);
-    const [cantidad, setCantidad] = React.useState(1);
+    let cantidad = 0;
     const [ready, setReady] = React.useState(false);
     return (
         <div>
@@ -49,19 +49,17 @@ const CarritoCompra = (props) => {
                 id="outlined-number"
                 label="Cantidad"
                 type="number"
-                defaultValue={cantidad}
+                defaultValue="1"
                 InputLabelProps={{
                     shrink: true,
                 }}
                 variant="outlined"
-                onChange={(event) => {setCantidad(event.target.value)}}
+                onChange={(event) => {cantidad = event.target.value}}
                 />
                 <Button variant="contained" color="primary" 
                 onClick={() => {props.addIdProductoLlevar(product.producto_codigo);
-                    props.addCantidadProductoLlevar(cantidad);
+                    props.addCantidadProductoLlevar({"producto_codigo": product.producto_codigo, "pedido_cp_cantidad": parseInt(cantidad)});
                     setArrayPrecios([...arrayPrecios, product.producto_precio]);
-                    // console.log(idProductosALlevar);
-                    // console.log(cantidadProductosALlevar);
                 }}
                 // onClick={handleConfirm(product.producto_codigo, cantidad)}
                 >
@@ -77,7 +75,7 @@ const CarritoCompra = (props) => {
           <Button size="large" variant="contained" color="primary" onClick={() => {
                   let counter = 0;
                   for(let i = 0; i < idProductosALlevar.length; i++) {
-                      counter = counter + (cantidadProductosALlevar[i] * arrayPrecios[i])
+                      counter = counter + (cantidadProductosALlevar[i].pedido_cp_cantidad * arrayPrecios[i])
                   }
                   setTotal(counter);
                   setReady(true);
