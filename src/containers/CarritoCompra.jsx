@@ -1,14 +1,42 @@
 import React from 'react';
 import TextField from '@material-ui/core/TextField';
 import '../assets/styles/components/CarritoCompra.css';
-import { addIdProductoLlevar, addCantidadProductoLlevar } from '../actions';
+import { setSedesDespliegue, addIdProductoLlevar, addCantidadProductoLlevar } from '../actions';
 import { connect } from 'react-redux';
 import Button from '@material-ui/core/Button';
 import Typography from '@material-ui/core/Typography';
+import Select from '@material-ui/core/Select';
+import MenuItem from '@material-ui/core/MenuItem';
+import InputLabel from '@material-ui/core/InputLabel';
+import FormControl from '@material-ui/core/FormControl';
+import { makeStyles } from '@material-ui/core/styles';
 
+const useStyles = makeStyles((theme) => ({
+  formControl: {
+    margin: theme.spacing(1),
+    minWidth: 120,
+  },
+  selectEmpty: {
+    marginTop: theme.spacing(2),
+  },
+}));
 
 const CarritoCompra = (props) => {
-    const { idProductosALlevar, cantidadProductosALlevar } = props;
+    const [sede, setSede] = React.useState('');
+    const classes = useStyles();
+    const { idProductosALlevar, cantidadProductosALlevar, dataSedesDespliegue } = props;
+    React.useEffect(() => {
+      fetch('http://burgertown-backend.herokuapp.com/Sede/Get', 
+        {
+          method: 'GET',
+          headers: { "Content-Type": "application/json",
+                     token: localStorage.token
+                   },
+        }).then(res => res.json())
+          .then(data => {
+            props.setSedesDespliegue(data.data);
+        })
+    }, []);
     const [arrayPrecios, setArrayPrecios] = React.useState([]);
     const [total, setTotal] = React.useState(0);
     let cantidad = 0;
@@ -16,7 +44,7 @@ const CarritoCompra = (props) => {
     return (
         <div>
             <header className="container">
-            <h1>Carrito de Compra</h1>
+            <Typography variant="h3" gutterBottom>Carrito de Compra</Typography>
 
             <ul className="breadcrumb">
                 <li>Menu</li>
@@ -24,22 +52,39 @@ const CarritoCompra = (props) => {
             </ul>
          </header>
          <section className="container">
+           <div style={{display: 'flex', justifyContent: 'center', flexDirection: 'column'}}>
+           <Typography variant="h6" gutterBottom>
+            Selecciona la Sede en la que quieres comprar
+          </Typography>
+           <FormControl className={classes.formControl}>
+         <InputLabel id="demo-simple-select-label">Sede</InputLabel>
+         <Select
+          labelId="select-sede-label"
+          id="select-sede"
+          value={sede}
+          onChange={(event) => {setSede(event.target.value)}}
+        >
+          {
+            dataSedesDespliegue.map(item => <MenuItem value={item.sede_id}>{item.sede_nombre}</MenuItem>)
+          }
+        </Select>
+        </FormControl>
+           </div>
       <ul className="products">
         {JSON.parse(localStorage.getItem("shopping_cart")).map((product) => {
           return (
             <li className="row" key={product.producto_codigo}>
               <div className="col left">
                 <div className="thumbnail">
-                  <a href="#">
+                  <a href={`/product/${product.producto_codigo}`}>
                     <img src={product.producto_imagen} alt={product.producto_nombre} />
                   </a>
                 </div>
                 <div className="detail">
                   <div className="name">
-                    <a href="#">{product.producto_nombre}</a>
+                    <Typography variant="h6" gutterBottom><a href={`/product/${product.producto_codigo}`}>{product.producto_nombre}</a></Typography>
                   </div>
-                  <div className="description">{product.producto_descripcion}</div>
-                  <div className="price">$ {product.producto_precio} COP</div>
+                  <div className="price"><Typography variant="h6" gutterBottom>$ {product.producto_precio} COP</Typography></div>
                 </div>
               </div>
 
@@ -94,6 +139,37 @@ const CarritoCompra = (props) => {
               localStorage.setItem("id_productos_a_pagar", JSON.stringify(idProductosALlevar))
               localStorage.setItem("cantidad_productos_a_pagar", JSON.stringify(cantidadProductosALlevar))
               localStorage.setItem("total_a_pagar", total.toString());
+              localStorage.setItem("sede_id", sede);
+              console.log(JSON.stringify({ 'sede_id': parseInt(localStorage.getItem("sede_id")), 'cliente_id': parseInt(localStorage.getItem("cliente_id")) }))
+              fetch('https://burgertown-backend.herokuapp.com/Pedido/Create', 
+        {
+          method: 'POST',
+          headers: { "Content-Type": "application/json",
+                     token: localStorage.token
+                   },
+          body: JSON.stringify({ 'sede_id': parseInt(localStorage.getItem("sede_id")), 'cliente_id': parseInt(localStorage.getItem("cliente_id")) })
+        }).then(res => res.json())
+          .then(data => {
+            console.log(data.message);
+            console.log(data.data.pedido_id);
+            localStorage.setItem("pedido_id", data.data.pedido_id.toString());
+            let tripletaProductoCantidadPedido = JSON.parse(localStorage.getItem("cantidad_productos_a_pagar"))
+        for(let i = 0; i < tripletaProductoCantidadPedido.length; i++) {
+          tripletaProductoCantidadPedido[i].pedido_id = parseInt(localStorage.getItem("pedido_id"))
+        }
+        console.log(tripletaProductoCantidadPedido)
+        fetch('https://burgertown-backend.herokuapp.com/Pedido/AgregarProducto', 
+        {
+          method: 'POST',
+          headers: { "Content-Type": "application/json",
+                     token: localStorage.token
+                   },
+          body: JSON.stringify(tripletaProductoCantidadPedido)
+        }).then(res => res.json())
+          .then(data => {
+            console.log(data.message);
+        })
+        })
           }}>Ir a pagar</Button>
           </div>
           </div>
@@ -107,12 +183,14 @@ const mapStateToProps = (state) => {
     return {
       idProductosALlevar: state.idProductosALlevar,
       cantidadProductosALlevar: state.cantidadProductosALlevar,
+      dataSedesDespliegue: state.dataSedesDespliegue,
     }
 }
 
 const mapDispatchToProps = {
     addIdProductoLlevar, 
     addCantidadProductoLlevar,
+    setSedesDespliegue,
 }
 
 export default connect(mapStateToProps, mapDispatchToProps)(CarritoCompra);

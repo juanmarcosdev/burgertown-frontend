@@ -112,3 +112,8 @@ export const addCantidadProductoLlevar = (payload) => ({
     type: 'ADD_CANTIDAD_PRODUCTO_LLEVAR',
     payload,
 });
+
+export const setSedesDespliegue = (payload) => ({
+    type: 'SET_SEDES_DESPLIEGUE',
+    payload,
+});

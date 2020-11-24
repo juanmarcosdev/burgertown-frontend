@@ -50,9 +50,9 @@ const Product = (props) => {
   
     <div className="column">
       <div className="details">
-  <h1>{dataProductoIndividual.producto_nombre}</h1>
-        <p className="price">$ {dataProductoIndividual.producto_precio} COP</p>
-  <p className="description">{dataProductoIndividual.producto_descripcion}</p>
+  <Typography variant="h4" gutterBottom>{dataProductoIndividual.producto_nombre}</Typography>
+        <Typography variant="h6" gutterBottom><p className="price">$ {dataProductoIndividual.producto_precio} COP</p></Typography>
+        <Typography variant="subtitle2" gutterBottom><p className="description">{dataProductoIndividual.producto_descripcion}</p></Typography>
   
   
   

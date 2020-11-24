@@ -105,6 +105,11 @@ const reducer = (state, action) => {
                 ...state,
                 cantidadProductosALlevar: [...state.cantidadProductosALlevar, action.payload]
             }
+        case 'SET_SEDES_DESPLIEGUE':
+            return {
+                ...state,
+                dataSedesDespliegue: action.payload
+            }
         default:
             return state;
     }

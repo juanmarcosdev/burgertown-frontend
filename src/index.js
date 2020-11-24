@@ -17,6 +17,7 @@ const initialState = {
   'carritoCompras': [],
   'idProductosALlevar': [],
   'cantidadProductosALlevar': [],
+  'dataSedesDespliegue': [],
 }
 
 const store = createStore(reducer, initialState);

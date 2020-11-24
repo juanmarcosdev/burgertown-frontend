@@ -10,12 +10,20 @@ import Swal from 'sweetalert2';
 const CarouselItem = (props) => {
   const { carritoCompras, categoria_id, producto_codigo, producto_descripcion, producto_descuento, producto_estado, producto_existencias, producto_imagen, producto_iva, producto_nombre, producto_precio } = props;
   const handleSetCart = (item, name) => {
-    props.sendCarritoProducto(item);
-    Swal.fire(
-      'Producto añadido al carrito exitosamente!',
-      `Añadiste el plato ${name} al carrito`,
-      'success'
-    )
+    if(localStorage.typeUser === '1') {
+      props.sendCarritoProducto(item);
+      Swal.fire(
+        'Producto añadido al carrito exitosamente!',
+        `Añadiste el plato ${name} al carrito`,
+        'success'
+      )
+    } else {
+      Swal.fire(
+        'No se pudo añadir el producto al carrito',
+        `Recuerda que para poder añadir productos al carrito debes haber iniciado sesión como cliente`,
+        'error'
+      )
+    }
   }
   return (
   <div className='carousel-item'>

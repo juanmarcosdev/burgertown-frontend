@@ -65,7 +65,7 @@ const Menu = (props) => {
                             <h3 style={{fontSize: 24, color: 'white', backgroundColor: '#28282A', margin: 0, padding: '20px'}}>{item.categoria_nombre}</h3>
                                 <Carousel>
                                     {
-                                        dataMenuProductos.filter(product => product.categoria_id === item.categoria_id).map(card =>
+                                        dataMenuProductos.filter(product => product.categoria_id === item.categoria_id && product.producto_estado === 1).map(card =>
                                             <CarouselItem key={card.producto_codigo} {...card} isList>
                                             </CarouselItem>)
                                     }

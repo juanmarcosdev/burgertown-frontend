@@ -66,6 +66,10 @@ export default function LoginClient(props) {
           text: 'Inicio de sesión Cliente Fallido',
         })
       } else {
+        fetch(`https://burgertown-backend.herokuapp.com/Cliente/${phone}`, {
+      method: "GET",
+      headers: { "Content-Type": "application/json"}
+    }).then(res => res.json()).then(data => localStorage.setItem('cliente_id', data.data.cliente_id.toString()));
         Swal.fire(
           'Inicio de Sesión exitoso',
           'Iniciaste sesión como Cliente exitosamente',
