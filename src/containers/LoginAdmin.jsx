@@ -10,6 +10,7 @@ import SupervisorAccountOutlinedIcon from '@material-ui/icons/SupervisorAccountO
 import Typography from '@material-ui/core/Typography';
 import { makeStyles } from '@material-ui/core/styles';
 import Swal from 'sweetalert2';
+import withRoot from './Home/modules/withRoot';
 
 const useStyles = makeStyles((theme) => ({
   root: {
@@ -42,7 +43,7 @@ const useStyles = makeStyles((theme) => ({
   },
 }));
 
-export default function LoginAdmin(props) {
+const LoginAdmin = (props) => {
   const classes = useStyles();
 
   const [document, setDocument] = React.useState('');
@@ -135,3 +136,5 @@ export default function LoginAdmin(props) {
     </Grid>
   );
 }
+
+export default withRoot(LoginAdmin);

@@ -10,6 +10,7 @@ import AccountCircleOutlinedIcon from '@material-ui/icons/AccountCircleOutlined'
 import Typography from '@material-ui/core/Typography';
 import { makeStyles } from '@material-ui/core/styles';
 import Swal from 'sweetalert2';
+import withRoot from './Home/modules/withRoot';
 
 const useStyles = makeStyles((theme) => ({
   root: {
@@ -42,7 +43,7 @@ const useStyles = makeStyles((theme) => ({
   },
 }));
 
-export default function LoginClient(props) {
+const LoginClient = (props) => {
   const classes = useStyles();
 
   const [phone, setPhone] = React.useState('');
@@ -141,3 +142,5 @@ export default function LoginClient(props) {
     </Grid>
   );
 }
+
+export default withRoot(LoginClient);

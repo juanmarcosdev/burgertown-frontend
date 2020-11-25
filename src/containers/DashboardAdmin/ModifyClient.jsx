@@ -18,6 +18,7 @@ import {
 } from '@material-ui/pickers';
 import { withRouter } from 'react-router-dom';
 import Swal from 'sweetalert2';
+import withRoot from '../Home/modules/withRoot';
 
 const useStyles = makeStyles((theme) => ({
   paper: {
@@ -236,4 +237,4 @@ const ModifyClient = ({ match }) => {
   );
 }
 
-export default withRouter(ModifyClient)
+export default withRoot(withRouter(ModifyClient));

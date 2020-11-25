@@ -6,6 +6,7 @@ import { Link } from 'react-router-dom';
 import { connect } from 'react-redux';
 import { sendCarritoProducto } from '../../../actions';
 import Swal from 'sweetalert2';
+import Typography from '@material-ui/core/Typography';
 
 const CarouselItem = (props) => {
   const { carritoCompras, categoria_id, producto_codigo, producto_descripcion, producto_descuento, producto_estado, producto_existencias, producto_imagen, producto_iva, producto_nombre, producto_precio } = props;
@@ -37,7 +38,7 @@ const CarouselItem = (props) => {
       </div>
       <p className='carousel-item__details--title'>{producto_nombre}</p>
       <p className='carousel-item__details--subtitle'>
-        {producto_descripcion}
+  { producto_descuento === 0 ? <Typography variant="subtitle2">$ {producto_precio} COP </Typography> : <div><Typography variant="overline"><div style={{textDecoration: 'line-through'}}>{producto_precio}</div></Typography><Typography variant="subtitle2">$ {producto_precio - (producto_precio * (producto_descuento / 100))} COP -  {producto_descuento} % OFF</Typography></div>}
       </p>
     </div>
   </div>

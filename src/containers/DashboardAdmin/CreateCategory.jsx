@@ -10,6 +10,7 @@ import Typography from '@material-ui/core/Typography';
 import { makeStyles } from '@material-ui/core/styles';
 import Container from '@material-ui/core/Container';
 import Swal from 'sweetalert2';
+import withRoot from '../Home/modules/withRoot';
 
 const useStyles = makeStyles((theme) => ({
   paper: {
@@ -31,7 +32,7 @@ const useStyles = makeStyles((theme) => ({
   },
 }));
 
-export default function CreateCategory() {
+const CreateCategory = () => {
   const classes = useStyles();
 
   const [name, setName] = React.useState('');
@@ -124,3 +125,5 @@ export default function CreateCategory() {
     </Container>
   );
 }
+
+export default withRoot(CreateCategory);

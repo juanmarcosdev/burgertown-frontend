@@ -21,12 +21,7 @@ img {
     cursor: pointer;
   }
   
-  button::after {
-    position: relative;
-    right: 0;
-    content: " \276f";
-    transition: all 0.15s linear;
-  }
+
   
   button:hover {
     background-color: #f58551;

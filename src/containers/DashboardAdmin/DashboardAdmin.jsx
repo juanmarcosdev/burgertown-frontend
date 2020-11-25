@@ -35,7 +35,7 @@ import AssignmentIcon from '@material-ui/icons/Assignment';
 import NotFound from '../NotFound';
 import ExitToAppIcon from '@material-ui/icons/ExitToApp';
 import Badge from '@material-ui/core/Badge';
-
+import withRoot from '../Home/modules/withRoot';
 
 
 const drawerWidth = 240;
@@ -470,7 +470,7 @@ const DashboardAdmin = (props) => {
                         }
                       })}
                     >
-                      Desactivar
+                      
                     </Button>
                     }
                     {
@@ -481,7 +481,7 @@ const DashboardAdmin = (props) => {
                       style={{margin: '7px 14px 7px 14px'}}
                       href={`/modifyworker/${item.trabajador_id}`}
                     >
-                      Modificar
+                      
                     </Button>
                     }
                     </tr>
@@ -579,7 +579,7 @@ const DashboardAdmin = (props) => {
                         }
                       })}
                     >
-                      Desactivar
+                      
                     </Button>
                     }
                     {
@@ -590,7 +590,7 @@ const DashboardAdmin = (props) => {
                       style={{margin: '7px 14px 7px 14px'}}
                       href={`/modifyclient/${item.cliente_id}`}
                     >
-                      Modificar
+                      
                     </Button>
                     }
                     </tr>
@@ -680,7 +680,7 @@ const DashboardAdmin = (props) => {
                         }
                       })}
                     >
-                      Desactivar
+                    
                     </Button>
                     }
                     {
@@ -691,7 +691,7 @@ const DashboardAdmin = (props) => {
                       style={{margin: '7px 14px 7px 14px'}}
                       href={`/modifysede/${item.sede_id}`}
                     >
-                      Modificar
+                      
                     </Button>
                     }
                     </tr>
@@ -769,7 +769,7 @@ const DashboardAdmin = (props) => {
                         }
                       })}
                     >
-                      Desactivar
+                      
                     </Button>
                     }
                     {
@@ -780,7 +780,7 @@ const DashboardAdmin = (props) => {
                       style={{margin: '7px 14px 7px 14px'}}
                       href={`/modifycategory/${item.categoria_id}`}
                     >
-                      Modificar
+                      
                     </Button>
                     }
                     </tr>
@@ -882,7 +882,7 @@ const DashboardAdmin = (props) => {
                         }
                       })}
                     >
-                      Desactivar
+                      
                     </Button>
                     }
                     {
@@ -893,7 +893,7 @@ const DashboardAdmin = (props) => {
                       style={{margin: '7px 14px 7px 14px'}}
                       href={`/modifyproduct/${item.producto_codigo}`}
                     >
-                      Modificar
+                      
                     </Button>
                     }
                     </tr>
@@ -940,4 +940,4 @@ const mapDispatchToProps = {
   activateProducto,
 }
 
-export default connect(mapStateToProps, mapDispatchToProps)(DashboardAdmin);
+export default connect(mapStateToProps, mapDispatchToProps)(withRoot(DashboardAdmin));

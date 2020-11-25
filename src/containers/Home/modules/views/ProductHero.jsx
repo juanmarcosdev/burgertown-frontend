@@ -40,16 +40,16 @@ function ProductHero(props) {
         Vive la mejor experiencia en Carnes Angus
       </Typography>
       <Typography color="inherit" align="center" variant="h5" className={classes.h5}>
-        En BurgerTown contamos con la mejor carne de res tipo Angus certificada
+        En BurgerTown contamos con la mejor carne de res tipo Angus certificada, anímate a ver nuestro Menú haciendo click abajo:
       </Typography>
       <Button
         color="secondary"
         variant="contained"
         size="large"
         className={classes.button}
-        href='/registrocliente'
+        href='/menu'
       >
-        Registrarme
+        Ver el Menú
       </Button>
       <Typography variant="body2" color="inherit" className={classes.more}>
         También somos expertos en todo tipo de comida rápida americana y colombiana. Descubre la auténtica experiencia de comida rápida con nosotros!

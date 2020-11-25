@@ -11,6 +11,7 @@ import { makeStyles } from '@material-ui/core/styles';
 import Container from '@material-ui/core/Container';
 import { withRouter } from 'react-router-dom';
 import Swal from 'sweetalert2';
+import withRoot from '../Home/modules/withRoot';
 
 const useStyles = makeStyles((theme) => ({
   paper: {
@@ -204,4 +205,4 @@ const ModifyProduct = ({ match }) => {
   );
 }
 
-export default withRouter(ModifyProduct)
+export default withRoot(withRouter(ModifyProduct));

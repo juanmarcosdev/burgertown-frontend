@@ -14,6 +14,7 @@ import Swal from 'sweetalert2';
 import { connect } from 'react-redux';
 import { getProductoIndividual } from '../actions';
 import '../assets/styles/components/Product.css';
+import withRoot from './Home/modules/withRoot';
 
 const Product = (props) => {
   const { match } = props;
@@ -44,14 +45,14 @@ const Product = (props) => {
   
     <div className="column">
         <div className="thumbnail-container">
-          <img className="drift-demo-trigger" src={dataProductoIndividual.producto_imagen} width="900" height="600" />
+          <img className="drift-demo-trigger" src={dataProductoIndividual.producto_imagen} width="10000" height="600" />
         </div>
     </div>
   
     <div className="column">
       <div className="details">
   <Typography variant="h4" gutterBottom>{dataProductoIndividual.producto_nombre}</Typography>
-        <Typography variant="h6" gutterBottom><p className="price">$ {dataProductoIndividual.producto_precio} COP</p></Typography>
+  <Typography variant="h6" gutterBottom><p className="price">{dataProductoIndividual.producto_descuento === 0 ? <Typography variant="h6">$ {dataProductoIndividual.producto_precio} COP </Typography> : <div><Typography variant="h6"><div style={{textDecoration: 'line-through'}}>{dataProductoIndividual.producto_precio}</div></Typography><Typography variant="h6">$ {dataProductoIndividual.producto_precio - (dataProductoIndividual.producto_precio * (dataProductoIndividual.producto_descuento / 100))} COP -  {dataProductoIndividual.producto_descuento} % OFF</Typography></div>}</p></Typography>
         <Typography variant="subtitle2" gutterBottom><p className="description">{dataProductoIndividual.producto_descripcion}</p></Typography>
   
   
@@ -79,4 +80,4 @@ const mapDispatchToProps = {
     getProductoIndividual,
 }
 
-export default connect(mapStateToProps, mapDispatchToProps)(Product);
+export default connect(mapStateToProps, mapDispatchToProps)(withRoot(Product));
