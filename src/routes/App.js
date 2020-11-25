@@ -20,6 +20,7 @@ import ModifyProduct from '../containers/DashboardAdmin/ModifyProduct';
 import NotFound from '../containers/NotFound';
 import Product from '../containers/Product';
 import CarritoCompra from '../containers/CarritoCompra';
+import AsistenteVirtual from '../containers/AsistenteVirtual/AsistenteVirtual';
 
 const App = () => (
   <BrowserRouter>
@@ -43,6 +44,7 @@ const App = () => (
       <Route path='/modifyproduct/:productId' component={ModifyProduct} />
       <Route path='/product/:productId' component={Product} />
       <Route exact path='/carritocompra' component={CarritoCompra} />
+      <Route exact path='/asistentevirtual' component={AsistenteVirtual} />
       <Route component={NotFound} />
     </Switch>
   </BrowserRouter>

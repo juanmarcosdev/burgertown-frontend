@@ -34,7 +34,7 @@ function ProductSmokingHero(props) {
 
   return (
     <Container className={classes.root} component='section'>
-      <Button className={classes.button}>
+      <Button className={classes.button} href='/asistentevirtual'>
         <Typography variant='h4' component='span'>
           Necesitas ayuda? Chatea con nuestro asistente virtual aquí
         </Typography>
