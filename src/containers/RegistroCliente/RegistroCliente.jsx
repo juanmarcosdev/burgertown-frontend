@@ -17,6 +17,7 @@ import {
   KeyboardDatePicker,
 } from '@material-ui/pickers';
 import Swal from 'sweetalert2';
+import withRoot from '../Home/modules/withRoot';
 
 const useStyles = makeStyles((theme) => ({
   paper: {
@@ -38,7 +39,7 @@ const useStyles = makeStyles((theme) => ({
   },
 }));
 
-export default function RegistroCliente() {
+const RegistroCliente = () => {
   const classes = useStyles();
   
 
@@ -253,3 +254,5 @@ export default function RegistroCliente() {
     </Container>
   );
 }
+
+export default withRoot(RegistroCliente);

@@ -66,7 +66,7 @@ const Menu = (props) => {
                                 <Carousel>
                                     {
                                         dataMenuProductos.filter(product => product.categoria_id === item.categoria_id && product.producto_estado === 1).map(card =>
-                                            <CarouselItem key={card.producto_codigo} {...card} isList>
+                                            <CarouselItem onClick={() => props.history.push('www.google.com')} key={card.producto_codigo} {...card} isList>
                                             </CarouselItem>)
                                     }
                                 </Carousel>
@@ -74,7 +74,7 @@ const Menu = (props) => {
                         ) : <div></div>
                     }
                     <div style={{display: 'flex', justifyContent: 'center'}}>
-                    <Button variant="contained" size="large" color="secondary" onClick={() => handleCheckout(carritoCompras)}>Ir al Carrito a Checkout</Button>
+                    <Button variant="contained" size="large" color="secondary" onClick={() => handleCheckout(carritoCompras)}>Ir a confirmar unidades</Button>
                     </div>
                     {/* {
                       console.log(carritoCompras)

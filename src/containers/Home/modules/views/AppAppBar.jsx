@@ -78,6 +78,17 @@ const AppAppBar = (props) => {
               Registrarse
             </Link>
           </div> : <div className={classes.right}>
+            {
+              localStorage.typeUser === "1" ? 
+              <Link
+              variant='h6'
+              underline='none'
+              className={clsx(classes.rightLink, classes.linkSecondary)}
+              href={`/mediospago/${localStorage.cliente_id}`}
+            >
+              Medios de Pago
+            </Link> : <div></div>
+            }
             <Link
               component='button'
               color='inherit'

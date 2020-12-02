@@ -10,6 +10,7 @@ import MenuItem from '@material-ui/core/MenuItem';
 import InputLabel from '@material-ui/core/InputLabel';
 import FormControl from '@material-ui/core/FormControl';
 import { makeStyles } from '@material-ui/core/styles';
+import withRoot from './Home/modules/withRoot';
 
 const useStyles = makeStyles((theme) => ({
   formControl: {
@@ -84,7 +85,10 @@ const CarritoCompra = (props) => {
                   <div className="name">
                     <Typography variant="h6" gutterBottom><a href={`/product/${product.producto_codigo}`}>{product.producto_nombre}</a></Typography>
                   </div>
-                  <div className="price"><Typography variant="h6" gutterBottom>$ {product.producto_precio} COP</Typography></div>
+                  <div className="price">
+                    {/* <Typography variant="h6" gutterBottom>$ {product.producto_precio} COP</Typography> */}
+                    { product.producto_descuento === 0 ? <Typography variant="subtitle2">$ {product.producto_precio} COP </Typography> : <div><Typography variant="overline"><div style={{textDecoration: 'line-through'}}>{product.producto_precio}</div></Typography><Typography variant="subtitle2">$ {product.producto_precio - (product.producto_precio * (product.producto_descuento / 100))} COP -  {product.producto_descuento} % OFF</Typography></div>}
+                    </div>
                 </div>
               </div>
 
@@ -101,10 +105,14 @@ const CarritoCompra = (props) => {
                 variant="outlined"
                 onChange={(event) => {cantidad = event.target.value}}
                 />
-                <Button variant="contained" color="primary" 
+                <Button variant="contained" color="secondary" 
                 onClick={() => {props.addIdProductoLlevar(product.producto_codigo);
                     props.addCantidadProductoLlevar({"producto_codigo": product.producto_codigo, "pedido_cp_cantidad": parseInt(cantidad)});
-                    setArrayPrecios([...arrayPrecios, product.producto_precio]);
+                    if(product.producto_descuento === 0) {
+                      setArrayPrecios([...arrayPrecios, product.producto_precio]);
+                    } else {
+                      setArrayPrecios([...arrayPrecios, product.producto_precio - (product.producto_precio * (product.producto_descuento/100))]);
+                    }
                 }}
                 // onClick={handleConfirm(product.producto_codigo, cantidad)}
                 >
@@ -193,4 +201,4 @@ const mapDispatchToProps = {
     setSedesDespliegue,
 }
 
-export default connect(mapStateToProps, mapDispatchToProps)(CarritoCompra);
+export default connect(mapStateToProps, mapDispatchToProps)(withRoot(CarritoCompra));

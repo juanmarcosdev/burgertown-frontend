@@ -21,6 +21,8 @@ import NotFound from '../containers/NotFound';
 import Product from '../containers/Product';
 import CarritoCompra from '../containers/CarritoCompra';
 import AsistenteVirtual from '../containers/AsistenteVirtual/AsistenteVirtual';
+import Checkout from '../containers/Checkout/Checkout';
+import MediosPago from '../containers/MediosPago';
 
 const App = () => (
   <BrowserRouter>
@@ -45,6 +47,8 @@ const App = () => (
       <Route path='/product/:productId' component={Product} />
       <Route exact path='/carritocompra' component={CarritoCompra} />
       <Route exact path='/asistentevirtual' component={AsistenteVirtual} />
+      <Route exact path='/checkout' component={Checkout} />
+      <Route path='/mediospago/:idCliente' component={MediosPago} />
       <Route component={NotFound} />
     </Switch>
   </BrowserRouter>
