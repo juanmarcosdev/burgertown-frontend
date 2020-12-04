@@ -110,6 +110,16 @@ const reducer = (state, action) => {
                 ...state,
                 dataSedesDespliegue: action.payload
             }
+        case 'GET_MEDIOS_PAGO':
+            return {
+                ...state,
+                dataMediosPago: action.payload
+            }
+        case 'SET_DIRECCION_CLIENTE':
+            return {
+                ...state,
+                dataDireccionCliente: action.payload
+            }
         default:
             return state;
     }

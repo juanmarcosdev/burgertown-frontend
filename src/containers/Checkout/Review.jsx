@@ -5,15 +5,11 @@ import List from '@material-ui/core/List';
 import ListItem from '@material-ui/core/ListItem';
 import ListItemText from '@material-ui/core/ListItemText';
 import Grid from '@material-ui/core/Grid';
+import { connect } from 'react-redux';
+import { setDireccionCliente } from '../../actions';
 
-const products = [
-  { name: 'Product 1', desc: 'A nice thing', price: '$9.99' },
-  { name: 'Product 2', desc: 'Another thing', price: '$3.45' },
-  { name: 'Product 3', desc: 'Something else', price: '$6.51' },
-  { name: 'Product 4', desc: 'Best thing of all', price: '$14.11' },
-  { name: 'Shipping', desc: '', price: 'Free' },
-];
-const addresses = ['1 Material-UI Drive', 'Reactville', 'Anytown', '99999', 'USA'];
+
+
 const payments = [
   { name: 'Card type', detail: 'Visa' },
   { name: 'Card holder', detail: 'Mr John Smith' },
@@ -33,8 +29,25 @@ const useStyles = makeStyles((theme) => ({
   },
 }));
 
-export default function Review() {
+const Review = (props) => {
+  const { dataDireccionCliente } = props;
   const classes = useStyles();
+
+
+
+  React.useEffect(() => {
+    console.log(`http://burgertown-backend.herokuapp.com/Cliente/${localStorage.cliente_celular}`);
+    fetch(`http://burgertown-backend.herokuapp.com/Cliente/${localStorage.cliente_celular}`, 
+      {
+        method: 'GET',
+        headers: { "Content-Type": "application/json",
+                   token: localStorage.token
+                 },
+      }).then(res => res.json())
+        .then(data => {
+          props.setDireccionCliente(data.data.cliente_direccion);
+      })
+  }, []);
 
   return (
     <React.Fragment>
@@ -42,45 +55,51 @@ export default function Review() {
         Resumen del pedido
       </Typography>
       <List disablePadding>
-        {products.map((product) => (
-          <ListItem className={classes.listItem} key={product.name}>
-            <ListItemText primary={product.name} secondary={product.desc} />
-            <Typography variant="body2">{product.price}</Typography>
+        {JSON.parse(localStorage.cantidad_productos_a_pagar).map((product) => (
+          <ListItem className={classes.listItem} key={product.producto_nombre}>
+            <ListItemText primary={product.producto_nombre} secondary={`Unidades: ${product.pedido_cp_cantidad} (Precio unitario: $ ${product.producto_precio} COP)`} />
+            <Typography variant="body2">$ {product.pedido_cp_cantidad * product.producto_precio} COP</Typography>
           </ListItem>
         ))}
         <ListItem className={classes.listItem}>
+          <ListItemText primary="Envío" />
+          <Typography variant="body2">
+            Gratis
+          </Typography>
+        </ListItem>
+        <ListItem className={classes.listItem}>
           <ListItemText primary="Total" />
           <Typography variant="subtitle1" className={classes.total}>
-            $34.06
+            $ {JSON.parse(localStorage.total_a_pagar)} COP
           </Typography>
         </ListItem>
       </List>
-      <Grid container spacing={2}>
-        <Grid item xs={12} sm={6}>
+      <Grid container>
+        <Grid>
           <Typography variant="h6" gutterBottom className={classes.title}>
-            Shipping
+            Dirección de Envío
           </Typography>
-          <Typography gutterBottom>John Smith</Typography>
-          <Typography gutterBottom>{addresses.join(', ')}</Typography>
-        </Grid>
-        <Grid item container direction="column" xs={12} sm={6}>
-          <Typography variant="h6" gutterBottom className={classes.title}>
-            Payment details
-          </Typography>
-          <Grid container>
-            {payments.map((payment) => (
-              <React.Fragment key={payment.name}>
-                <Grid item xs={6}>
-                  <Typography gutterBottom>{payment.name}</Typography>
-                </Grid>
-                <Grid item xs={6}>
-                  <Typography gutterBottom>{payment.detail}</Typography>
-                </Grid>
-              </React.Fragment>
-            ))}
-          </Grid>
+        <Typography gutterBottom>{localStorage.cliente_nombre_completo}</Typography>
+          <Typography gutterBottom>{dataDireccionCliente}</Typography>
         </Grid>
       </Grid>
+      <Grid>
+          <Typography variant="h6" gutterBottom className={classes.title}>
+            Opciones de Pago
+          </Typography>
+        </Grid>
     </React.Fragment>
   );
 }
+
+const mapStateToProps = (state) => {
+  return {
+    dataDireccionCliente: state.dataDireccionCliente,
+  }
+}
+
+const mapDispatchToProps = {
+  setDireccionCliente,
+}
+
+export default connect(mapStateToProps, mapDispatchToProps)(Review);

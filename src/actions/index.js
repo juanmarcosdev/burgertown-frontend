@@ -117,3 +117,13 @@ export const setSedesDespliegue = (payload) => ({
     type: 'SET_SEDES_DESPLIEGUE',
     payload,
 });
+
+export const getMediosPago = (payload) => ({
+    type: 'GET_MEDIOS_PAGO',
+    payload,
+});
+
+export const setDireccionCliente = (payload) => ({
+    type: 'SET_DIRECCION_CLIENTE',
+    payload,
+});

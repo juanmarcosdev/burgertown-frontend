@@ -18,6 +18,8 @@ const initialState = {
   'idProductosALlevar': [],
   'cantidadProductosALlevar': [],
   'dataSedesDespliegue': [],
+  'dataMediosPago': [],
+  'dataDireccionCliente': '',
 }
 
 const store = createStore(reducer, initialState);

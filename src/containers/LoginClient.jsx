@@ -70,7 +70,10 @@ const LoginClient = (props) => {
         fetch(`https://burgertown-backend.herokuapp.com/Cliente/${phone}`, {
       method: "GET",
       headers: { "Content-Type": "application/json"}
-    }).then(res => res.json()).then(data => localStorage.setItem('cliente_id', data.data.cliente_id.toString()));
+    }).then(res => res.json()).then(data => 
+      {localStorage.setItem('cliente_nombre_completo', data.data.cliente_nombre + " " + data.data.cliente_apellido)
+        localStorage.setItem('cliente_celular', data.data.cliente_celular)
+      localStorage.setItem('cliente_id', data.data.cliente_id.toString())});
         Swal.fire(
           'Inicio de Sesión exitoso',
           'Iniciaste sesión como Cliente exitosamente',

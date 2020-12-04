@@ -27,12 +27,13 @@ import Select from '@material-ui/core/Select';
 import MenuItem from '@material-ui/core/MenuItem';
 import InputLabel from '@material-ui/core/InputLabel';
 import FormControl from '@material-ui/core/FormControl';
+import { getMediosPago } from '../actions';
 
 function Copyright() {
   return (
     <Typography variant="body2" color="textSecondary" align="center">
       {'Copyright © '}
-      <Link color="inherit" href="https://material-ui.com/">
+      <Link color="inherit" href="http://burgertown-frontend.herokuapp.com/">
         BurgerTown
       </Link>{' '}
       {new Date().getFullYear()}
@@ -66,8 +67,23 @@ const useStyles = makeStyles((theme) => ({
 }));
 
 const MediosPago = (props) => {
-  const { match } = props;
+  const { dataMediosPago, match } = props;
   const clientId = match.params.idCliente;
+
+  React.useEffect(() => {
+    fetch(`https://burgertown-backend.herokuapp.com/Cliente/Metodos/${clientId}`, 
+    {
+      method: 'GET',
+      headers: { "Content-Type": "application/json",
+                 token: localStorage.token
+               },
+    }).then(res => res.json())
+      .then(data => {
+        props.getMediosPago(data.data)
+        console.log(data.data)
+      })
+  }, []);
+
   const classes = useStyles();
 
   const dateFormat = require('dateformat');
@@ -81,10 +97,50 @@ const MediosPago = (props) => {
     setSelectedDate(date);
   };
 
-  const dateToday = new Date();
-  const formatedToday = dateFormat(dateToday, "yyyy-mm-dd");
 
-  const birthdayFormat = dateFormat(selectedDate, "yyyy-mm-dd");
+  const vencimientoFormat = dateFormat(selectedDate, "yyyy-mm-dd");
+
+  const handleSubmit = async (event) => {
+    event.preventDefault();
+    const newTarjeta = {
+      tarjeta_numero: cardNumber,
+      tarjeta_cvc: parseInt(cvcNumber),
+      tarjeta_vencimiento: vencimientoFormat,
+      tarjeta_tipo: tipoTarjeta === "0" ? 0 : 1,
+      cliente_id: parseInt(clientId),
+    }
+    console.log(newTarjeta);
+      const response = await fetch(`https://burgertown-backend.herokuapp.com/Cliente/Tarjeta/Add`, {
+        method: "POST",
+        headers: { "Content-Type": "application/json"},
+        body: JSON.stringify(newTarjeta)
+      })
+      if(response.status === 200) {
+        Swal.fire(
+          'Tarjeta agregada',
+          'Tarjeta agregada exitosamente!',
+          'success'
+        )
+        fetch(`https://burgertown-backend.herokuapp.com/Cliente/Metodos/${clientId}`, 
+        {
+          method: 'GET',
+          headers: { "Content-Type": "application/json",
+                    token: localStorage.token
+                  },
+        }).then(res => res.json())
+          .then(data => {
+            props.getMediosPago(data.data)
+            console.log(data.data)
+        })
+      } else {
+        Swal.fire(
+          'Error al agregar tarjeta',
+          'Hubo un error agregando la tarjeta',
+          'error'
+        )
+      }
+    }
+  
 
   return (
     <Container component="main" maxWidth="xs">
@@ -97,12 +153,42 @@ const MediosPago = (props) => {
           Medios de Pago asociados al cliente con ID {clientId}
         </Typography>
         <div>
-          <p>Medios de Pago</p>
+        <table>
+              <thead>
+                <tr style={{display: 'flex', flexDirection: 'row', justifyContent: 'flex-start', fontSize: 17}}>
+                  <td style={{marginLeft: '60px', marginRight: '60px'}}>Número de tarjeta</td>
+                  <td style={{marginLeft: '60px', marginRight: '60px'}}>CVC</td>
+                  <td style={{marginLeft: '60px', marginRight: '60px'}}>Fecha de vencimiento</td>
+                  <td style={{marginLeft: '60px', marginRight: '60px'}}>Tipo</td>
+              </tr>
+              </thead>
+              <tbody>
+                {
+                  dataMediosPago.length > 0 ? dataMediosPago.map((item) => 
+                  <tr style={{display: 'flex', flexDirection: 'row', justifyContent: 'space-between', fontSize: 17}}>
+                    {
+                      <td style={{margin: '14px'}} key={item.tarjeta_numero}>{item.tarjeta_numero}</td>
+                    }
+                    {
+                      <td style={{margin: '14px'}} key={item.tarjeta_cvc}>{item.tarjeta_cvc}</td>
+                    }
+                    {
+                      <td style={{margin: '14px'}} key={item.tarjeta_vencimiento}>{item.tarjeta_vencimiento}</td>
+                    }
+                    {
+                      <td key={item.tarjeta_tipo}>{item.tarjeta_tipo === 0 ? <p>Débito</p> : <p>Crédito</p>}</td>
+                    }
+                    </tr>
+                  ) 
+                  : <div></div>
+                }
+              </tbody>
+            </table>
         </div>
         <Typography component="h6" variant="h6">
           Añadir Nuevo Medio de Pago
         </Typography>
-        <form className={classes.form} noValidate onSubmit={(event) => event.preventDefault()}>
+        <form className={classes.form} noValidate onSubmit={handleSubmit}>
           <TextField
             variant="outlined"
             margin="normal"
@@ -178,4 +264,14 @@ const MediosPago = (props) => {
   );
 }
 
-export default withRoot(MediosPago);
+const mapStateToProps = (state) => {
+  return {
+    dataMediosPago: state.dataMediosPago,
+  }
+}
+
+const mapDispatchToProps = {
+  getMediosPago,
+}
+
+export default connect(mapStateToProps, mapDispatchToProps)(withRoot(MediosPago));

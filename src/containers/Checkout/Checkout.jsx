@@ -66,7 +66,7 @@ const useStyles = makeStyles((theme) => ({
 
 const steps = ['Elegir platillos del Menú', 'Confirmar cantidades', 'Pagar pedido'];
 
-function getStepContent(step) {
+function getStepContent() {
       return <Review />;
 }
 

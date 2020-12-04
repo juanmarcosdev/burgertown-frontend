@@ -11,6 +11,7 @@ import InputLabel from '@material-ui/core/InputLabel';
 import FormControl from '@material-ui/core/FormControl';
 import { makeStyles } from '@material-ui/core/styles';
 import withRoot from './Home/modules/withRoot';
+import { withRouter } from 'react-router-dom';
 
 const useStyles = makeStyles((theme) => ({
   formControl: {
@@ -25,7 +26,7 @@ const useStyles = makeStyles((theme) => ({
 const CarritoCompra = (props) => {
     const [sede, setSede] = React.useState('');
     const classes = useStyles();
-    const { idProductosALlevar, cantidadProductosALlevar, dataSedesDespliegue } = props;
+    const { idProductosALlevar, cantidadProductosALlevar, dataSedesDespliegue, history } = props;
     React.useEffect(() => {
       fetch('http://burgertown-backend.herokuapp.com/Sede/Get', 
         {
@@ -107,7 +108,13 @@ const CarritoCompra = (props) => {
                 />
                 <Button variant="contained" color="secondary" 
                 onClick={() => {props.addIdProductoLlevar(product.producto_codigo);
-                    props.addCantidadProductoLlevar({"producto_codigo": product.producto_codigo, "pedido_cp_cantidad": parseInt(cantidad)});
+                    props.addCantidadProductoLlevar(
+                      {
+                      "producto_nombre": product.producto_nombre, 
+                      "producto_codigo": product.producto_codigo, 
+                      "pedido_cp_cantidad": parseInt(cantidad),
+                      "producto_precio": product.producto_descuento === 0 ? product.producto_precio : product.producto_precio - (product.producto_precio * (product.producto_descuento/100)),
+                    });
                     if(product.producto_descuento === 0) {
                       setArrayPrecios([...arrayPrecios, product.producto_precio]);
                     } else {
@@ -132,7 +139,7 @@ const CarritoCompra = (props) => {
                   }
                   setTotal(counter);
                   setReady(true);
-          }}>Mostrar Detalle</Button>
+          }}>Mostrar Total e Ir a Pagar</Button>
       </div>
       {
           ready && <div>
@@ -178,6 +185,7 @@ const CarritoCompra = (props) => {
             console.log(data.message);
         })
         })
+        history.push('/checkout')
           }}>Ir a pagar</Button>
           </div>
           </div>
