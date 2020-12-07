@@ -5,7 +5,7 @@ import CssBaseline from '@material-ui/core/CssBaseline';
 import TextField from '@material-ui/core/TextField';
 import Link from '@material-ui/core/Link';
 import Grid from '@material-ui/core/Grid';
-import LockOutlinedIcon from '@material-ui/icons/LockOutlined';
+import CategoryIcon from '@material-ui/icons/Category';
 import Typography from '@material-ui/core/Typography';
 import { makeStyles } from '@material-ui/core/styles';
 import Container from '@material-ui/core/Container';
@@ -40,11 +40,26 @@ const ModifyCategory = ({ match }) => {
   const [name, setName] = React.useState('');
   const [description, setDescription] = React.useState('');
 
+  React.useEffect(() => {
+    fetch(`https://burgertown-backend.herokuapp.com/Categoria/${categoryId}`, 
+    {
+      method: 'GET',
+      headers: { "Content-Type": "application/json",
+                 token: localStorage.token
+               },
+    }).then(res => res.json())
+      .then(data => {
+        console.log(data.data)
+        setName(data.data.categoria_nombre);
+        setDescription(data.data.categoria_descripcion);
+      })
+  }, []);
+
   const handleSubmit = async (event) => {
     event.preventDefault();
     const newCategory = {
-      categoria_nombre: (name !== '' ? name : undefined),
-      categoria_descripcion: (description !== '' ? description : undefined),
+      categoria_nombre: name,
+      categoria_descripcion: description,
     }
     const response = await fetch(`https://burgertown-backend.herokuapp.com/Categoria/Edit/${categoryId}`, {
       method: "PUT",
@@ -71,7 +86,7 @@ const ModifyCategory = ({ match }) => {
       <CssBaseline />
       <div className={classes.paper}>
         <Avatar className={classes.avatar}>
-          <LockOutlinedIcon />
+          <CategoryIcon />
         </Avatar>
         <Typography component="h1" variant="h5">
           Modificar Categoria con ID {categoryId}
@@ -80,6 +95,7 @@ const ModifyCategory = ({ match }) => {
           <Grid container spacing={2}>
             <Grid item xs={12}>
               <TextField
+                value={name}
                 autoComplete="nombre"
                 name="nombre"
                 variant="outlined"
@@ -93,6 +109,7 @@ const ModifyCategory = ({ match }) => {
             </Grid>
             <Grid item xs={12}>
               <TextField
+                value={description}
                 variant="outlined"
                 required
                 fullWidth

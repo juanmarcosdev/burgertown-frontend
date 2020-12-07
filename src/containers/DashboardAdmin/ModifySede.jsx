@@ -6,7 +6,7 @@ import CssBaseline from '@material-ui/core/CssBaseline';
 import TextField from '@material-ui/core/TextField';
 import Link from '@material-ui/core/Link';
 import Grid from '@material-ui/core/Grid';
-import LockOutlinedIcon from '@material-ui/icons/LockOutlined';
+import BusinessIcon from '@material-ui/icons/Business';
 import Typography from '@material-ui/core/Typography';
 import { makeStyles } from '@material-ui/core/styles';
 import Container from '@material-ui/core/Container';
@@ -53,6 +53,39 @@ const ModifySede = ({ match }) => {
   const [selectedDate1, setSelectedDate1] = React.useState(new Date());
   const [selectedDate2, setSelectedDate2] = React.useState(new Date());
 
+  React.useEffect(() => {
+    fetch(`https://burgertown-backend.herokuapp.com/Sede/${sedeId}`, 
+    {
+      method: 'GET',
+      headers: { "Content-Type": "application/json",
+                 token: localStorage.token
+               },
+    }).then(res => res.json())
+      .then(data => {
+        console.log(data.data)
+        setName(data.data.sede_nombre)
+        setAddress(data.data.sede_direccion)
+        setCity(data.data.sede_ciudad)
+        console.log(data.data.sede_horario_apertura)
+        console.log(parseInt(data.data.sede_horario_apertura.substring(0,2)))
+        console.log(parseInt(data.data.sede_horario_apertura.substring(3,5)))
+        console.log(parseInt(data.data.sede_horario_apertura.substring(6,8)))
+        selectedDate1.setHours(parseInt(data.data.sede_horario_apertura.substring(0,2)))
+        selectedDate1.setMinutes(parseInt(data.data.sede_horario_apertura.substring(3,5)))
+        selectedDate1.setSeconds(parseInt(data.data.sede_horario_apertura.substring(6,8)))
+        setSelectedDate1(new Date(selectedDate1.getDate(), selectedDate1.getMonth(), selectedDate1.getDay(), selectedDate1.getHours(), selectedDate1.getMinutes(), selectedDate1.getSeconds()))
+        // ---
+        console.log(data.data.sede_horario_cierre)
+        console.log(parseInt(data.data.sede_horario_cierre.substring(0,2)))
+        console.log(parseInt(data.data.sede_horario_cierre.substring(3,5)))
+        console.log(parseInt(data.data.sede_horario_cierre.substring(6,8)))
+        selectedDate2.setHours(parseInt(data.data.sede_horario_cierre.substring(0,2)))
+        selectedDate2.setMinutes(parseInt(data.data.sede_horario_cierre.substring(3,5)))
+        selectedDate2.setSeconds(parseInt(data.data.sede_horario_cierre.substring(6,8)))
+        setSelectedDate2(new Date(selectedDate2.getDate(), selectedDate2.getMonth(), selectedDate2.getDay(), selectedDate2.getHours(), selectedDate2.getMinutes(), selectedDate2.getSeconds()))
+      })
+  }, []);
+
   const handleDateChange1 = (date) => {
     setSelectedDate1(date);
   };
@@ -61,9 +94,7 @@ const ModifySede = ({ match }) => {
     setSelectedDate2(date);
   };
 
-  const hora1 = dateFormat(selectedDate1, "hh:MM TT");
-  const hora2 = dateFormat(selectedDate2, "hh:MM TT");
-
+  
 
 
   const handleSubmit = async (event) => {
@@ -71,11 +102,11 @@ const ModifySede = ({ match }) => {
     const nowFormat = dateFormat(now, "hh:MM TT");
     event.preventDefault();
     const newSede = {
-        sede_nombre: (name !== '' ? name : undefined),
-        sede_direccion: (address !== '' ? address : undefined),
-        sede_ciudad: (city !== '' ? city : undefined),
-        sede_horario_apertura: (hora1 !== nowFormat ? hora1 : undefined),
-        sede_horario_cierre: (hora2 !== nowFormat ? hora1 : undefined),
+        sede_nombre: name,
+        sede_direccion: address,
+        sede_ciudad: city,
+        sede_horario_apertura: dateFormat(selectedDate1, "hh:MM TT"),
+        sede_horario_cierre: dateFormat(selectedDate2, "hh:MM TT"),
     }
     console.log(JSON.stringify(newSede));
     const response = await fetch(`https://burgertown-backend.herokuapp.com/Sede/Edit/${sedeId}`, {
@@ -104,7 +135,7 @@ const ModifySede = ({ match }) => {
       <CssBaseline />
       <div className={classes.paper}>
         <Avatar className={classes.avatar}>
-          <LockOutlinedIcon />
+          <BusinessIcon />
         </Avatar>
         <Typography component="h1" variant="h5">
             Modificar Sede con ID {sedeId}
@@ -113,6 +144,7 @@ const ModifySede = ({ match }) => {
           <Grid container spacing={2}>
             <Grid item xs={12}>
               <TextField
+                value={name}
                 autoComplete="nombre"
                 name="nombre"
                 variant="outlined"
@@ -126,6 +158,7 @@ const ModifySede = ({ match }) => {
             </Grid>
             <Grid item xs={12}>
               <TextField
+                value={address}
                 variant="outlined"
                 required
                 fullWidth
@@ -138,6 +171,7 @@ const ModifySede = ({ match }) => {
             </Grid>
             <Grid item xs={12}>
               <TextField
+                value={city}
                 autoComplete="ciudad"
                 name="ciudad"
                 variant="outlined"

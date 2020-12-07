@@ -6,7 +6,7 @@ import CssBaseline from '@material-ui/core/CssBaseline';
 import TextField from '@material-ui/core/TextField';
 import Link from '@material-ui/core/Link';
 import Grid from '@material-ui/core/Grid';
-import LockOutlinedIcon from '@material-ui/icons/LockOutlined';
+import AccountCircleIcon from '@material-ui/icons/AccountCircle';
 import Typography from '@material-ui/core/Typography';
 import { makeStyles } from '@material-ui/core/styles';
 import Container from '@material-ui/core/Container';
@@ -56,6 +56,26 @@ const ModifyClient = ({ match }) => {
   const [photo, setPhoto] = React.useState('');
   const [selectedDate, setSelectedDate] = React.useState(new Date());
 
+  React.useEffect(() => {
+    fetch(`https://burgertown-backend.herokuapp.com/Cliente/${localStorage.clienteCelularModify}`, 
+    {
+      method: 'GET',
+      headers: { "Content-Type": "application/json",
+                 token: localStorage.token
+               },
+    }).then(res => res.json())
+      .then(data => {
+        console.log(data.data)
+        setName(data.data.cliente_nombre)
+        setSurname(data.data.cliente_apellido)
+        setPhone(data.data.cliente_celular)
+        setDocument(data.data.cliente_documento)
+        setAddress(data.data.cliente_direccion)
+        setPhoto(data.data.cliente_foto)
+        setSelectedDate(Date.parse(data.data.cliente_fecha_nacimiento))
+      })
+  }, []);
+
   const handleDateChange = (date) => {
     setSelectedDate(date);
   };
@@ -68,14 +88,14 @@ const ModifyClient = ({ match }) => {
     const nowFormat = dateFormat(now, "dd-mm-yyyy");
     event.preventDefault();
     const newClient = {
-      cliente_documento: (document !== '' ? document : undefined),
-      cliente_nombre: (name !== '' ? name : undefined),
-      cliente_apellido: (surname !== '' ? surname : undefined),
-      cliente_celular: (phone !== '' ? phone : undefined),
-      cliente_direccion: (address !== '' ? address : undefined),
+      cliente_documento: document,
+      cliente_nombre: name,
+      cliente_apellido: surname,
+      cliente_celular: phone,
+      cliente_direccion: address,
       cliente_password: (password !== '' ? password : undefined),
-      cliente_fecha_nacimiento: (birthdayFormat !== nowFormat ?  birthdayFormat : undefined),
-      cliente_foto: (photo !== '' ? photo : undefined),
+      cliente_fecha_nacimiento: dateFormat(selectedDate, "yyyy-mm-dd"),
+      cliente_foto: photo,
     }
     console.log(JSON.stringify(newClient));
     const response = await fetch(`https://burgertown-backend.herokuapp.com/Cliente/Edit/${clientId}`, {
@@ -104,7 +124,7 @@ const ModifyClient = ({ match }) => {
       <CssBaseline />
       <div className={classes.paper}>
         <Avatar className={classes.avatar}>
-          <LockOutlinedIcon />
+          <AccountCircleIcon />
         </Avatar>
         <Typography component="h1" variant="h5">
         Modificar Cliente con ID {clientId}
@@ -113,6 +133,7 @@ const ModifyClient = ({ match }) => {
           <Grid container spacing={2}>
             <Grid item xs={12} sm={6}>
               <TextField
+                value={name}
                 autoComplete="nombre"
                 name="nombre"
                 variant="outlined"
@@ -126,6 +147,7 @@ const ModifyClient = ({ match }) => {
             </Grid>
             <Grid item xs={12} sm={6}>
               <TextField
+                value={surname}
                 variant="outlined"
                 required
                 fullWidth
@@ -138,6 +160,7 @@ const ModifyClient = ({ match }) => {
             </Grid>
             <Grid item xs={12}>
               <TextField
+                value={phone}
                 variant="outlined"
                 required
                 fullWidth
@@ -150,6 +173,7 @@ const ModifyClient = ({ match }) => {
             </Grid>
             <Grid item xs={12}>
               <TextField
+                value={document}
                 variant="outlined"
                 required
                 fullWidth
@@ -162,6 +186,7 @@ const ModifyClient = ({ match }) => {
             </Grid>
             <Grid item xs={12}>
               <TextField
+                value={address}
                 variant="outlined"
                 required
                 fullWidth
@@ -174,6 +199,7 @@ const ModifyClient = ({ match }) => {
             </Grid>
             <Grid item xs={12}>
               <TextField
+                value={photo}
                 variant="outlined"
                 required
                 fullWidth

@@ -5,7 +5,7 @@ import CssBaseline from '@material-ui/core/CssBaseline';
 import TextField from '@material-ui/core/TextField';
 import Link from '@material-ui/core/Link';
 import Grid from '@material-ui/core/Grid';
-import LockOutlinedIcon from '@material-ui/icons/LockOutlined';
+import WorkIcon from '@material-ui/icons/Work';
 import Typography from '@material-ui/core/Typography';
 import { makeStyles } from '@material-ui/core/styles';
 import Container from '@material-ui/core/Container';
@@ -46,17 +46,37 @@ const ModifyWorker = ({ match }) => {
   const [password, setPassword] = React.useState('');
   const [photo, setPhoto] = React.useState('');
 
+  React.useEffect(() => {
+    fetch(`https://burgertown-backend.herokuapp.com/Trabajador/${workerId}`, 
+    {
+      method: 'GET',
+      headers: { "Content-Type": "application/json",
+                 token: localStorage.token
+               },
+    }).then(res => res.json())
+      .then(data => {
+        console.log(data.data)
+        setName(data.data.trabajador_nombre);
+        setSurname(data.data.trabajador_apellido);
+        setPhone(data.data.trabajador_celular);
+        setDocument(data.data.trabajador_documento);
+        setAddress(data.data.trabajador_direccion);
+        setPosition(data.data.trabajador_cargo);
+        setPhoto(data.data.trabajador_foto);
+      })
+  }, []);
+
   const handleSubmit = async (event) => {
     event.preventDefault();
     const newWorker = {
-      trabajador_documento: (document !== '' ? document : undefined),
-      trabajador_nombre: (name !== '' ? name : undefined),
-      trabajador_apellido: (surname !== '' ? surname : undefined),
-      trabajador_celular: (phone !== '' ? phone : undefined),
-      trabajador_cargo: (position !== '' ? position : undefined),
-      trabajador_direccion: (address !== '' ? address : undefined),
+      trabajador_documento: document,
+      trabajador_nombre: name,
+      trabajador_apellido: surname,
+      trabajador_celular: phone,
+      trabajador_cargo: position,
+      trabajador_direccion: address,
       trabajador_password: (password !== '' ? password : undefined),
-      trabajador_foto: (photo !== '' ? photo : undefined),
+      trabajador_foto: photo,
     }
     console.log(JSON.stringify(newWorker))
     const targetUrl = `https://burgertown-backend.herokuapp.com/Trabajador/Edit/${workerId}`
@@ -85,7 +105,7 @@ const ModifyWorker = ({ match }) => {
       <CssBaseline />
       <div className={classes.paper}>
         <Avatar className={classes.avatar}>
-          <LockOutlinedIcon />
+          <WorkIcon />
         </Avatar>
         <Typography component="h1" variant="h5">
           Modificar Trabajador con ID {workerId}
@@ -94,6 +114,7 @@ const ModifyWorker = ({ match }) => {
           <Grid container spacing={2}>
           <Grid item xs={12} sm={6}>
               <TextField
+                value={name}
                 autoComplete="nombre"
                 name="nombre"
                 variant="outlined"
@@ -107,6 +128,7 @@ const ModifyWorker = ({ match }) => {
             </Grid>
             <Grid item xs={12} sm={6}>
               <TextField
+                value={surname}
                 variant="outlined"
                 required
                 fullWidth
@@ -119,6 +141,7 @@ const ModifyWorker = ({ match }) => {
             </Grid>
             <Grid item xs={12}>
               <TextField
+                value={phone}
                 variant="outlined"
                 required
                 fullWidth
@@ -131,6 +154,7 @@ const ModifyWorker = ({ match }) => {
             </Grid>
             <Grid item xs={12}>
               <TextField
+                value={document}
                 variant="outlined"
                 required
                 fullWidth
@@ -143,6 +167,7 @@ const ModifyWorker = ({ match }) => {
             </Grid>
             <Grid item xs={12}>
               <TextField
+                value={address}
                 variant="outlined"
                 required
                 fullWidth
@@ -155,6 +180,7 @@ const ModifyWorker = ({ match }) => {
             </Grid>
             <Grid item xs={12}>
               <TextField
+                value={position}
                 variant="outlined"
                 required
                 fullWidth
@@ -167,6 +193,7 @@ const ModifyWorker = ({ match }) => {
             </Grid>
             <Grid item xs={12}>
               <TextField
+                value={photo}
                 variant="outlined"
                 required
                 fullWidth

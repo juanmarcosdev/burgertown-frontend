@@ -589,6 +589,9 @@ const DashboardAdmin = (props) => {
                       startIcon={<SaveIcon />}
                       style={{margin: '7px 14px 7px 14px'}}
                       href={`/modifyclient/${item.cliente_id}`}
+                      onClick={() => {
+                        localStorage.setItem("clienteCelularModify", item.cliente_celular)
+                      }}
                     >
                       
                     </Button>
@@ -857,10 +860,10 @@ const DashboardAdmin = (props) => {
                       <td style={{margin: '14px'}} key={item.producto_precio}>{item.producto_precio}</td>
                     }
                     {
-                      <td style={{margin: '14px'}} key={item.producto_descuento}>{item.producto_descuento}</td>
+                      <td style={{margin: '14px'}} key={item.producto_descuento}>{item.producto_descuento !== 0 ? `${item.producto_descuento}%` : "No aplica"}</td>
                     }
                     {
-                      <td style={{margin: '14px'}} key={item.producto_iva}>{item.producto_iva}</td>
+                      <td style={{margin: '14px'}} key={item.producto_iva}>{item.producto_iva}%</td>
                     }
                     {
                       <td style={{margin: '14px'}} key={item.categoria_id}>{item.categoria_id}</td>

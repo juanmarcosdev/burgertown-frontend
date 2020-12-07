@@ -5,7 +5,7 @@ import CssBaseline from '@material-ui/core/CssBaseline';
 import TextField from '@material-ui/core/TextField';
 import Link from '@material-ui/core/Link';
 import Grid from '@material-ui/core/Grid';
-import LockOutlinedIcon from '@material-ui/icons/LockOutlined';
+import FastfoodIcon from '@material-ui/icons/Fastfood';
 import Typography from '@material-ui/core/Typography';
 import { makeStyles } from '@material-ui/core/styles';
 import Container from '@material-ui/core/Container';
@@ -45,16 +45,36 @@ const ModifyProduct = ({ match }) => {
   const [discount, setDiscount] = React.useState('');
   const [iva, setIva] = React.useState('');
 
+  React.useEffect(() => {
+    fetch(`https://burgertown-backend.herokuapp.com/Producto/${productId}`, 
+    {
+      method: 'GET',
+      headers: { "Content-Type": "application/json",
+                 token: localStorage.token
+               },
+    }).then(res => res.json())
+      .then(data => {
+        console.log(data.data)
+        setName(data.data.producto_nombre)
+        setDescription(data.data.producto_descripcion)
+        setImage(data.data.producto_imagen)
+        setExist(data.data.producto_existencias)
+        setPrice(data.data.producto_precio)
+        setDiscount(data.data.producto_descuento)
+        setIva(data.data.producto_iva)
+      })
+  }, []);
+
   const handleSubmit = async (event) => {
     event.preventDefault();
     const newProduct = {
-      producto_nombre: (name !== '' ? name : undefined),
-      producto_descripcion: (description !== '' ? description : undefined),
-      producto_imagen: (image !== '' ? image: undefined),
-      producto_existencias: (exist !== '' ? parseInt(exist) : undefined),
-      producto_precio: (price !== '' ? parseInt(price) : undefined),
-      producto_descuento: (discount !== '' ? parseInt(discount) : undefined),
-      producto_iva: (iva !== '' ? parseInt(iva) : undefined),
+      producto_nombre: name,
+      producto_descripcion: description,
+      producto_imagen: image,
+      producto_existencias: parseInt(exist),
+      producto_precio: parseInt(price),
+      producto_descuento: parseInt(discount),
+      producto_iva: parseInt(iva),
     }
     console.log(JSON.stringify(newProduct));
     const response = await fetch(`https://burgertown-backend.herokuapp.com/Producto/Edit/${productId}`, {
@@ -82,7 +102,7 @@ const ModifyProduct = ({ match }) => {
       <CssBaseline />
       <div className={classes.paper}>
         <Avatar className={classes.avatar}>
-          <LockOutlinedIcon />
+          <FastfoodIcon />
         </Avatar>
         <Typography component="h1" variant="h5">
           Modificar Producto con ID {productId}
@@ -91,6 +111,7 @@ const ModifyProduct = ({ match }) => {
           <Grid container spacing={2}>
             <Grid item xs={12}>
               <TextField
+                value={name}
                 autoComplete="nombre"
                 name="nombre"
                 variant="outlined"
@@ -104,6 +125,7 @@ const ModifyProduct = ({ match }) => {
             </Grid>
             <Grid item xs={12}>
               <TextField
+                value={description}
                 autoComplete="descripcion"
                 name="descripcion"
                 variant="outlined"
@@ -117,6 +139,7 @@ const ModifyProduct = ({ match }) => {
             </Grid>
             <Grid item xs={12}>
               <TextField
+                value={image}
                 autoComplete="image"
                 name="image"
                 variant="outlined"
@@ -130,6 +153,7 @@ const ModifyProduct = ({ match }) => {
             </Grid>
             <Grid item xs={12}>
               <TextField
+                value={exist}
                 autoComplete="exist"
                 name="exist"
                 variant="outlined"
@@ -143,6 +167,7 @@ const ModifyProduct = ({ match }) => {
             </Grid>
             <Grid item xs={12}>
               <TextField
+                value={price}
                 autoComplete="price"
                 name="price"
                 variant="outlined"
@@ -156,6 +181,7 @@ const ModifyProduct = ({ match }) => {
             </Grid>
             <Grid item xs={12}>
               <TextField
+                value={discount}
                 autoComplete="discount"
                 name="discount"
                 variant="outlined"
@@ -169,6 +195,7 @@ const ModifyProduct = ({ match }) => {
             </Grid>
             <Grid item xs={12}>
               <TextField
+                value={iva}
                 autoComplete="iva"
                 name="iva"
                 variant="outlined"
