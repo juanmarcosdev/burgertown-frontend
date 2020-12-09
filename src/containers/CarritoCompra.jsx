@@ -28,7 +28,7 @@ const CarritoCompra = (props) => {
     const classes = useStyles();
     const { idProductosALlevar, cantidadProductosALlevar, dataSedesDespliegue, history } = props;
     React.useEffect(() => {
-      fetch('http://burgertown-backend.herokuapp.com/Sede/Get', 
+      fetch('https://burgertown-backend.herokuapp.com/Sede/Get', 
         {
           method: 'GET',
           headers: { "Content-Type": "application/json",
