@@ -2,7 +2,7 @@ class ActionProvider {
     constructor(createChatBotMessage, setStateFunc) {
         this.createChatBotMessage = createChatBotMessage;
         this.setState = setStateFunc;
-        fetch(`http://burgertown-backend.herokuapp.com/Producto/Get`, {
+        fetch(`https://burgertown-backend.herokuapp.com/Producto/Get`, {
                 method: 'GET',
                 headers: {
                     "Content-Type": "application/json",
@@ -15,7 +15,7 @@ class ActionProvider {
         let today = new Date();
         let todayDayString = today.getDate().toString();
         console.log(todayDayString);
-        fetch(`http://burgertown-backend.herokuapp.com/Producto/${todayDayString}`, {
+        fetch(`https://burgertown-backend.herokuapp.com/Producto/${todayDayString}`, {
                 method: 'GET',
                 headers: {
                     "Content-Type": "application/json",
@@ -25,7 +25,7 @@ class ActionProvider {
                 this.producto_del_dia = data.data;
                 console.log(this.producto_del_dia);
             })
-        fetch(`http://burgertown-backend.herokuapp.com/Sede/Get`, {
+        fetch(`https://burgertown-backend.herokuapp.com/Sede/Get`, {
                 method: 'GET',
                 headers: {
                     "Content-Type": "application/json",
