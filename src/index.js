@@ -6,27 +6,30 @@ import reducer from './reducers';
 import App from './routes/App';
 
 const initialState = {
-  'dataTrabajadores': [],
-  'dataClientes': [],
-  'dataCategorias': [],
-  'dataSedes': [],
-  'dataProductos': [],
-  'dataMenu': [],
-  'dataMenuProductos': [],
-  'dataProductoIndividual': {},
-  'carritoCompras': [],
-  'idProductosALlevar': [],
-  'cantidadProductosALlevar': [],
-  'dataSedesDespliegue': [],
-  'dataMediosPago': [],
-  'dataDireccionCliente': '',
+    'dataTrabajadores': [],
+    'dataClientes': [],
+    'dataCategorias': [],
+    'dataSedes': [],
+    'dataProductos': [],
+    'dataMenu': [],
+    'dataMenuProductos': [],
+    'dataProductoIndividual': {},
+    'carritoCompras': [],
+    'idProductosALlevar': [],
+    'cantidadProductosALlevar': [],
+    'dataSedesDespliegue': [],
+    'dataMediosPago': [],
+    'dataDireccionCliente': '',
+    'dataPagar': [],
 }
 
 const store = createStore(reducer, initialState);
 
-ReactDOM.render(
-  <Provider store={store}>
-      <App />
-  </Provider>,
-  document.getElementById('app'),
+ReactDOM.render( <
+    Provider store = { store } >
+    <
+    App / >
+    <
+    /Provider>,
+    document.getElementById('app'),
 );

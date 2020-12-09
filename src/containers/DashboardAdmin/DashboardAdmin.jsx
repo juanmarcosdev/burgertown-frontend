@@ -420,7 +420,7 @@ const DashboardAdmin = (props) => {
                   <td style={{margin: '10px'}}>Fecha contratacion</td>
                   <td style={{margin: '10px'}}>Cargo</td>
                   <td style={{margin: '10px'}}>Dirección</td>
-              </tr>
+                </tr>
               </thead>
               <tbody>
                 {

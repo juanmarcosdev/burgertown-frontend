@@ -127,3 +127,8 @@ export const setDireccionCliente = (payload) => ({
     type: 'SET_DIRECCION_CLIENTE',
     payload,
 });
+
+export const setMetodoPagar = (payload) => ({
+    type: 'SET_METODO_PAGAR',
+    payload,
+})

@@ -1,5 +1,5 @@
 const reducer = (state, action) => {
-    switch(action.type) {
+    switch (action.type) {
         case 'GET_TRABAJADORES':
             return {
                 ...state,
@@ -119,6 +119,11 @@ const reducer = (state, action) => {
             return {
                 ...state,
                 dataDireccionCliente: action.payload
+            }
+        case 'SET_METODO_PAGAR':
+            return {
+                ...state,
+                dataPagar: [...state.dataPagar, action.payload],
             }
         default:
             return state;

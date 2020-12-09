@@ -256,6 +256,16 @@ const MediosPago = (props) => {
             Asociar Nuevo Medio de Pago
           </Button>
         </form>
+        <div>
+        <Button
+        fullWidth
+        variant="contained"
+        color="secondary"
+        href='/menu'
+          >
+            Volver al Menú
+          </Button>
+        </div>
       </div>
       <Box mt={8}>
         <Copyright />
