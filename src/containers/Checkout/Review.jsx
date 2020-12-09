@@ -122,6 +122,7 @@ const Review = (props) => {
                         pago_fecha: dateFormat(new Date(), "mm-dd-yyyy"),
                         tarjeta_id: parseInt(medioPago) !== 0 ? parseInt(medioPago) : undefined,
                         pedido_id: parseInt(localStorage.pedido_id),
+                        cliente_id: parseInt(localStorage.cliente_id),
                       }
                       console.log(JSON.parse(JSON.stringify(objectPago)))
                       props.setMetodoPagar(JSON.parse(JSON.stringify(objectPago)))

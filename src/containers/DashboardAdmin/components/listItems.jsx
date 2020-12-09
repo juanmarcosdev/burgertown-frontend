@@ -48,23 +48,53 @@ export const mainListItems = (
 export const secondaryListItems = (
   <div>
     <ListSubheader inset>Reportes</ListSubheader>
-    <ListItem button>
+    <ListItem button component="a" href="#masvendidos">
       <ListItemIcon>
         <AssignmentIcon />
       </ListItemIcon>
-      <ListItemText primary="Reporte 1" />
+      <ListItemText primary="Reporte 1: + Vendidos" />
     </ListItem>
-    <ListItem button>
+    <ListItem button component="a" href="#clientesdinero">
       <ListItemIcon>
         <AssignmentIcon />
       </ListItemIcon>
-      <ListItemText primary="Reporte 2" />
+      <ListItemText primary="Reporte 2: Clientes + $" />
     </ListItem>
-    <ListItem button>
+    <ListItem button component="a" href="#ventasfecha">
       <ListItemIcon>
         <AssignmentIcon />
       </ListItemIcon>
-      <ListItemText primary="Reporte 3" />
+      <ListItemText primary="Reporte 3: Ventas" />
+    </ListItem>
+    <ListItem button component="a" href="#menosvendidos">
+      <ListItemIcon>
+        <AssignmentIcon />
+      </ListItemIcon>
+      <ListItemText primary="Reporte 4: - Vendidos" />
+    </ListItem>
+    <ListItem button component="a" href="#ventasproducto">
+      <ListItemIcon>
+        <AssignmentIcon />
+      </ListItemIcon>
+      <ListItemText primary="Reporte 5: $ Producto" />
+    </ListItem>
+    <ListItem button component="a" href="#sedemas">
+      <ListItemIcon>
+        <AssignmentIcon />
+      </ListItemIcon>
+      <ListItemText primary="Reporte 6: Sede +" />
+    </ListItem>
+    <ListItem button component="a" href="#sedemenos">
+      <ListItemIcon>
+        <AssignmentIcon />
+      </ListItemIcon>
+      <ListItemText primary="Reporte 7: Sede -" />
+    </ListItem>
+    <ListItem button component="a" href="#clientesfc">
+      <ListItemIcon>
+        <AssignmentIcon />
+      </ListItemIcon>
+      <ListItemText primary="Reporte 8: Clientes FC" />
     </ListItem>
   </div>
 );

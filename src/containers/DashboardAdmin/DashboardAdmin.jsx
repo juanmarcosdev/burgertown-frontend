@@ -1,4 +1,5 @@
 import React from 'react';
+import 'date-fns';
 import clsx from 'clsx';
 import { makeStyles } from '@material-ui/core/styles';
 import CssBaseline from '@material-ui/core/CssBaseline';
@@ -36,6 +37,14 @@ import NotFound from '../NotFound';
 import ExitToAppIcon from '@material-ui/icons/ExitToApp';
 import Badge from '@material-ui/core/Badge';
 import withRoot from '../Home/modules/withRoot';
+import { Bar, Pie } from '@reactchartjs/react-chart.js';
+import DateFnsUtils from '@date-io/date-fns';
+import 'dateformat';
+import {
+  MuiPickersUtilsProvider,
+  KeyboardDatePicker,
+} from '@material-ui/pickers';
+import TextField from '@material-ui/core/TextField';
 
 
 const drawerWidth = 240;
@@ -131,9 +140,296 @@ const DashboardAdmin = (props) => {
   };
   const fixedHeightPaper = clsx(classes.paper, classes.fixedHeight);
 
+  const [selectedDate1, setSelectedDate1] = React.useState(new Date());
+  const [selectedDate2, setSelectedDate2] = React.useState(new Date());
+  const dateFormat = require('dateformat');
+
+  const [idPedidoReporte, setIdPedidoReporte] = React.useState('');
+
+  const handleDateChange1 = (date) => {
+    setSelectedDate1(date);
+  };
+
+  const handleDateChange2 = (date) => {
+    setSelectedDate2(date);
+  };
+
   const Swal = require('sweetalert2');
 
   // componentDidMount()
+  const options = {
+    scales: {
+      yAxes: [
+        {
+          ticks: {
+            beginAtZero: true,
+          },
+        },
+      ],
+    },
+  }
+  
+
+  const [dataReporte1, setDataReporte1] = React.useState([])
+
+  React.useEffect(() => {
+    fetch('https://burgertown-backend.herokuapp.com/Reportes/ProductosMasVendidos', 
+    {
+      method: 'GET',
+      headers: { "Content-Type": "application/json",
+                 token: localStorage.token
+               },
+    }).then(res => res.json())
+      .then(data => {
+        setDataReporte1(data.data)
+        console.log(data.data)
+      })
+  }, []);
+
+  const dataChartReporte1 = {
+    labels: dataReporte1.map(a => a.producto_nombre),
+    datasets: [
+      {
+        label: '# de Ventas',
+        data: dataReporte1.map(a => a.total_ventas),
+        backgroundColor: [
+          'rgba(255, 99, 132, 0.2)',
+          'rgba(54, 162, 235, 0.2)',
+          'rgba(255, 206, 86, 0.2)',
+          'rgba(75, 192, 192, 0.2)',
+          'rgba(153, 102, 255, 0.2)',
+          'rgba(255, 159, 64, 0.2)',
+        ],
+        borderColor: [
+          'rgba(255, 99, 132, 1)',
+          'rgba(54, 162, 235, 1)',
+          'rgba(255, 206, 86, 1)',
+          'rgba(75, 192, 192, 1)',
+          'rgba(153, 102, 255, 1)',
+          'rgba(255, 159, 64, 1)',
+        ],
+        borderWidth: 1,
+      },
+    ],
+  }
+
+  const [dataReporte2, setDataReporte2] = React.useState([])
+
+  React.useEffect(() => {
+    fetch('https://burgertown-backend.herokuapp.com/Reportes/MejoresClientes', 
+    {
+      method: 'GET',
+      headers: { "Content-Type": "application/json",
+                 token: localStorage.token
+               },
+    }).then(res => res.json())
+      .then(data => {
+        setDataReporte2(data.data)
+        console.log(data.data)
+      })
+  }, []);
+
+  const dataChartReporte2 = {
+    labels: dataReporte2.map(a => a.cliente_nombre),
+    datasets: [
+      {
+        label: 'Cantidad de Dinero ingresado',
+        data: dataReporte2.map(a => a.contribucion),
+        backgroundColor: [
+          'rgba(255, 99, 132, 0.2)',
+          'rgba(54, 162, 235, 0.2)',
+          'rgba(255, 206, 86, 0.2)',
+          'rgba(75, 192, 192, 0.2)',
+          'rgba(153, 102, 255, 0.2)',
+          'rgba(255, 159, 64, 0.2)',
+        ],
+        borderColor: [
+          'rgba(255, 99, 132, 1)',
+          'rgba(54, 162, 235, 1)',
+          'rgba(255, 206, 86, 1)',
+          'rgba(75, 192, 192, 1)',
+          'rgba(153, 102, 255, 1)',
+          'rgba(255, 159, 64, 1)',
+        ],
+        borderWidth: 1,
+      },
+    ],
+  }
+
+  const [dataReporte4, setDataReporte4] = React.useState([])
+
+  React.useEffect(() => {
+    fetch('https://burgertown-backend.herokuapp.com/Reportes/ProductosMenosVendidos', 
+    {
+      method: 'GET',
+      headers: { "Content-Type": "application/json",
+                 token: localStorage.token
+               },
+    }).then(res => res.json())
+      .then(data => {
+        setDataReporte4(data.data)
+        console.log(data.data)
+      })
+  }, []);
+
+  const dataChartReporte4 = {
+    labels: dataReporte4.map(a => a.producto_nombre),
+    datasets: [
+      {
+        label: '# de Ventas',
+        data: dataReporte4.map(a => a.total_ventas),
+        backgroundColor: [
+          'rgba(255, 99, 132, 0.2)',
+          'rgba(54, 162, 235, 0.2)',
+          'rgba(255, 206, 86, 0.2)',
+          'rgba(75, 192, 192, 0.2)',
+          'rgba(153, 102, 255, 0.2)',
+          'rgba(255, 159, 64, 0.2)',
+        ],
+        borderColor: [
+          'rgba(255, 99, 132, 1)',
+          'rgba(54, 162, 235, 1)',
+          'rgba(255, 206, 86, 1)',
+          'rgba(75, 192, 192, 1)',
+          'rgba(153, 102, 255, 1)',
+          'rgba(255, 159, 64, 1)',
+        ],
+        borderWidth: 1,
+      },
+    ],
+  }
+
+  const [dataReporte6, setDataReporte6] = React.useState([])
+
+  React.useEffect(() => {
+    fetch('https://burgertown-backend.herokuapp.com/Reportes/MejoresSedes', 
+    {
+      method: 'GET',
+      headers: { "Content-Type": "application/json",
+                 token: localStorage.token
+               },
+    }).then(res => res.json())
+      .then(data => {
+        setDataReporte6(data.data)
+        console.log(data.data)
+      })
+  }, []);
+
+  const dataChartReporte6 = {
+    labels: dataReporte6.map(a => a.sede_nombre),
+    datasets: [
+      {
+        label: 'Dinero ingresado por sede',
+        data: dataReporte6.map(a => a.ventas_sede),
+        backgroundColor: [
+          'rgba(255, 99, 132, 0.2)',
+          'rgba(54, 162, 235, 0.2)',
+          'rgba(255, 206, 86, 0.2)',
+          'rgba(75, 192, 192, 0.2)',
+          'rgba(153, 102, 255, 0.2)',
+          'rgba(255, 159, 64, 0.2)',
+        ],
+        borderColor: [
+          'rgba(255, 99, 132, 1)',
+          'rgba(54, 162, 235, 1)',
+          'rgba(255, 206, 86, 1)',
+          'rgba(75, 192, 192, 1)',
+          'rgba(153, 102, 255, 1)',
+          'rgba(255, 159, 64, 1)',
+        ],
+        borderWidth: 1,
+      },
+    ],
+  }
+
+  const [dataReporte7, setDataReporte7] = React.useState([])
+
+  React.useEffect(() => {
+    fetch('https://burgertown-backend.herokuapp.com/Reportes/PeoresSedes', 
+    {
+      method: 'GET',
+      headers: { "Content-Type": "application/json",
+                 token: localStorage.token
+               },
+    }).then(res => res.json())
+      .then(data => {
+        setDataReporte7(data.data)
+        console.log(data.data)
+      })
+  }, []);
+
+  const dataChartReporte7 = {
+    labels: dataReporte7.map(a => a.sede_nombre),
+    datasets: [
+      {
+        label: 'Dinero ingresado por sede',
+        data: dataReporte7.map(a => a.ventas_sede),
+        backgroundColor: [
+          'rgba(255, 99, 132, 0.2)',
+          'rgba(54, 162, 235, 0.2)',
+          'rgba(255, 206, 86, 0.2)',
+          'rgba(75, 192, 192, 0.2)',
+          'rgba(153, 102, 255, 0.2)',
+          'rgba(255, 159, 64, 0.2)',
+        ],
+        borderColor: [
+          'rgba(255, 99, 132, 1)',
+          'rgba(54, 162, 235, 1)',
+          'rgba(255, 206, 86, 1)',
+          'rgba(75, 192, 192, 1)',
+          'rgba(153, 102, 255, 1)',
+          'rgba(255, 159, 64, 1)',
+        ],
+        borderWidth: 1,
+      },
+    ],
+  }
+
+  const [valueIDProducto, setValueIDProducto] = React.useState('');
+
+  const [dataReporte3, setDataReporte3] = React.useState([]);
+
+  const handleReporteVenta = async () => {
+    console.log(selectedDate1)
+              console.log(selectedDate2)
+              console.log(dateFormat(selectedDate1, "dd-mm-yyyy"))
+              console.log(dateFormat(selectedDate2, "dd-mm-yyyy"))
+              console.log(JSON.stringify({
+                fecha_inicial: dateFormat(selectedDate1, "dd-mm-yyyy"),
+                fecha_final: dateFormat(selectedDate2, "dd-mm-yyyy"),
+              }))
+              const response = await fetch('https://burgertown-backend.herokuapp.com/Reportes/Ventas_Fecha', 
+              {
+                method: 'PUT',
+                headers: { "Content-Type": "application/json",
+                          token: localStorage.token,
+                        },
+                body: JSON.stringify({
+                  fecha_inicial: dateFormat(selectedDate1, "dd-mm-yyyy"),
+                  fecha_final: dateFormat(selectedDate2, "dd-mm-yyyy"),
+                })
+              }).then(res => res.json())
+                .then(data => {
+                  setDataReporte3(data.data)
+                  console.log(data.data)
+                })
+  }
+
+  const [dataReporte8, setDataReporte8] = React.useState([])
+
+  React.useEffect(() => {
+    fetch('https://burgertown-backend.herokuapp.com/Reportes/Proximos_cumpleaneros', 
+    {
+      method: 'GET',
+      headers: { "Content-Type": "application/json",
+                 token: localStorage.token
+               },
+    }).then(res => res.json())
+      .then(data => {
+        setDataReporte8(data.data)
+        console.log(data.data)
+      })
+  }, []);
 
   React.useEffect(() => {
     fetch('https://burgertown-backend.herokuapp.com/Trabajador/Get', 
@@ -317,8 +613,8 @@ const DashboardAdmin = (props) => {
 
   return (
     <div>
-      {/* {
-        localStorage.token !== undefined && localStorage.typeUser === '2' ? */}
+      {
+        localStorage.token !== undefined && localStorage.typeUser === '2' ?
          <div className={classes.root}>
         <CssBaseline />
         <AppBar position="absolute" className={clsx(classes.appBar, open && classes.appBarShift)}>
@@ -906,12 +1202,233 @@ const DashboardAdmin = (props) => {
               </tbody>
             </table>
             </div>
+            <div id="reportes" style={{display: 'flex', flexDirection: 'column'}}>
+            <div id="masvendidos">
+            <div style={{display: 'flex', flexDirection: 'row'}}>
+              <AssignmentIcon style={{marginTop: '20px', marginRight: '5px'}}/><h2>Reporte 1: Productos más vendidos (Top 20)</h2>
+              </div>
+              <Pie data={dataChartReporte1} options={options} />
+            </div>
+            <div id="clientesdinero">
+            <div style={{display: 'flex', flexDirection: 'row'}}>
+              <AssignmentIcon style={{marginTop: '20px', marginRight: '5px'}}/><h2>Reporte 2: Clientes que más dinero ingresaron a la tienda</h2>
+              </div>
+              <Bar data={dataChartReporte2} options={options} />
+            </div>
+            <div id="ventasfecha">
+            <div style={{display: 'flex', flexDirection: 'row'}}>
+              <AssignmentIcon style={{marginTop: '20px', marginRight: '5px'}}/><h2>Reporte 3: Ventas por fecha (fecha inicial - fecha final)</h2>
+              </div>
+              <Typography component="h6" variant="h6">Seleccione rango de fechas</Typography>
+              <Grid container justify="space-around">
+            <MuiPickersUtilsProvider utils={DateFnsUtils}>
+        <KeyboardDatePicker
+          margin="normal"
+          id="fechainicial"
+          label="Fecha Inicial"
+          format="dd/MM/yyyy"
+          value={selectedDate1}
+          onChange={handleDateChange1}
+          KeyboardButtonProps={{
+            'aria-label': 'change date',
+          }}
+        />
+        <KeyboardDatePicker
+          margin="normal"
+          id="fechafinal"
+          label="Fecha Final"
+          format="dd/MM/yyyy"
+          value={selectedDate2}
+          onChange={handleDateChange2}
+          KeyboardButtonProps={{
+            'aria-label': 'change date',
+          }}
+        />
+    </MuiPickersUtilsProvider>
+            </Grid>
+            <Button
+            fullWidth
+            variant="contained"
+            color="secondary"
+            onClick={handleReporteVenta}
+          >
+            Consultar
+          </Button>
+          {
+            dataReporte3.length > 0 ? 
+            <Bar data={{
+              labels: ['Rango de fecha'],
+    datasets: [
+      {
+        label: 'Valor promedio',
+        data: dataReporte3.map(a => a.valor_promedio),
+        backgroundColor: [
+          'rgba(255, 99, 132, 0.2)',
+          'rgba(54, 162, 235, 0.2)',
+          'rgba(255, 206, 86, 0.2)',
+          'rgba(75, 192, 192, 0.2)',
+          'rgba(153, 102, 255, 0.2)',
+          'rgba(255, 159, 64, 0.2)',
+        ],
+        borderColor: [
+          'rgba(255, 99, 132, 1)',
+          'rgba(54, 162, 235, 1)',
+          'rgba(255, 206, 86, 1)',
+          'rgba(75, 192, 192, 1)',
+          'rgba(153, 102, 255, 1)',
+          'rgba(255, 159, 64, 1)',
+        ],
+        borderWidth: 1,
+      },
+      {
+        label: 'Pedido mas alto',
+        data: dataReporte3.map(a => a.pedido_mas_alto),
+        backgroundColor: [
+          'rgba(255, 99, 132, 0.2)',
+          'rgba(54, 162, 235, 0.2)',
+          'rgba(255, 206, 86, 0.2)',
+          'rgba(75, 192, 192, 0.2)',
+          'rgba(153, 102, 255, 0.2)',
+          'rgba(255, 159, 64, 0.2)',
+        ],
+        borderColor: [
+          'rgba(255, 99, 132, 1)',
+          'rgba(54, 162, 235, 1)',
+          'rgba(255, 206, 86, 1)',
+          'rgba(75, 192, 192, 1)',
+          'rgba(153, 102, 255, 1)',
+          'rgba(255, 159, 64, 1)',
+        ],
+        borderWidth: 1,
+      },
+      {
+        label: 'Pedido mas bajo',
+        data: dataReporte3.map(a => a.pedido_mas_bajo),
+        backgroundColor: [
+          'rgba(255, 99, 132, 0.2)',
+          'rgba(54, 162, 235, 0.2)',
+          'rgba(255, 206, 86, 0.2)',
+          'rgba(75, 192, 192, 0.2)',
+          'rgba(153, 102, 255, 0.2)',
+          'rgba(255, 159, 64, 0.2)',
+        ],
+        borderColor: [
+          'rgba(255, 99, 132, 1)',
+          'rgba(54, 162, 235, 1)',
+          'rgba(255, 206, 86, 1)',
+          'rgba(75, 192, 192, 1)',
+          'rgba(153, 102, 255, 1)',
+          'rgba(255, 159, 64, 1)',
+        ],
+        borderWidth: 1,
+      },
+      {
+        label: 'Total ventas',
+        data: dataReporte3.map(a => a.total_ventas),
+        backgroundColor: [
+          'rgba(255, 99, 132, 0.2)',
+          'rgba(54, 162, 235, 0.2)',
+          'rgba(255, 206, 86, 0.2)',
+          'rgba(75, 192, 192, 0.2)',
+          'rgba(153, 102, 255, 0.2)',
+          'rgba(255, 159, 64, 0.2)',
+        ],
+        borderColor: [
+          'rgba(255, 99, 132, 1)',
+          'rgba(54, 162, 235, 1)',
+          'rgba(255, 206, 86, 1)',
+          'rgba(75, 192, 192, 1)',
+          'rgba(153, 102, 255, 1)',
+          'rgba(255, 159, 64, 1)',
+        ],
+        borderWidth: 1,
+      },
+    ],
+            }}
+            options={options} />
+          : <div></div>}
+            </div>
+            <div id="menosvendidos">
+            <div style={{display: 'flex', flexDirection: 'row'}}>
+              <AssignmentIcon style={{marginTop: '20px', marginRight: '5px'}}/><h2>Reporte 4: Productos menos vendidos (20 productos)</h2>
+              </div>
+              <Pie data={dataChartReporte4} options={options} />
+            </div>
+            <div id="ventasproducto">
+            <div style={{display: 'flex', flexDirection: 'row'}}>
+              <AssignmentIcon style={{marginTop: '20px', marginRight: '5px'}}/><h2>Reporte 5: Total de ventas de un producto particular en los últimos 6 meses</h2>
+              </div>
+              <Typography component="h6" variant="h6">Seleccione ID producto a consultar</Typography>
+              <Grid item xs={12}>
+              <TextField
+                variant="outlined"
+                required
+                fullWidth
+                id="idproducto"
+                label="ID Producto"
+                name="idproducto"
+                autoComplete="idproducto"
+                value={valueIDProducto}
+                onChange={(event) => {setValueIDProducto(event.target.value)}}
+              />
+            </Grid>
+            </div>
+            <div id="sedemas">
+            <div style={{display: 'flex', flexDirection: 'row'}}>
+              <AssignmentIcon style={{marginTop: '20px', marginRight: '5px'}}/><h2>Reporte 6: Sedes del restaurante con mayores ventas</h2>
+              </div>
+              <Bar data={dataChartReporte6} options={options} />
+            </div>
+            <div id="sedemenos">
+            <div style={{display: 'flex', flexDirection: 'row'}}>
+              <AssignmentIcon style={{marginTop: '20px', marginRight: '5px'}}/><h2>Reporte 7: Sedes del restaurante con menores ventas</h2>
+              </div>
+              <Bar data={dataChartReporte7} options={options} />
+            </div>
+            <div id="clientesfc">
+            <div style={{display: 'flex', flexDirection: 'row'}}>
+              <AssignmentIcon style={{marginTop: '20px', marginRight: '5px'}}/><h2>Reporte 8: Clientes que cumplirán años el mes que empieza</h2>
+              </div>
+              <table>
+              <thead>
+                <tr style={{display: 'flex', flexDirection: 'row', justifyContent: 'flex-start', fontSize: 17}}>
+                  <td style={{marginLeft: '60px', marginRight: '60px'}}>Nombre</td>
+                  <td style={{marginLeft: '60px', marginRight: '60px'}}>Apellido</td>
+                  <td style={{marginLeft: '60px', marginRight: '60px'}}>Fecha de nacimiento</td>
+                  <td style={{marginLeft: '60px', marginRight: '60px'}}>Documento</td>
+              </tr>
+              </thead>
+              <tbody>
+                {
+                  dataReporte8.length > 0 ? dataReporte8.map((item) => 
+                  <tr style={{display: 'flex', flexDirection: 'row', justifyContent: 'space-between', fontSize: 17}}>
+                    {
+                      <td style={{margin: '14px'}} key={item.nombre}>{item.nombre}</td>
+                    }
+                    {
+                      <td style={{margin: '14px'}} key={item.apellido}>{item.apellido}</td>
+                    }
+                    {
+                      <td style={{margin: '14px'}} key={item.fecha_nacimiento}>{item.fecha_nacimiento}</td>
+                    }
+                    {
+                      <td style={{margin: '14px'}} key={item.documento}>{item.documento}</td>
+                    }
+                    </tr>
+                  ) 
+                  : <div></div>
+                }
+              </tbody>
+            </table>
+            </div>
+            </div>
             </Grid>
           </Container>
         </main>
-              </div> 
-              {/* : <NotFound /> } */}
-    </div>
+      </div> : <NotFound />
+
+      }
+      </div>
   );
 }
 
