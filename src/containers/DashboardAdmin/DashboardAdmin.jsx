@@ -359,7 +359,63 @@ const DashboardAdmin = (props) => {
     ],
   }
 
+  const mapNumberToMonth = number => {
+    switch(number) {
+      case '01':
+        return 'Enero';
+      case '02':
+        return 'Febrero';
+      case '03':
+        return 'Marzo';
+      case '04':
+        return 'Abril';
+      case '05':
+        return 'Mayo';
+      case '06':
+        return 'Junio';
+      case '07':
+        return 'Julio';
+      case '08':
+        return 'Agosto';
+      case '09':
+        return 'Septiembre';
+      case '10':
+        return 'Octubre';
+      case '11':
+        return 'Noviembre';
+      case '12':
+        return 'Diciembre';
+      default:
+        return 'No valido';
+    }
+  }
+
+  const changeDate = fecha => {
+    return fecha.substring(5,7)
+  }
+
   const [valueIDProducto, setValueIDProducto] = React.useState('');
+
+  const [dataReporte5, setDataReporte5] = React.useState([]);
+
+  const handleReporteMesesProducto = async () => {
+    console.log(valueIDProducto);
+    const response = await fetch(`https://burgertown-backend.herokuapp.com/Reportes/Ventas_producto/${valueIDProducto}`, 
+              {
+                method: 'GET',
+                headers: { "Content-Type": "application/json",
+                          token: localStorage.token,
+                        },
+              }).then(res => res.json())
+                .then(data => {
+                  console.log("reporte 5")
+                  console.log(data.data)
+                  setDataReporte5(data.data)
+                })
+  }
+
+  
+
 
   const [dataReporte3, setDataReporte3] = React.useState([]);
 
@@ -387,6 +443,7 @@ const DashboardAdmin = (props) => {
                   console.log("reporte 3")
                   console.log(data.data)
                   setDataReporte3(data.data)
+                  
                 })
   }
 
@@ -1281,7 +1338,7 @@ const DashboardAdmin = (props) => {
             <div style={{display: 'flex', flexDirection: 'row'}}>
               <AssignmentIcon style={{marginTop: '20px', marginRight: '5px'}}/><h2>Reporte 5: Total de ventas de un producto particular en los últimos 6 meses</h2>
               </div>
-              <Typography component="h6" variant="h6">Seleccione ID producto a consultar</Typography>
+              <Typography component="h6" variant="h6">Digite ID producto a consultar</Typography>
               <Grid item xs={12}>
               <TextField
                 variant="outlined"
@@ -1295,6 +1352,36 @@ const DashboardAdmin = (props) => {
                 onChange={(event) => {setValueIDProducto(event.target.value)}}
               />
             </Grid>
+            <Button
+            fullWidth
+            variant="contained"
+            color="secondary"
+            onClick={handleReporteMesesProducto}
+          >
+            Consultar
+          </Button>
+          {
+            dataReporte5.length > 0 ? 
+            <div>
+              <Bar data={{
+              labels: dataReporte5.map(item => item.fecha).map(item => changeDate(item)).sort((a, b) => parseInt(a) - parseInt(b)).map(item => mapNumberToMonth(item)),
+    datasets: [
+      {
+        label: '# de Ventas de Producto / Mes',
+        data: dataReporte5.map(item => ({
+          fecha: changeDate(item.fecha),
+          total_ventas: item.total_ventas
+        })).sort((a, b) => parseInt(a.fecha) - parseInt(b.fecha)).map(item => item.total_ventas),
+        backgroundColor: backgroundArrayColors,
+        borderColor: borderArrayColors,
+        borderWidth: 1,
+      }
+    ],
+            }}
+            options={options} />
+            </div>
+            
+          : <div></div>}
             </div>
             <div id="sedemas">
             <div style={{display: 'flex', flexDirection: 'row'}}>
