@@ -112,7 +112,9 @@ const MediosPago = (props) => {
     console.log(newTarjeta);
       const response = await fetch(`https://burgertown-backend.herokuapp.com/Cliente/Tarjeta/Add`, {
         method: "POST",
-        headers: { "Content-Type": "application/json"},
+        headers: { "Content-Type": "application/json",
+                    token: localStorage.token
+                  },
         body: JSON.stringify(newTarjeta)
       })
       if(response.status === 200) {
