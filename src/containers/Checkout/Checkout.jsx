@@ -72,9 +72,17 @@ const useStyles = makeStyles((theme) => ({
 
 const Checkout = () => {
   const classes = useStyles();
-  const [activeStep, setActiveStep] = React.useState(2);
+
   const dateFormat = require('dateformat');
 
+  const [numeroPedido, setNumeroPedido] = React.useState('');
+
+  React.useEffect(() => {
+    setNumeroPedido(localStorage.pedido_id)
+  }, []);
+
+  
+  
 
 
   return (
@@ -94,7 +102,7 @@ const Checkout = () => {
             Checkout
           </Typography>
           <Typography component="h2" variant="h6" align="center">
-            Pedido #{localStorage.pedido_id}
+            Pedido #{numeroPedido}
           </Typography>
           <div>
           <Typography align="center">

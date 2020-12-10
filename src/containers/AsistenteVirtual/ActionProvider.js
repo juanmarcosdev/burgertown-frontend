@@ -64,6 +64,11 @@ class ActionProvider {
         this.updateChatbotState(descuentoMessage);
     }
 
+    covid() {
+        const greetingMessage = this.createChatBotMessage("Recuerda que por la época y pandemia que vivimos contamos con todos los protocolos de Bioseguridad Covid-19, nuestros alimentos salen del horno y las únicas manos que los tocan son las tuyas, los empacamos en empaques bioseguros");
+        this.updateChatbotState(greetingMessage);
+    }
+
     pedido() {
         const greetingMessage = this.createChatBotMessage("Para poder realizar un pedido debes: 1. Ser cliente registrado y estar logeado como tal \n 2. Dirigirte al Menú y seleccionar los productos que deseas llevar \n 3. Al terminar de escoger los productos dirigirte a checkout para confirmar pedido \n 4. En Checkout confirmas la cantidad de cada producto y pagas");
         this.updateChatbotState(greetingMessage);

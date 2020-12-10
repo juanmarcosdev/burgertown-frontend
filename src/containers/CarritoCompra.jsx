@@ -41,8 +41,8 @@ const CarritoCompra = (props) => {
     }, []);
     const [arrayPrecios, setArrayPrecios] = React.useState([]);
     const [total, setTotal] = React.useState(0);
-    let cantidad = 0;
     const [ready, setReady] = React.useState(false);
+    const [quantity, setQuantity] = React.useState("1");
     return (
         <div>
             <header className="container">
@@ -99,12 +99,12 @@ const CarritoCompra = (props) => {
                 id="outlined-number"
                 label="Cantidad"
                 type="number"
-                defaultValue="1"
+                defaultValue=""
                 InputLabelProps={{
                     shrink: true,
                 }}
                 variant="outlined"
-                onChange={(event) => {cantidad = event.target.value}}
+                onChange={(event) => {setQuantity(event.target.value)}}
                 />
                 <Button variant="contained" color="secondary" 
                 onClick={() => {props.addIdProductoLlevar(product.producto_codigo);
@@ -112,7 +112,7 @@ const CarritoCompra = (props) => {
                       {
                       "producto_nombre": product.producto_nombre, 
                       "producto_codigo": product.producto_codigo, 
-                      "pedido_cp_cantidad": parseInt(cantidad),
+                      "pedido_cp_cantidad": parseInt(quantity),
                       "producto_precio": product.producto_descuento === 0 ? product.producto_precio : product.producto_precio - (product.producto_precio * (product.producto_descuento/100)),
                     });
                     if(product.producto_descuento === 0) {
@@ -177,7 +177,7 @@ const CarritoCompra = (props) => {
         {
           method: 'POST',
           headers: { "Content-Type": "application/json",
-                     token: localStorage.token
+                     token: localStorage.token,
                    },
           body: JSON.stringify(tripletaProductoCantidadPedido)
         }).then(res => res.json())

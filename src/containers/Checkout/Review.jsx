@@ -134,8 +134,8 @@ const Review = (props) => {
   );
 
   React.useEffect(() => {
-    console.log(`http://burgertown-backend.herokuapp.com/Cliente/Metodos/${localStorage.cliente_id}`);
-    fetch(`http://burgertown-backend.herokuapp.com/Cliente/Metodos/${localStorage.cliente_id}`, 
+    console.log(`https://burgertown-backend.herokuapp.com/Cliente/Metodos/${localStorage.cliente_id}`);
+    fetch(`https://burgertown-backend.herokuapp.com/Cliente/Metodos/${localStorage.cliente_id}`, 
       {
         method: 'GET',
         headers: { "Content-Type": "application/json",
@@ -150,8 +150,8 @@ const Review = (props) => {
 
 
   React.useEffect(() => {
-    console.log(`http://burgertown-backend.herokuapp.com/Cliente/${localStorage.cliente_celular}`);
-    fetch(`http://burgertown-backend.herokuapp.com/Cliente/${localStorage.cliente_celular}`, 
+    console.log(`https://burgertown-backend.herokuapp.com/Cliente/${localStorage.cliente_celular}`);
+    fetch(`https://burgertown-backend.herokuapp.com/Cliente/${localStorage.cliente_celular}`, 
       {
         method: 'GET',
         headers: { "Content-Type": "application/json",
@@ -164,8 +164,8 @@ const Review = (props) => {
   }, []);
 
   React.useEffect(() => {
-    console.log(`http://burgertown-backend.herokuapp.com/Sede/${localStorage.sede_id}`);
-    fetch(`http://burgertown-backend.herokuapp.com/Sede/${localStorage.sede_id}`, 
+    console.log(`https://burgertown-backend.herokuapp.com/Sede/${localStorage.sede_id}`);
+    fetch(`https://burgertown-backend.herokuapp.com/Sede/${localStorage.sede_id}`, 
       {
         method: 'GET',
         headers: { "Content-Type": "application/json",
@@ -192,7 +192,7 @@ const Review = (props) => {
         headers: { "Content-Type": "application/json", token: localStorage.token},
         body: JSON.stringify(dataPagar)
       })
-      console.log(response.status)
+      // console.log(response.status)
       if(response.status === 200) {
         Swal.fire(
           'Pedido pagado exitosamente',

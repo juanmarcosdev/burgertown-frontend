@@ -129,6 +129,50 @@ const useStyles = makeStyles((theme) => ({
 }));
 
 const DashboardAdmin = (props) => {
+  const backgroundArrayColors = [
+    'rgba(255, 99, 132, 0.2)',
+    'rgba(54, 162, 235, 0.2)',
+    'rgba(255, 206, 86, 0.2)',
+    'rgba(75, 192, 192, 0.2)',
+    'rgba(153, 102, 255, 0.2)',
+    'rgba(255, 159, 64, 0.2)',
+    'rgba(63, 189, 0, 0.2)',
+    'rgba(151, 0, 201, 0.2)',
+    'rgba(246, 255, 0, 0.2)',
+    'rgba(255, 0, 0, 0.2)',
+    'rgba(255, 153, 0, 0.2)',
+    'rgba(255, 251, 120, 0.2)',
+    'rgba(200, 225, 73, 0.2)',
+    'rgba(60, 51, 187, 0.2)',
+    'rgba(126, 75, 77, 0.2)',
+    'rgba(141, 247, 155, 0.2)',
+    'rgba(249, 108, 185, 0.2)',
+    'rgba(218, 116, 8, 0.2)',
+    'rgba(57, 195, 158, 0.2)',
+    'rgba(31, 33, 104, 0.2)',
+  ];
+  const borderArrayColors = [
+    'rgba(255, 99, 132, 1)',
+    'rgba(54, 162, 235, 1)',
+    'rgba(255, 206, 86, 1)',
+    'rgba(75, 192, 192, 1)',
+    'rgba(153, 102, 255, 1)',
+    'rgba(255, 159, 64, 1)',
+    'rgba(63, 189, 0, 1)',
+    'rgba(151, 0, 201, 1)',
+    'rgba(246, 255, 0, 1)',
+    'rgba(255, 0, 0, 1)',
+    'rgba(255, 153, 0, 1)',
+    'rgba(255, 251, 120, 1)',
+    'rgba(200, 225, 73, 1)',
+    'rgba(60, 51, 187, 1)',
+    'rgba(126, 75, 77, 1)',
+    'rgba(141, 247, 155, 1)',
+    'rgba(249, 108, 185, 1)',
+    'rgba(218, 116, 8, 1)',
+    'rgba(57, 195, 158, 1)',
+    'rgba(31, 33, 104, 1)',
+  ];
   const { dataTrabajadores, dataClientes, dataCategorias, dataSedes, dataProductos, history } = props;
   const classes = useStyles();
   const [open, setOpen] = React.useState(true);
@@ -192,22 +236,8 @@ const DashboardAdmin = (props) => {
       {
         label: '# de Ventas',
         data: dataReporte1.map(a => a.total_ventas),
-        backgroundColor: [
-          'rgba(255, 99, 132, 0.2)',
-          'rgba(54, 162, 235, 0.2)',
-          'rgba(255, 206, 86, 0.2)',
-          'rgba(75, 192, 192, 0.2)',
-          'rgba(153, 102, 255, 0.2)',
-          'rgba(255, 159, 64, 0.2)',
-        ],
-        borderColor: [
-          'rgba(255, 99, 132, 1)',
-          'rgba(54, 162, 235, 1)',
-          'rgba(255, 206, 86, 1)',
-          'rgba(75, 192, 192, 1)',
-          'rgba(153, 102, 255, 1)',
-          'rgba(255, 159, 64, 1)',
-        ],
+        backgroundColor: backgroundArrayColors,
+        borderColor: borderArrayColors,
         borderWidth: 1,
       },
     ],
@@ -235,22 +265,8 @@ const DashboardAdmin = (props) => {
       {
         label: 'Cantidad de Dinero ingresado',
         data: dataReporte2.map(a => a.contribucion),
-        backgroundColor: [
-          'rgba(255, 99, 132, 0.2)',
-          'rgba(54, 162, 235, 0.2)',
-          'rgba(255, 206, 86, 0.2)',
-          'rgba(75, 192, 192, 0.2)',
-          'rgba(153, 102, 255, 0.2)',
-          'rgba(255, 159, 64, 0.2)',
-        ],
-        borderColor: [
-          'rgba(255, 99, 132, 1)',
-          'rgba(54, 162, 235, 1)',
-          'rgba(255, 206, 86, 1)',
-          'rgba(75, 192, 192, 1)',
-          'rgba(153, 102, 255, 1)',
-          'rgba(255, 159, 64, 1)',
-        ],
+        backgroundColor: backgroundArrayColors,
+        borderColor: borderArrayColors,
         borderWidth: 1,
       },
     ],
@@ -278,22 +294,8 @@ const DashboardAdmin = (props) => {
       {
         label: '# de Ventas',
         data: dataReporte4.map(a => a.total_ventas),
-        backgroundColor: [
-          'rgba(255, 99, 132, 0.2)',
-          'rgba(54, 162, 235, 0.2)',
-          'rgba(255, 206, 86, 0.2)',
-          'rgba(75, 192, 192, 0.2)',
-          'rgba(153, 102, 255, 0.2)',
-          'rgba(255, 159, 64, 0.2)',
-        ],
-        borderColor: [
-          'rgba(255, 99, 132, 1)',
-          'rgba(54, 162, 235, 1)',
-          'rgba(255, 206, 86, 1)',
-          'rgba(75, 192, 192, 1)',
-          'rgba(153, 102, 255, 1)',
-          'rgba(255, 159, 64, 1)',
-        ],
+        backgroundColor: backgroundArrayColors,
+        borderColor: borderArrayColors,
         borderWidth: 1,
       },
     ],
@@ -321,22 +323,8 @@ const DashboardAdmin = (props) => {
       {
         label: 'Dinero ingresado por sede',
         data: dataReporte6.map(a => a.ventas_sede),
-        backgroundColor: [
-          'rgba(255, 99, 132, 0.2)',
-          'rgba(54, 162, 235, 0.2)',
-          'rgba(255, 206, 86, 0.2)',
-          'rgba(75, 192, 192, 0.2)',
-          'rgba(153, 102, 255, 0.2)',
-          'rgba(255, 159, 64, 0.2)',
-        ],
-        borderColor: [
-          'rgba(255, 99, 132, 1)',
-          'rgba(54, 162, 235, 1)',
-          'rgba(255, 206, 86, 1)',
-          'rgba(75, 192, 192, 1)',
-          'rgba(153, 102, 255, 1)',
-          'rgba(255, 159, 64, 1)',
-        ],
+        backgroundColor: backgroundArrayColors,
+        borderColor: borderArrayColors,
         borderWidth: 1,
       },
     ],
@@ -364,22 +352,8 @@ const DashboardAdmin = (props) => {
       {
         label: 'Dinero ingresado por sede',
         data: dataReporte7.map(a => a.ventas_sede),
-        backgroundColor: [
-          'rgba(255, 99, 132, 0.2)',
-          'rgba(54, 162, 235, 0.2)',
-          'rgba(255, 206, 86, 0.2)',
-          'rgba(75, 192, 192, 0.2)',
-          'rgba(153, 102, 255, 0.2)',
-          'rgba(255, 159, 64, 0.2)',
-        ],
-        borderColor: [
-          'rgba(255, 99, 132, 1)',
-          'rgba(54, 162, 235, 1)',
-          'rgba(255, 206, 86, 1)',
-          'rgba(75, 192, 192, 1)',
-          'rgba(153, 102, 255, 1)',
-          'rgba(255, 159, 64, 1)',
-        ],
+        backgroundColor: backgroundArrayColors,
+        borderColor: borderArrayColors,
         borderWidth: 1,
       },
     ],
@@ -410,8 +384,9 @@ const DashboardAdmin = (props) => {
                 })
               }).then(res => res.json())
                 .then(data => {
-                  setDataReporte3(data.data)
+                  console.log("reporte 3")
                   console.log(data.data)
+                  setDataReporte3(data.data)
                 })
   }
 
@@ -1207,13 +1182,13 @@ const DashboardAdmin = (props) => {
             <div style={{display: 'flex', flexDirection: 'row'}}>
               <AssignmentIcon style={{marginTop: '20px', marginRight: '5px'}}/><h2>Reporte 1: Productos más vendidos (Top 20)</h2>
               </div>
-              <Pie data={dataChartReporte1} options={options} />
+              <Bar data={dataChartReporte1} options={options} />
             </div>
             <div id="clientesdinero">
             <div style={{display: 'flex', flexDirection: 'row'}}>
               <AssignmentIcon style={{marginTop: '20px', marginRight: '5px'}}/><h2>Reporte 2: Clientes que más dinero ingresaron a la tienda</h2>
               </div>
-              <Bar data={dataChartReporte2} options={options} />
+              <Pie data={dataChartReporte2} options={options} />
             </div>
             <div id="ventasfecha">
             <div style={{display: 'flex', flexDirection: 'row'}}>
@@ -1256,103 +1231,51 @@ const DashboardAdmin = (props) => {
           </Button>
           {
             dataReporte3.length > 0 ? 
-            <Bar data={{
+            <div>
+              <Bar data={{
               labels: ['Rango de fecha'],
     datasets: [
       {
         label: 'Valor promedio',
         data: dataReporte3.map(a => a.valor_promedio),
-        backgroundColor: [
-          'rgba(255, 99, 132, 0.2)',
-          'rgba(54, 162, 235, 0.2)',
-          'rgba(255, 206, 86, 0.2)',
-          'rgba(75, 192, 192, 0.2)',
-          'rgba(153, 102, 255, 0.2)',
-          'rgba(255, 159, 64, 0.2)',
-        ],
-        borderColor: [
-          'rgba(255, 99, 132, 1)',
-          'rgba(54, 162, 235, 1)',
-          'rgba(255, 206, 86, 1)',
-          'rgba(75, 192, 192, 1)',
-          'rgba(153, 102, 255, 1)',
-          'rgba(255, 159, 64, 1)',
-        ],
+        backgroundColor: backgroundArrayColors,
+        borderColor: borderArrayColors,
         borderWidth: 1,
       },
       {
         label: 'Pedido mas alto',
         data: dataReporte3.map(a => a.pedido_mas_alto),
-        backgroundColor: [
-          'rgba(255, 99, 132, 0.2)',
-          'rgba(54, 162, 235, 0.2)',
-          'rgba(255, 206, 86, 0.2)',
-          'rgba(75, 192, 192, 0.2)',
-          'rgba(153, 102, 255, 0.2)',
-          'rgba(255, 159, 64, 0.2)',
-        ],
-        borderColor: [
-          'rgba(255, 99, 132, 1)',
-          'rgba(54, 162, 235, 1)',
-          'rgba(255, 206, 86, 1)',
-          'rgba(75, 192, 192, 1)',
-          'rgba(153, 102, 255, 1)',
-          'rgba(255, 159, 64, 1)',
-        ],
+        backgroundColor: backgroundArrayColors,
+        borderColor: borderArrayColors,
         borderWidth: 1,
       },
       {
         label: 'Pedido mas bajo',
         data: dataReporte3.map(a => a.pedido_mas_bajo),
-        backgroundColor: [
-          'rgba(255, 99, 132, 0.2)',
-          'rgba(54, 162, 235, 0.2)',
-          'rgba(255, 206, 86, 0.2)',
-          'rgba(75, 192, 192, 0.2)',
-          'rgba(153, 102, 255, 0.2)',
-          'rgba(255, 159, 64, 0.2)',
-        ],
-        borderColor: [
-          'rgba(255, 99, 132, 1)',
-          'rgba(54, 162, 235, 1)',
-          'rgba(255, 206, 86, 1)',
-          'rgba(75, 192, 192, 1)',
-          'rgba(153, 102, 255, 1)',
-          'rgba(255, 159, 64, 1)',
-        ],
+        backgroundColor: backgroundArrayColors,
+        borderColor: borderArrayColors,
         borderWidth: 1,
       },
       {
         label: 'Total ventas',
         data: dataReporte3.map(a => a.total_ventas),
-        backgroundColor: [
-          'rgba(255, 99, 132, 0.2)',
-          'rgba(54, 162, 235, 0.2)',
-          'rgba(255, 206, 86, 0.2)',
-          'rgba(75, 192, 192, 0.2)',
-          'rgba(153, 102, 255, 0.2)',
-          'rgba(255, 159, 64, 0.2)',
-        ],
-        borderColor: [
-          'rgba(255, 99, 132, 1)',
-          'rgba(54, 162, 235, 1)',
-          'rgba(255, 206, 86, 1)',
-          'rgba(75, 192, 192, 1)',
-          'rgba(153, 102, 255, 1)',
-          'rgba(255, 159, 64, 1)',
-        ],
+        backgroundColor: backgroundArrayColors,
+        borderColor: borderArrayColors,
         borderWidth: 1,
       },
     ],
             }}
             options={options} />
+            <Typography component="h6" variant="h6">Cantidad de pedidos realizados en la fecha: {dataReporte3[0].cantidad_pedidos}</Typography>
+            </div>
+            
           : <div></div>}
             </div>
             <div id="menosvendidos">
             <div style={{display: 'flex', flexDirection: 'row'}}>
               <AssignmentIcon style={{marginTop: '20px', marginRight: '5px'}}/><h2>Reporte 4: Productos menos vendidos (20 productos)</h2>
               </div>
-              <Pie data={dataChartReporte4} options={options} />
+              <Bar data={dataChartReporte4} options={options} />
             </div>
             <div id="ventasproducto">
             <div style={{display: 'flex', flexDirection: 'row'}}>
@@ -1377,13 +1300,13 @@ const DashboardAdmin = (props) => {
             <div style={{display: 'flex', flexDirection: 'row'}}>
               <AssignmentIcon style={{marginTop: '20px', marginRight: '5px'}}/><h2>Reporte 6: Sedes del restaurante con mayores ventas</h2>
               </div>
-              <Bar data={dataChartReporte6} options={options} />
+              <Pie data={dataChartReporte6} options={options} />
             </div>
             <div id="sedemenos">
             <div style={{display: 'flex', flexDirection: 'row'}}>
               <AssignmentIcon style={{marginTop: '20px', marginRight: '5px'}}/><h2>Reporte 7: Sedes del restaurante con menores ventas</h2>
               </div>
-              <Bar data={dataChartReporte7} options={options} />
+              <Pie data={dataChartReporte7} options={options} />
             </div>
             <div id="clientesfc">
             <div style={{display: 'flex', flexDirection: 'row'}}>
