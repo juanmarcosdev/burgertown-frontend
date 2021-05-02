@@ -10,7 +10,7 @@
     <img src="https://i.ibb.co/VBQp2Xd/Screenshot-from-2021-05-01-23-25-44.png">
 </p>
 <p align="center">
-    <img src="https://i.ibb.co/VBQp2Xd/Screenshot-from-2021-05-01-23-25-44.png">
+    <img src="https://i.ibb.co/FghwQFx/Screenshot-from-2021-05-01-23-26-24.png">
 </p>
 <p align="center">
     <img src="https://i.ibb.co/DbmTcDp/Screenshot-from-2021-05-01-23-19-46.png">
