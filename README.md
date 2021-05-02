@@ -27,3 +27,6 @@
 <p align="center">
     <img src="https://i.ibb.co/5MxtKbP/Screenshot-from-2021-05-01-23-52-49.png">
 </p>
+<ul>
+  <li><h4>Preview:</h4>You can see the app running live <a href="http://burgertown-frontend.herokuapp.com/">clicking here</a></li>
+</ul>
